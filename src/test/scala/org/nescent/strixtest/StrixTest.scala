@@ -1,6 +1,7 @@
 package org.nescent.strixtest
 
 import scala.collection.JavaConversions._
+
 import org.junit.Test
 import org.junit.Assert
 import org.nescent.strix.OWL.Class
@@ -9,7 +10,6 @@ import org.nescent.strix.OWL.OWLObjectPropertyToProperty
 import org.nescent.strix.OWL.ObjectProperty
 import org.nescent.strix.OWL.not
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.OWLObjectProperty
 
 class StrixTest {
 

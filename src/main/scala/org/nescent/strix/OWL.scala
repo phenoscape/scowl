@@ -16,7 +16,7 @@ object OWL {
 	def Class(iri: String): OWLClass = {
 			return Class(IRI.create(iri));
 	}
-	
+
 	def ObjectProperty(iri: IRI): OWLObjectProperty = {
 			return OWLManager.getOWLDataFactory().getOWLObjectProperty(iri);
 	}
