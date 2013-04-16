@@ -4,11 +4,7 @@ import scala.collection.JavaConversions._
 
 import org.junit.Test
 import org.junit.Assert
-import org.nescent.strix.OWL.Class
-import org.nescent.strix.OWL.OWLClassExpressionToClassExpression
-import org.nescent.strix.OWL.OWLObjectPropertyToProperty
-import org.nescent.strix.OWL.ObjectProperty
-import org.nescent.strix.OWL.not
+import org.nescent.strix.OWL._
 import org.semanticweb.owlapi.apibinding.OWLManager
 
 class StrixTest {
@@ -69,6 +65,17 @@ class StrixTest {
 			val chainAxiom2 = prop4 SubPropertyChain (prop1 o prop2 o prop3);
 			val longChainAxiom2 = factory.getOWLSubPropertyChainOfAxiom(List(prop1, prop2, prop3), prop4);
 			Assert.assertEquals(longChainAxiom2, chainAxiom2);
+	}
+
+	@Test
+	def testPropertyAssertions(): Unit = {
+			val factory = OWLManager.getOWLDataFactory();
+			val rdfsLabel = factory.getRDFSLabel();
+			val prop1 = ObjectProperty("http://example.org/prop1");
+			val ind1 = Individual("http://example.org/ind1");
+			val ind2 = Individual("http://example.org/ind2");
+			ind1 Fact (prop1, ind2); //TODO
+			(ind1 Fact (prop1, ind2)) Annotation (rdfsLabel, Individual()); 
 	}
 
 }
