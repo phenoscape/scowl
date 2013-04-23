@@ -28,12 +28,4 @@ class StrixIndividual(val self: OWLIndividual) {
 			factory.getOWLClassAssertionAxiom(owlClass, self);
 	}
 
-	def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = {
-			self match {
-			case named: OWLNamedIndividual => factory.getOWLAnnotationAssertionAxiom(property, named.getIRI(), value);
-			case anon: OWLAnonymousIndividual => factory.getOWLAnnotationAssertionAxiom(property, anon, value);
-			}
-
-	}
-
 }

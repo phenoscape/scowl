@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLAnonymousIndividual
 import org.semanticweb.owlapi.model.OWLIndividual
 import org.semanticweb.owlapi.model.OWLAxiom
 import org.semanticweb.owlapi.model.OWLNamedObject
+import org.semanticweb.owlapi.model.OWLAnnotationSubject
 
 object OWL {
 
@@ -51,6 +52,8 @@ object OWL {
 	implicit def OWLIndividualToIndividual(value: OWLIndividual) = { new StrixIndividual(value); }
 	
 	implicit def OWLAxiomToStrixAxiom(value: OWLAxiom) = { new StrixAxiom(value); }
+	
+	implicit def OWLAnnotationSubjectToStrixAnnotationSubject(value: OWLAnnotationSubject) = { new StrixAnnotationSubject(value); }
 	
 	implicit def OWLNamedObjectToStrixNamedObject(value: OWLNamedObject) = { new StrixNamedObject(value); }
 
