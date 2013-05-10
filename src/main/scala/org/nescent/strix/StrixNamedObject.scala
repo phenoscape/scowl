@@ -10,6 +10,10 @@ import org.semanticweb.owlapi.apibinding.OWLManager
 class StrixNamedObject(val self: OWLNamedObject) {
 
 	val factory = OWLManager.getOWLDataFactory();
+	
+	def Annotation(property: OWLAnnotationProperty, value: String): OWLAnnotationAssertionAxiom = {
+			Annotation(property, factory.getOWLLiteral(value));
+	}
 
 	def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = {
 			factory.getOWLAnnotationAssertionAxiom(property, self.getIRI(), value);
