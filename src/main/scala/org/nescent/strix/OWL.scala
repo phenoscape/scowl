@@ -1,5 +1,6 @@
 package org.nescent.strix
 
+import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLClass
@@ -12,10 +13,15 @@ import org.semanticweb.owlapi.model.OWLIndividual
 import org.semanticweb.owlapi.model.OWLAxiom
 import org.semanticweb.owlapi.model.OWLNamedObject
 import org.semanticweb.owlapi.model.OWLAnnotationSubject
+import org.semanticweb.owlapi.model.OWLOntology
 
 object OWL {
 
 	val factory = OWLManager.getOWLDataFactory();
+
+	def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = {
+			return OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri));
+	}
 
 	def Class(iri: IRI): OWLClass = {
 			return factory.getOWLClass(iri);
@@ -48,13 +54,13 @@ object OWL {
 	implicit def OWLObjectPropertyToProperty(value: OWLObjectProperty) = { new StrixObjectProperty(value); }
 
 	implicit def OWLClassExpressionToClassExpression(value: OWLClassExpression) = { new StrixClassExpression(value); }
-	
+
 	implicit def OWLIndividualToIndividual(value: OWLIndividual) = { new StrixIndividual(value); }
-	
+
 	implicit def OWLAxiomToStrixAxiom(value: OWLAxiom) = { new StrixAxiom(value); }
-	
+
 	implicit def OWLAnnotationSubjectToStrixAnnotationSubject(value: OWLAnnotationSubject) = { new StrixAnnotationSubject(value); }
-	
+
 	implicit def OWLNamedObjectToStrixNamedObject(value: OWLNamedObject) = { new StrixNamedObject(value); }
 
 	def not(classExpression: OWLClassExpression): OWLObjectComplementOf = {
