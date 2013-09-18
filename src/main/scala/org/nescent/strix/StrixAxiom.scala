@@ -10,14 +10,14 @@ import org.semanticweb.owlapi.model.OWLNamedObject
 
 class StrixAxiom(val self: OWLAxiom) {
 
-	val factory = OWLManager.getOWLDataFactory();
+  val factory = OWLManager.getOWLDataFactory();
 
-	def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAxiom = {
-			self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value)));
-	}
-	
-	def Annotation(property: OWLAnnotationProperty, value: OWLNamedObject): OWLAxiom = {
-			self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value.getIRI())));
-	}
+  def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAxiom = {
+    self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value)));
+  }
+
+  def Annotation(property: OWLAnnotationProperty, value: OWLNamedObject): OWLAxiom = {
+    self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value.getIRI())));
+  }
 
 }

@@ -8,16 +8,16 @@ import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
 
 class StrixClassExpression(val classExpression: OWLClassExpression) {
 
-	def and(other: OWLClassExpression): OWLObjectIntersectionOf = {
-			OWLManager.getOWLDataFactory().getOWLObjectIntersectionOf(classExpression, other);
-	}
+  def and(other: OWLClassExpression): OWLObjectIntersectionOf = {
+    OWLManager.getOWLDataFactory().getOWLObjectIntersectionOf(classExpression, other);
+  }
 
-	def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = {
-			OWLManager.getOWLDataFactory().getOWLSubClassOfAxiom(classExpression, other);
-	}
+  def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = {
+    OWLManager.getOWLDataFactory().getOWLSubClassOfAxiom(classExpression, other);
+  }
 
-	def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = {
-			OWLManager.getOWLDataFactory().getOWLEquivalentClassesAxiom(classExpression, other);
-	}
+  def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = {
+    OWLManager.getOWLDataFactory().getOWLEquivalentClassesAxiom(classExpression, other);
+  }
 
 }

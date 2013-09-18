@@ -17,54 +17,54 @@ import org.semanticweb.owlapi.model.OWLOntology
 
 object OWL {
 
-	val factory = OWLManager.getOWLDataFactory();
+  val factory = OWLManager.getOWLDataFactory();
 
-	def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = {
-			return OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri));
-	}
+  def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = {
+    return OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri));
+  }
 
-	def Class(iri: IRI): OWLClass = {
-			return factory.getOWLClass(iri);
-	}
+  def Class(iri: IRI): OWLClass = {
+    return factory.getOWLClass(iri);
+  }
 
-	def Class(iri: String): OWLClass = {
-			return Class(IRI.create(iri));
-	}
+  def Class(iri: String): OWLClass = {
+    return Class(IRI.create(iri));
+  }
 
-	def Individual(iri: IRI): OWLNamedIndividual = {
-			return factory.getOWLNamedIndividual(iri);
-	}
+  def Individual(iri: IRI): OWLNamedIndividual = {
+    return factory.getOWLNamedIndividual(iri);
+  }
 
-	def Individual(iri: String): OWLNamedIndividual = {
-			return Individual(IRI.create(iri));
-	}
+  def Individual(iri: String): OWLNamedIndividual = {
+    return Individual(IRI.create(iri));
+  }
 
-	def Individual(): OWLAnonymousIndividual = {
-			return factory.getOWLAnonymousIndividual();
-	}
+  def Individual(): OWLAnonymousIndividual = {
+    return factory.getOWLAnonymousIndividual();
+  }
 
-	def ObjectProperty(iri: IRI): OWLObjectProperty = {
-			return OWLManager.getOWLDataFactory().getOWLObjectProperty(iri);
-	}
+  def ObjectProperty(iri: IRI): OWLObjectProperty = {
+    return OWLManager.getOWLDataFactory().getOWLObjectProperty(iri);
+  }
 
-	def ObjectProperty(iri: String): OWLObjectProperty = {
-			return ObjectProperty(IRI.create(iri));
-	}
+  def ObjectProperty(iri: String): OWLObjectProperty = {
+    return ObjectProperty(IRI.create(iri));
+  }
 
-	implicit def OWLObjectPropertyToProperty(value: OWLObjectProperty) = { new StrixObjectProperty(value); }
+  implicit def OWLObjectPropertyToProperty(value: OWLObjectProperty) = { new StrixObjectProperty(value); }
 
-	implicit def OWLClassExpressionToClassExpression(value: OWLClassExpression) = { new StrixClassExpression(value); }
+  implicit def OWLClassExpressionToClassExpression(value: OWLClassExpression) = { new StrixClassExpression(value); }
 
-	implicit def OWLIndividualToIndividual(value: OWLIndividual) = { new StrixIndividual(value); }
+  implicit def OWLIndividualToIndividual(value: OWLIndividual) = { new StrixIndividual(value); }
 
-	implicit def OWLAxiomToStrixAxiom(value: OWLAxiom) = { new StrixAxiom(value); }
+  implicit def OWLAxiomToStrixAxiom(value: OWLAxiom) = { new StrixAxiom(value); }
 
-	implicit def OWLAnnotationSubjectToStrixAnnotationSubject(value: OWLAnnotationSubject) = { new StrixAnnotationSubject(value); }
+  implicit def OWLAnnotationSubjectToStrixAnnotationSubject(value: OWLAnnotationSubject) = { new StrixAnnotationSubject(value); }
 
-	implicit def OWLNamedObjectToStrixNamedObject(value: OWLNamedObject) = { new StrixNamedObject(value); }
+  implicit def OWLNamedObjectToStrixNamedObject(value: OWLNamedObject) = { new StrixNamedObject(value); }
 
-	def not(classExpression: OWLClassExpression): OWLObjectComplementOf = {
-		OWLManager.getOWLDataFactory().getOWLObjectComplementOf(classExpression);
-	}
+  def not(classExpression: OWLClassExpression): OWLObjectComplementOf = {
+    OWLManager.getOWLDataFactory().getOWLObjectComplementOf(classExpression);
+  }
 
 }
