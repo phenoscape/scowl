@@ -1,4 +1,4 @@
-package org.nescent.strix
+package org.phenoscape.scowl
 
 import org.semanticweb.owlapi.model.OWLAnnotationSubject
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual
@@ -8,7 +8,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.model.OWLNamedIndividual
 import org.semanticweb.owlapi.apibinding.OWLManager
 
-class StrixAnnotationSubject(val self: OWLAnnotationSubject) {
+class ScowlAnnotationSubject(val self: OWLAnnotationSubject) {
 
   val factory = OWLManager.getOWLDataFactory();
 

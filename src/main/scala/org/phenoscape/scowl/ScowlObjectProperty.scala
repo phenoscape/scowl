@@ -1,4 +1,4 @@
-package org.nescent.strix
+package org.phenoscape.scowl
 
 import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.apibinding.OWLManager
@@ -13,7 +13,7 @@ import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality
 
-class StrixObjectProperty(val objectProperty: OWLObjectPropertyExpression) {
+class ScowlObjectProperty(val objectProperty: OWLObjectPropertyExpression) {
 
   def some(classExpression: OWLClassExpression): OWLObjectSomeValuesFrom = {
     OWLManager.getOWLDataFactory().getOWLObjectSomeValuesFrom(objectProperty, classExpression);
@@ -51,11 +51,11 @@ class StrixObjectProperty(val objectProperty: OWLObjectPropertyExpression) {
     OWLManager.getOWLDataFactory().getOWLObjectHasValue(objectProperty, individual);
   }
 
-  def o(property: OWLObjectPropertyExpression): StrixPropertyChain = {
-    new StrixPropertyChain(objectProperty, property);
+  def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = {
+    new ScowlPropertyChain(objectProperty, property);
   }
 
-  def SubPropertyChain(chain: StrixPropertyChain): OWLSubPropertyChainOfAxiom = {
+  def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = {
     OWLManager.getOWLDataFactory().getOWLSubPropertyChainOfAxiom(chain.properties, objectProperty);
   }
 

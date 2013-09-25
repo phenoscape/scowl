@@ -1,13 +1,13 @@
-package org.nescent.strixtest
+package org.phenoscape.scowltest
 
 import scala.collection.JavaConversions._
 
 import org.junit.Test
 import org.junit.Assert
-import org.nescent.strix.OWL._
+import org.phenoscape.scowl.OWL._
 import org.semanticweb.owlapi.apibinding.OWLManager
 
-class StrixTest {
+class ScowlTest {
 
   @Test
   def testIntersectionOf(): Unit = {

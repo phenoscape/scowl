@@ -1,4 +1,4 @@
-package org.nescent.strix
+package org.phenoscape.scowl
 
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.OWLClassExpression
@@ -6,7 +6,7 @@ import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
 
-class StrixClassExpression(val classExpression: OWLClassExpression) {
+class ScowlClassExpression(val classExpression: OWLClassExpression) {
 
   def and(other: OWLClassExpression): OWLObjectIntersectionOf = {
     OWLManager.getOWLDataFactory().getOWLObjectIntersectionOf(classExpression, other);

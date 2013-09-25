@@ -1,4 +1,4 @@
-package org.nescent.strix
+package org.phenoscape.scowl
 
 import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.apibinding.OWLManager
@@ -51,17 +51,17 @@ object OWL {
     return ObjectProperty(IRI.create(iri));
   }
 
-  implicit def OWLObjectPropertyToProperty(value: OWLObjectProperty) = { new StrixObjectProperty(value); }
+  implicit def OWLObjectPropertyToProperty(value: OWLObjectProperty) = { new ScowlObjectProperty(value); }
 
-  implicit def OWLClassExpressionToClassExpression(value: OWLClassExpression) = { new StrixClassExpression(value); }
+  implicit def OWLClassExpressionToClassExpression(value: OWLClassExpression) = { new ScowlClassExpression(value); }
 
-  implicit def OWLIndividualToIndividual(value: OWLIndividual) = { new StrixIndividual(value); }
+  implicit def OWLIndividualToIndividual(value: OWLIndividual) = { new ScowlIndividual(value); }
 
-  implicit def OWLAxiomToStrixAxiom(value: OWLAxiom) = { new StrixAxiom(value); }
+  implicit def OWLAxiomToScowlAxiom(value: OWLAxiom) = { new ScowlAxiom(value); }
 
-  implicit def OWLAnnotationSubjectToStrixAnnotationSubject(value: OWLAnnotationSubject) = { new StrixAnnotationSubject(value); }
+  implicit def OWLAnnotationSubjectToScowlAnnotationSubject(value: OWLAnnotationSubject) = { new ScowlAnnotationSubject(value); }
 
-  implicit def OWLNamedObjectToStrixNamedObject(value: OWLNamedObject) = { new StrixNamedObject(value); }
+  implicit def OWLNamedObjectToScowlNamedObject(value: OWLNamedObject) = { new ScowlNamedObject(value); }
 
   def not(classExpression: OWLClassExpression): OWLObjectComplementOf = {
     OWLManager.getOWLDataFactory().getOWLObjectComplementOf(classExpression);

@@ -1,4 +1,4 @@
-package org.nescent.strix
+package org.phenoscape.scowl
 
 import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.model.OWLNamedObject
@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationValue
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.apibinding.OWLManager
 
-class StrixNamedObject(val self: OWLNamedObject) {
+class ScowlNamedObject(val self: OWLNamedObject) {
 
   val factory = OWLManager.getOWLDataFactory();
 
