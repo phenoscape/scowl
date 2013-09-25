@@ -1,10 +1,10 @@
-# Strix
+# Scowl
 
-Strix is a Scala library allowing a declarative approach to composing OWL expressions and axioms using the [OWL API](http://owlapi.sourceforge.net).
+Scowl is a Scala library allowing a declarative approach to composing OWL expressions and axioms using the [OWL API](http://owlapi.sourceforge.net).
 
 ## Usage
 
-Build the jar using `mvn package`, and add to your Scala project. Import `org.nescent.strix.OWL._`, and Strix implicit conversions will add pseudo Manchester syntax methods to native OWL API objects.
+Build the jar using `mvn package`, and add to your Scala project. Import `org.phenoscape.scowl.OWL._`, and Scowl implicit conversions will add pseudo Manchester syntax methods to native OWL API objects.
 
 ## Examples
 
@@ -24,4 +24,4 @@ Build the jar using `mvn package`, and add to your Scala project. Import `org.ne
 
 ## License
 
-Strix is open source under the [MIT License](http://opensource.org/licenses/MIT).  See [LICENSE](LICENSE) for more information.
+Scowl is open source under the [MIT License](http://opensource.org/licenses/MIT).  See [LICENSE](LICENSE) for more information.
