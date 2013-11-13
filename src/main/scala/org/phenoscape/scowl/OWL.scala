@@ -17,54 +17,36 @@ import org.semanticweb.owlapi.model.OWLOntology
 
 object OWL {
 
-  val factory = OWLManager.getOWLDataFactory();
+  val factory = OWLManager.getOWLDataFactory
 
-  def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = {
-    return OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri));
-  }
+  def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
 
-  def Class(iri: IRI): OWLClass = {
-    return factory.getOWLClass(iri);
-  }
+  def Class(iri: IRI): OWLClass = factory.getOWLClass(iri)
 
-  def Class(iri: String): OWLClass = {
-    return Class(IRI.create(iri));
-  }
+  def Class(iri: String): OWLClass = Class(IRI.create(iri))
 
-  def Individual(iri: IRI): OWLNamedIndividual = {
-    return factory.getOWLNamedIndividual(iri);
-  }
+  def Individual(iri: IRI): OWLNamedIndividual = factory.getOWLNamedIndividual(iri)
 
-  def Individual(iri: String): OWLNamedIndividual = {
-    return Individual(IRI.create(iri));
-  }
+  def Individual(iri: String): OWLNamedIndividual = Individual(IRI.create(iri))
 
-  def Individual(): OWLAnonymousIndividual = {
-    return factory.getOWLAnonymousIndividual();
-  }
+  def Individual(): OWLAnonymousIndividual = factory.getOWLAnonymousIndividual()
 
-  def ObjectProperty(iri: IRI): OWLObjectProperty = {
-    return OWLManager.getOWLDataFactory().getOWLObjectProperty(iri);
-  }
+  def ObjectProperty(iri: IRI): OWLObjectProperty = OWLManager.getOWLDataFactory.getOWLObjectProperty(iri)
 
-  def ObjectProperty(iri: String): OWLObjectProperty = {
-    return ObjectProperty(IRI.create(iri));
-  }
+  def ObjectProperty(iri: String): OWLObjectProperty = ObjectProperty(IRI.create(iri))
 
-  implicit def OWLObjectPropertyToProperty(value: OWLObjectProperty) = { new ScowlObjectProperty(value); }
+  implicit def OWLObjectPropertyToProperty(value: OWLObjectProperty) = new ScowlObjectProperty(value)
 
-  implicit def OWLClassExpressionToClassExpression(value: OWLClassExpression) = { new ScowlClassExpression(value); }
+  implicit def OWLClassExpressionToClassExpression(value: OWLClassExpression) = new ScowlClassExpression(value)
 
-  implicit def OWLIndividualToIndividual(value: OWLIndividual) = { new ScowlIndividual(value); }
+  implicit def OWLIndividualToIndividual(value: OWLIndividual) = new ScowlIndividual(value)
 
-  implicit def OWLAxiomToScowlAxiom(value: OWLAxiom) = { new ScowlAxiom(value); }
+  implicit def OWLAxiomToScowlAxiom(value: OWLAxiom) = new ScowlAxiom(value)
 
-  implicit def OWLAnnotationSubjectToScowlAnnotationSubject(value: OWLAnnotationSubject) = { new ScowlAnnotationSubject(value); }
+  implicit def OWLAnnotationSubjectToScowlAnnotationSubject(value: OWLAnnotationSubject) = new ScowlAnnotationSubject(value)
 
-  implicit def OWLNamedObjectToScowlNamedObject(value: OWLNamedObject) = { new ScowlNamedObject(value); }
+  implicit def OWLNamedObjectToScowlNamedObject(value: OWLNamedObject) = new ScowlNamedObject(value)
 
-  def not(classExpression: OWLClassExpression): OWLObjectComplementOf = {
-    OWLManager.getOWLDataFactory().getOWLObjectComplementOf(classExpression);
-  }
+  def not(classExpression: OWLClassExpression): OWLObjectComplementOf = OWLManager.getOWLDataFactory.getOWLObjectComplementOf(classExpression)
 
 }

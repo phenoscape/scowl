@@ -14,49 +14,29 @@ import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality
 
 class ScowlObjectProperty(val objectProperty: OWLObjectPropertyExpression) {
+  
+  val factory = OWLManager.getOWLDataFactory
 
-  def some(classExpression: OWLClassExpression): OWLObjectSomeValuesFrom = {
-    OWLManager.getOWLDataFactory().getOWLObjectSomeValuesFrom(objectProperty, classExpression);
-  }
+  def some(classExpression: OWLClassExpression): OWLObjectSomeValuesFrom = factory.getOWLObjectSomeValuesFrom(objectProperty, classExpression)
 
-  def only(classExpression: OWLClassExpression): OWLObjectAllValuesFrom = {
-    OWLManager.getOWLDataFactory().getOWLObjectAllValuesFrom(objectProperty, classExpression);
-  }
+  def only(classExpression: OWLClassExpression): OWLObjectAllValuesFrom = factory.getOWLObjectAllValuesFrom(objectProperty, classExpression)
 
-  def exactly(cardinality: Int, classExpression: OWLClassExpression): OWLObjectExactCardinality = {
-    OWLManager.getOWLDataFactory().getOWLObjectExactCardinality(cardinality, objectProperty, classExpression);
-  }
+  def exactly(cardinality: Int, classExpression: OWLClassExpression): OWLObjectExactCardinality = factory.getOWLObjectExactCardinality(cardinality, objectProperty, classExpression)
 
-  def exactly(cardinality: Int): OWLObjectExactCardinality = {
-    OWLManager.getOWLDataFactory().getOWLObjectExactCardinality(cardinality, objectProperty);
-  }
+  def exactly(cardinality: Int): OWLObjectExactCardinality = factory.getOWLObjectExactCardinality(cardinality, objectProperty)
 
-  def min(cardinality: Int, classExpression: OWLClassExpression): OWLObjectMinCardinality = {
-    OWLManager.getOWLDataFactory().getOWLObjectMinCardinality(cardinality, objectProperty, classExpression);
-  }
+  def min(cardinality: Int, classExpression: OWLClassExpression): OWLObjectMinCardinality = factory.getOWLObjectMinCardinality(cardinality, objectProperty, classExpression)
 
-  def min(cardinality: Int): OWLObjectMinCardinality = {
-    OWLManager.getOWLDataFactory().getOWLObjectMinCardinality(cardinality, objectProperty);
-  }
+  def min(cardinality: Int): OWLObjectMinCardinality = factory.getOWLObjectMinCardinality(cardinality, objectProperty)
 
-  def max(cardinality: Int, classExpression: OWLClassExpression): OWLObjectMaxCardinality = {
-    OWLManager.getOWLDataFactory().getOWLObjectMaxCardinality(cardinality, objectProperty, classExpression);
-  }
+  def max(cardinality: Int, classExpression: OWLClassExpression): OWLObjectMaxCardinality = factory.getOWLObjectMaxCardinality(cardinality, objectProperty, classExpression)
 
-  def max(cardinality: Int): OWLObjectMaxCardinality = {
-    OWLManager.getOWLDataFactory().getOWLObjectMaxCardinality(cardinality, objectProperty);
-  }
+  def max(cardinality: Int): OWLObjectMaxCardinality = factory.getOWLObjectMaxCardinality(cardinality, objectProperty)
 
-  def value(individual: OWLIndividual): OWLObjectHasValue = {
-    OWLManager.getOWLDataFactory().getOWLObjectHasValue(objectProperty, individual);
-  }
+  def value(individual: OWLIndividual): OWLObjectHasValue = factory.getOWLObjectHasValue(objectProperty, individual)
 
-  def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = {
-    new ScowlPropertyChain(objectProperty, property);
-  }
+  def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = new ScowlPropertyChain(objectProperty, property)
 
-  def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = {
-    OWLManager.getOWLDataFactory().getOWLSubPropertyChainOfAxiom(chain.properties, objectProperty);
-  }
+  def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = factory.getOWLSubPropertyChainOfAxiom(chain.properties, objectProperty)
 
 }

@@ -8,16 +8,12 @@ import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
 
 class ScowlClassExpression(val classExpression: OWLClassExpression) {
 
-  def and(other: OWLClassExpression): OWLObjectIntersectionOf = {
-    OWLManager.getOWLDataFactory().getOWLObjectIntersectionOf(classExpression, other);
-  }
+  val factory = OWLManager.getOWLDataFactory
 
-  def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = {
-    OWLManager.getOWLDataFactory().getOWLSubClassOfAxiom(classExpression, other);
-  }
+  def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(classExpression, other)
 
-  def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = {
-    OWLManager.getOWLDataFactory().getOWLEquivalentClassesAxiom(classExpression, other);
-  }
+  def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(classExpression, other)
+
+  def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(classExpression, other)
 
 }
