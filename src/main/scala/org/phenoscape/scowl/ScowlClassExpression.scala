@@ -9,12 +9,14 @@ import org.semanticweb.owlapi.model.OWLObjectUnionOf
 
 class ScowlClassExpression(val classExpression: OWLClassExpression) {
 
-  def and(other: OWLClassExpression): OWLObjectIntersectionOf = OWLManager.getOWLDataFactory().getOWLObjectIntersectionOf(classExpression, other)
+  val factory = OWLManager.getOWLDataFactory
 
-  def or(other: OWLClassExpression): OWLObjectUnionOf = OWLManager.getOWLDataFactory().getOWLObjectUnionOf(classExpression, other)
+  def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(classExpression, other)
 
-  def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = OWLManager.getOWLDataFactory().getOWLSubClassOfAxiom(classExpression, other)
+  def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf(classExpression, other)
 
-  def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = OWLManager.getOWLDataFactory().getOWLEquivalentClassesAxiom(classExpression, other)
+  def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(classExpression, other)
+
+  def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(classExpression, other)
 
 }

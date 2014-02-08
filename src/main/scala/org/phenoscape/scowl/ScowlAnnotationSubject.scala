@@ -10,10 +10,10 @@ import org.semanticweb.owlapi.apibinding.OWLManager
 
 class ScowlAnnotationSubject(val self: OWLAnnotationSubject) {
 
-  val factory = OWLManager.getOWLDataFactory();
+  val factory = OWLManager.getOWLDataFactory
 
   def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = {
-    factory.getOWLAnnotationAssertionAxiom(property, self, value);
+    factory.getOWLAnnotationAssertionAxiom(property, self, value)
   }
 
 }

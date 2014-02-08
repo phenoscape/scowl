@@ -7,15 +7,15 @@ import java.io.File
 
 object AnatomyOntology extends App {
 
-  val factory = OWLManager.getOWLDataFactory();
-  val ns = "http://example.org/anatomy.owl#";
-  val head = Class(ns + "001");
-  val body = Class(ns + "002");
-  val hand = Class(ns + "003");
-  val arm = Class(ns + "004");
-  val anatomical_structure = Class(ns + "005");
-  val part_of = ObjectProperty(ns + "006");
-  val label = factory.getRDFSLabel();
+  val factory = OWLManager.getOWLDataFactory
+  val ns = "http://example.org/anatomy.owl#"
+  val head = Class(ns + "001")
+  val body = Class(ns + "002")
+  val hand = Class(ns + "003")
+  val arm = Class(ns + "004")
+  val anatomical_structure = Class(ns + "005")
+  val part_of = ObjectProperty(ns + "006")
+  val label = factory.getRDFSLabel
 
   val ontology = Ontology("http://example.org/anatomy.owl", Set(
     head Annotation (label, "head"),
@@ -32,8 +32,8 @@ object AnatomyOntology extends App {
 
     hand Annotation (label, "hand"),
     hand SubClassOf anatomical_structure,
-    hand SubClassOf (part_of some arm)));
+    hand SubClassOf (part_of some arm)))
 
-  ontology.getOWLOntologyManager().saveOntology(ontology, IRI.create(new File(args(0))));
+  ontology.getOWLOntologyManager.saveOntology(ontology, IRI.create(new File(args(0))))
 
 }
