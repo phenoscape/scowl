@@ -3,34 +3,35 @@ package org.phenoscape.scowl
 import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
-import org.semanticweb.owlapi.model.OWLClass
-import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLObjectComplementOf
-import org.semanticweb.owlapi.model.OWLObjectProperty
-import org.semanticweb.owlapi.model.OWLNamedIndividual
-import org.semanticweb.owlapi.model.OWLAnonymousIndividual
-import org.semanticweb.owlapi.model.OWLIndividual
-import org.semanticweb.owlapi.model.OWLAxiom
-import org.semanticweb.owlapi.model.OWLNamedObject
-import org.semanticweb.owlapi.model.OWLAnnotationSubject
-import org.semanticweb.owlapi.model.OWLOntology
-import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
-import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
-import org.semanticweb.owlapi.model.OWLObjectUnionOf
-import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.model.OWLAnnotationProperty
+import org.semanticweb.owlapi.model.OWLAnnotationSubject
 import org.semanticweb.owlapi.model.OWLAnnotationValue
-import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom
+import org.semanticweb.owlapi.model.OWLAnonymousIndividual
+import org.semanticweb.owlapi.model.OWLAxiom
+import org.semanticweb.owlapi.model.OWLClass
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom
-import org.semanticweb.owlapi.model.OWLObjectHasValue
+import org.semanticweb.owlapi.model.OWLClassExpression
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
+import org.semanticweb.owlapi.model.OWLIndividual
+import org.semanticweb.owlapi.model.OWLNamedIndividual
+import org.semanticweb.owlapi.model.OWLNamedObject
+import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom
+import org.semanticweb.owlapi.model.OWLObjectComplementOf
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality
+import org.semanticweb.owlapi.model.OWLObjectHasValue
+import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality
 import org.semanticweb.owlapi.model.OWLObjectMinCardinality
-import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
+import org.semanticweb.owlapi.model.OWLObjectProperty
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom
+import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
+import org.semanticweb.owlapi.model.OWLObjectUnionOf
+import org.semanticweb.owlapi.model.OWLOntology
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
+import org.semanticweb.owlapi.model.OWLDataProperty
 
 object OWL {
 
@@ -48,9 +49,17 @@ object OWL {
 
   def Individual(): OWLAnonymousIndividual = factory.getOWLAnonymousIndividual()
 
-  def ObjectProperty(iri: IRI): OWLObjectProperty = OWLManager.getOWLDataFactory.getOWLObjectProperty(iri)
+  def ObjectProperty(iri: IRI): OWLObjectProperty = factory.getOWLObjectProperty(iri)
 
   def ObjectProperty(iri: String): OWLObjectProperty = ObjectProperty(IRI.create(iri))
+
+  def AnnotationProperty(iri: IRI): OWLAnnotationProperty = factory.getOWLAnnotationProperty(iri)
+
+  def AnnotationProperty(iri: String): OWLAnnotationProperty = AnnotationProperty(IRI.create(iri))
+
+  def DataProperty(iri: IRI): OWLDataProperty = factory.getOWLDataProperty(iri)
+
+  def DataProperty(iri: String): OWLDataProperty = DataProperty(IRI.create(iri))
 
   def not(classExpression: OWLClassExpression): OWLObjectComplementOf = OWLManager.getOWLDataFactory.getOWLObjectComplementOf(classExpression)
 
