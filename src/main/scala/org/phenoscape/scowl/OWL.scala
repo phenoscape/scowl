@@ -32,12 +32,16 @@ import org.semanticweb.owlapi.model.OWLOntology
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
 import org.semanticweb.owlapi.model.OWLDataProperty
+import org.semanticweb.owlapi.model.OWLEntity
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom
 
 object OWL {
 
   val factory = OWLManager.getOWLDataFactory
 
   def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
+
+  def Declare(entity: OWLEntity): OWLDeclarationAxiom = factory.getOWLDeclarationAxiom(entity)
 
   def Class(iri: IRI): OWLClass = factory.getOWLClass(iri)
 
