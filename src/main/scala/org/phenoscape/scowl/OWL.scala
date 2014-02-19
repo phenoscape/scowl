@@ -35,6 +35,7 @@ import org.semanticweb.owlapi.model.OWLDataProperty
 import org.semanticweb.owlapi.model.OWLEntity
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom
 import org.semanticweb.owlapi.model.OWLObjectOneOf
+import org.semanticweb.owlapi.model.OWLObjectHasSelf
 
 object OWL {
 
@@ -116,6 +117,8 @@ object OWL {
     def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = new ScowlPropertyChain(objectProperty, property)
 
     def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = factory.getOWLSubPropertyChainOfAxiom(chain.properties, objectProperty)
+    
+    def Self: OWLObjectHasSelf = factory.getOWLObjectHasSelf(objectProperty)
 
   }
 

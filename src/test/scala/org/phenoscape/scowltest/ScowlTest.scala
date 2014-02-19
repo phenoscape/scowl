@@ -27,7 +27,7 @@ class ScowlTest {
     val longNotClass1 = factory.getOWLObjectComplementOf(class1)
     Assert.assertEquals(longNotClass1, notClass1)
   }
-  
+
   @Test
   def testOneOf(): Unit = {
     val ind1 = Individual("http://example.org/ind1")
@@ -60,6 +60,15 @@ class ScowlTest {
     val axiom1 = class1 SubClassOf class2
     val longAxiom1 = factory.getOWLSubClassOfAxiom(class1, class2)
     Assert.assertEquals(longAxiom1, axiom1)
+  }
+
+  @Test
+  def testHasSelf(): Unit = {
+    val loves = ObjectProperty("http://example.org/loves")
+    val Narcissist = Class("http://example.org/Narcissist")
+    val narcissismAxiom = Narcissist EquivalentTo (loves Self)
+    val longNarcissismAxiom = factory.getOWLEquivalentClassesAxiom(Narcissist, factory.getOWLObjectHasSelf(loves))
+    Assert.assertEquals(longNarcissismAxiom, narcissismAxiom)
   }
 
   @Test
