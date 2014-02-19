@@ -34,6 +34,7 @@ import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
 import org.semanticweb.owlapi.model.OWLDataProperty
 import org.semanticweb.owlapi.model.OWLEntity
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom
+import org.semanticweb.owlapi.model.OWLObjectOneOf
 
 object OWL {
 
@@ -66,6 +67,8 @@ object OWL {
   def DataProperty(iri: String): OWLDataProperty = DataProperty(IRI.create(iri))
 
   def not(classExpression: OWLClassExpression): OWLObjectComplementOf = OWLManager.getOWLDataFactory.getOWLObjectComplementOf(classExpression)
+
+  def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet)
 
   implicit class ScowlClassExpression(val classExpression: OWLClassExpression) extends AnyVal {
 

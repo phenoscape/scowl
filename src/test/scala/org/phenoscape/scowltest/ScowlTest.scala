@@ -27,6 +27,16 @@ class ScowlTest {
     val longNotClass1 = factory.getOWLObjectComplementOf(class1)
     Assert.assertEquals(longNotClass1, notClass1)
   }
+  
+  @Test
+  def testOneOf(): Unit = {
+    val ind1 = Individual("http://example.org/ind1")
+    val ind2 = Individual("http://example.org/ind2")
+    val oneAndTwo = oneOf(ind1, ind2)
+    val longOneAndTwo = factory.getOWLObjectOneOf(ind1, ind2)
+    Assert.assertEquals(longOneAndTwo, oneAndTwo)
+    Assert.assertEquals(factory.getOWLObjectOneOf(ind1), oneOf(ind1))
+  }
 
   @Test
   def testComplexExpressions(): Unit = {
