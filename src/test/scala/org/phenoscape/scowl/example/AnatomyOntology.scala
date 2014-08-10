@@ -1,9 +1,12 @@
 package org.phenoscape.scowl.example
 
 import org.phenoscape.scowl.OWL._
+import org.phenoscape.scowl.Macros._
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import java.io.File
+import org.semanticweb.owlapi.model.OWLClassExpression
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 
 object AnatomyOntology extends App {
 
@@ -22,6 +25,7 @@ object AnatomyOntology extends App {
     head SubClassOf anatomical_structure,
     head SubClassOf (part_of some body),
     head SubClassOf (not(part_of some arm)),
+    head SpatiallyDisjointFrom arm,
 
     body Annotation (label, "body"),
     body SubClassOf anatomical_structure,
