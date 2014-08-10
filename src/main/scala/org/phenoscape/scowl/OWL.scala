@@ -36,6 +36,7 @@ import org.semanticweb.owlapi.model.OWLEntity
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom
 import org.semanticweb.owlapi.model.OWLObjectOneOf
 import org.semanticweb.owlapi.model.OWLObjectHasSelf
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
 
 object OWL {
 
@@ -81,6 +82,8 @@ object OWL {
 
     def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(classExpression, other)
 
+    def DisjointFrom(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(classExpression, other)
+
   }
 
   implicit class ScowlIndividual(val self: OWLIndividual) extends AnyVal {
@@ -117,7 +120,7 @@ object OWL {
     def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = new ScowlPropertyChain(objectProperty, property)
 
     def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = factory.getOWLSubPropertyChainOfAxiom(chain.properties, objectProperty)
-    
+
     def Self: OWLObjectHasSelf = factory.getOWLObjectHasSelf(objectProperty)
 
   }
