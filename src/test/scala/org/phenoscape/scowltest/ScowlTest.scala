@@ -15,9 +15,13 @@ class ScowlTest {
   def testIntersectionOf(): Unit = {
     val class1 = Class("http://example.org/class1")
     val class2 = Class("http://example.org/class2")
+    val class3 = Class("http://example.org/class3")
     val oneAndTwo = class1 and class2
     val longOneAndTwo = factory.getOWLObjectIntersectionOf(class1, class2)
     Assert.assertEquals(longOneAndTwo, oneAndTwo)
+    val oneAndTwoAndThree = class1 and class2 and class3
+    val longOneAndTwoAndThree = factory.getOWLObjectIntersectionOf(class1, class2, class3)
+    Assert.assertEquals(longOneAndTwoAndThree, oneAndTwoAndThree)
   }
 
   @Test
