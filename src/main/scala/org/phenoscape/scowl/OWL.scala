@@ -36,6 +36,7 @@ import org.semanticweb.owlapi.model.OWLEntity
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom
 import org.semanticweb.owlapi.model.OWLObjectOneOf
 import org.semanticweb.owlapi.model.OWLObjectHasSelf
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
 
 object OWL {
 
@@ -71,15 +72,17 @@ object OWL {
 
   def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet)
 
-  implicit class ScowlClassExpression(val classExpression: OWLClassExpression) extends AnyVal {
+  implicit class ScowlClassExpression(val self: OWLClassExpression) extends AnyVal {
 
-    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(classExpression, other)
+    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(self.asConjunctSet + other)
 
-    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf(classExpression, other)
+    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf(self.asDisjunctSet + other)
 
-    def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(classExpression, other)
+    def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(self, other)
 
-    def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(classExpression, other)
+    def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(self, other)
+
+    def DisjointFrom(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(self, other)
 
   }
 
@@ -117,7 +120,7 @@ object OWL {
     def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = new ScowlPropertyChain(objectProperty, property)
 
     def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = factory.getOWLSubPropertyChainOfAxiom(chain.properties, objectProperty)
-    
+
     def Self: OWLObjectHasSelf = factory.getOWLObjectHasSelf(objectProperty)
 
   }
