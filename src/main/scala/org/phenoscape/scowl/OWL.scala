@@ -72,17 +72,17 @@ object OWL {
 
   def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet)
 
-  implicit class ScowlClassExpression(val classExpression: OWLClassExpression) extends AnyVal {
+  implicit class ScowlClassExpression(val self: OWLClassExpression) extends AnyVal {
 
-    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(classExpression, other)
+    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(self.asConjunctSet + other)
 
-    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf(classExpression, other)
+    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf(self.asDisjunctSet + other)
 
-    def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(classExpression, other)
+    def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(self, other)
 
-    def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(classExpression, other)
+    def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(self, other)
 
-    def DisjointFrom(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(classExpression, other)
+    def DisjointFrom(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(self, other)
 
   }
 
