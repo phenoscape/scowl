@@ -1,6 +1,7 @@
 package org.phenoscape.scowl.example
 
 import org.phenoscape.scowl.Functional._
+import org.phenoscape.scowl.OWL._
 import org.semanticweb.owlapi.model.OWLClassExpression
 
 object FunctionalSyntax extends App {
@@ -27,5 +28,24 @@ object FunctionalSyntax extends App {
     case ObjectComplementOf(ObjectMaxCardinality(num, property, filler)) => ObjectMinCardinality(num + 1, property, filler)
     case ObjectComplementOf(ObjectExactCardinality(num, property, filler)) => ObjectUnionOf(ObjectMinCardinality(num + 1, property, filler), ObjectMaxCardinality(math.max(num - 1, 0), property, filler))
   }
+
+  // has_part some (entity and (bearer_of some quality))
+
+  val HasPart = ObjectProperty("")
+  val PartOf = ObjectProperty("")
+  val BearerOf = ObjectProperty("")
+  val InheresIn = ObjectProperty("")
+
+  //  def entityFocusToQualityFocus(given: OWLClassExpression): OWLClassExpression = given match {
+  //    case ObjectSomeValuesFrom(HasPart, ObjectIntersectionOf(entity, ObjectSomeValuesFrom(BearerOf, quality))) =>
+  //      ObjectIntersectionOf(quality, ObjectSomeValuesFrom(InheresIn, entity))
+  //  }
+
+//  def entityFocusToQualityFocus(given: OWLClassExpression): OWLClassExpression = given match {
+//    case ObjectSomeValuesFrom(HasPart, ObjectIntersectionOf(operands)) =>
+//      ObjectIntersectionOf(operands.map {
+//        case ObjectSomeValuesFrom(BearerOf, quality) => ObjectSomeValuesFrom()
+//      })
+//  }
 
 }

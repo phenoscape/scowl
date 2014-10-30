@@ -39,16 +39,6 @@ object Functional {
   val factory = OWLManager.getOWLDataFactory
   val OWLThing = factory.getOWLThing
 
-  object Class {
-
-    def apply(iri: IRI): OWLClass = factory.getOWLClass(iri)
-
-    def apply(iri: String): OWLClass = apply(IRI.create(iri))
-
-    def unapply(aClass: OWLClass): Option[IRI] = Option(aClass.getIRI)
-
-  }
-
   object ObjectIntersectionOf {
 
     def apply(operands: OWLClassExpression*): OWLObjectIntersectionOf = apply(operands.toSet)
@@ -56,6 +46,8 @@ object Functional {
     def apply(operands: Set[_ <: OWLClassExpression]): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(operands)
 
     def unapply(expression: OWLObjectIntersectionOf): Option[Set[_ <: OWLClassExpression]] = Option(expression.getOperands.toSet)
+
+    //def unapplySeq(operands: Seq[OWLClassExpression]): Option[Seq[OWLClassExpression]] = Option(operands.sortWith((a, b) => a.compareTo(b) < 1))
 
   }
 

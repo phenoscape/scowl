@@ -45,10 +45,16 @@ object OWL {
   def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
 
   def Declare(entity: OWLEntity): OWLDeclarationAxiom = factory.getOWLDeclarationAxiom(entity)
+  
+  object Class {
 
-  def Class(iri: IRI): OWLClass = factory.getOWLClass(iri)
+    def apply(iri: IRI): OWLClass = factory.getOWLClass(iri)
 
-  def Class(iri: String): OWLClass = Class(IRI.create(iri))
+    def apply(iri: String): OWLClass = apply(IRI.create(iri))
+
+    def unapply(aClass: OWLClass): Option[IRI] = Option(aClass.getIRI)
+
+  }
 
   def Individual(iri: IRI): OWLNamedIndividual = factory.getOWLNamedIndividual(iri)
 

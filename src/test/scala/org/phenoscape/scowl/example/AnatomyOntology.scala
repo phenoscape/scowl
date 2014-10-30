@@ -1,6 +1,7 @@
 package org.phenoscape.scowl.example
 
 import org.phenoscape.scowl.OWL._
+import org.phenoscape.scowl.Functional._
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import java.io.File
