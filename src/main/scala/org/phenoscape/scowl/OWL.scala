@@ -37,6 +37,7 @@ import org.semanticweb.owlapi.model.OWLDeclarationAxiom
 import org.semanticweb.owlapi.model.OWLObjectOneOf
 import org.semanticweb.owlapi.model.OWLObjectHasSelf
 import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
+import org.semanticweb.owlapi.model.OWLAnnotation
 
 object OWL {
 
@@ -147,6 +148,10 @@ object OWL {
 
     def Annotation(property: OWLAnnotationProperty, value: OWLNamedObject): OWLAxiom = {
       self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value.getIRI)))
+    }
+
+    def Annotations(annotations: (OWLAnnotationProperty, OWLNamedObject)*): OWLAxiom = {
+      self.getAnnotatedAxiom(annotations.map { case (property, value) => factory.getOWLAnnotation(property, value.getIRI) }.toSet[OWLAnnotation])
     }
 
   }
