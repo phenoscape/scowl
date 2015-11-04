@@ -45,7 +45,7 @@ object OWL {
   def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
 
   def Declare(entity: OWLEntity): OWLDeclarationAxiom = factory.getOWLDeclarationAxiom(entity)
-  
+
   object Class {
 
     def apply(iri: IRI): OWLClass = factory.getOWLClass(iri)
@@ -133,9 +133,9 @@ object OWL {
 
   implicit class ScowlAnnotationSubject(val self: OWLAnnotationSubject) extends AnyVal {
 
-    def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = {
-      factory.getOWLAnnotationAssertionAxiom(property, self, value)
-    }
+    def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, self, value)
+
+    def Annotation(property: OWLAnnotationProperty, value: String): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
 
   }
 
