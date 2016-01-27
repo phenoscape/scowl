@@ -4,3 +4,6 @@
 .settings
 target
 scowl.iml
+.cache-main
+.cache-tests
+project/target
