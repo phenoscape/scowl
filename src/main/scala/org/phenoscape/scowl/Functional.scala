@@ -1,7 +1,6 @@
 package org.phenoscape.scowl
 
 import scala.collection.JavaConversions._
-
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLAnnotation
@@ -28,12 +27,16 @@ import org.semanticweb.owlapi.model.OWLObjectExactCardinality
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality
 import org.semanticweb.owlapi.model.OWLObjectMinCardinality
+import org.semanticweb.owlapi.model.OWLObjectOneOf
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLObjectUnionOf
 import org.semanticweb.owlapi.model.OWLPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
+import org.semanticweb.owlapi.model.OWLObjectProperty
+import org.semanticweb.owlapi.model.OWLObjectHasSelf
+import org.semanticweb.owlapi.model.OWLObjectHasValue
 
 object Functional {
 
@@ -63,6 +66,37 @@ object Functional {
 
     def unapply(expression: OWLObjectUnionOf): Option[Set[_ <: OWLClassExpression]] =
       Option(expression.getOperands.toSet)
+
+  }
+
+  object ObjectOneOf {
+
+    def apply(individuals: OWLIndividual*): OWLObjectOneOf =
+      apply(individuals.toSet)
+
+    def apply(individuals: Set[_ <: OWLIndividual]): OWLObjectOneOf =
+      factory.getOWLObjectOneOf(individuals)
+
+    def unapply(expression: OWLObjectOneOf): Option[Set[_ <: OWLIndividual]] =
+      Option(expression.getIndividuals.toSet)
+
+  }
+
+  object ObjectHasValue {
+
+    def apply(property: OWLObjectPropertyExpression, value: OWLIndividual): OWLObjectHasValue =
+      factory.getOWLObjectHasValue(property, value)
+
+    def unapply(expression: OWLObjectHasValue): Option[(OWLObjectPropertyExpression, OWLIndividual)] =
+      Option((expression.getProperty, expression.getValue))
+
+  }
+
+  object ObjectHasSelf {
+
+    def apply(property: OWLObjectPropertyExpression): OWLObjectHasSelf = factory.getOWLObjectHasSelf(property)
+
+    def unapply(expression: OWLObjectHasSelf): Option[OWLObjectPropertyExpression] = Option(expression.getProperty)
 
   }
 
