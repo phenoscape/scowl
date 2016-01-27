@@ -1,12 +1,15 @@
 package org.phenoscape.scowl
 
 import scala.collection.JavaConversions._
+
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLAnnotation
+import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.model.OWLAnnotationProperty
+import org.semanticweb.owlapi.model.OWLAnnotationSubject
 import org.semanticweb.owlapi.model.OWLAnnotationValue
-import org.semanticweb.owlapi.model.OWLAxiom
+import org.semanticweb.owlapi.model.OWLAnonymousIndividual
 import org.semanticweb.owlapi.model.OWLClass
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
@@ -16,6 +19,7 @@ import org.semanticweb.owlapi.model.OWLDisjointUnionAxiom
 import org.semanticweb.owlapi.model.OWLEntity
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
 import org.semanticweb.owlapi.model.OWLIndividual
+import org.semanticweb.owlapi.model.OWLNamedIndividual
 import org.semanticweb.owlapi.model.OWLNaryClassAxiom
 import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom
@@ -30,11 +34,6 @@ import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLObjectUnionOf
 import org.semanticweb.owlapi.model.OWLPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
-import org.semanticweb.owlapi.model.OWLNamedIndividual
-import org.semanticweb.owlapi.model.OWLAnonymousIndividual
-import org.semanticweb.owlapi.model.NodeID
-import org.semanticweb.owlapi.model.OWLAnnotationSubject
-import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 
 object Functional {
 
@@ -51,8 +50,6 @@ object Functional {
 
     def unapply(expression: OWLObjectIntersectionOf): Option[Set[_ <: OWLClassExpression]] =
       Option(expression.getOperands.toSet)
-
-    //def unapplySeq(operands: Seq[OWLClassExpression]): Option[Seq[OWLClassExpression]] = Option(operands.sortWith((a, b) => a.compareTo(b) < 1))
 
   }
 
@@ -156,7 +153,7 @@ object Functional {
       Declaration(annotations.toSet, entity)
 
     def apply(entity: OWLEntity): OWLDeclarationAxiom =
-      Declaration(Set(), entity)
+      Declaration(Set.empty, entity)
 
     def unapply(axiom: OWLDeclarationAxiom): Option[(Set[OWLAnnotation], OWLEntity)] =
       Option((axiom.getAnnotations.toSet, axiom.getEntity))
@@ -172,7 +169,7 @@ object Functional {
       SubClassOf(annotations.toSet, subClass, superClass)
 
     def apply(subClass: OWLClassExpression, superClass: OWLClassExpression): OWLSubClassOfAxiom =
-      SubClassOf(Set(), subClass, superClass)
+      SubClassOf(Set.empty, subClass, superClass)
 
     def unapply(axiom: OWLSubClassOfAxiom): Option[(Set[OWLAnnotation], OWLClassExpression, OWLClassExpression)] =
       Option((axiom.getAnnotations.toSet, axiom.getSubClass, axiom.getSuperClass))
@@ -238,7 +235,7 @@ object Functional {
       apply(annotations.toSet, property, subject, target)
 
     def apply(property: OWLObjectPropertyExpression, subject: OWLIndividual, target: OWLIndividual): T =
-      apply(Set(), property, subject, target)
+      apply(Set.empty, property, subject, target)
 
     def unapply(axiom: T): Option[(Set[OWLAnnotation], OWLObjectPropertyExpression, OWLIndividual, OWLIndividual)] =
       Option((axiom.getAnnotations.toSet, axiom.getProperty, axiom.getSubject, axiom.getObject))
@@ -265,7 +262,7 @@ object Functional {
       factory.getOWLClassAssertionAxiom(classExpression, individual, annotations)
 
     def apply(classExpression: OWLClassExpression, individual: OWLIndividual): OWLClassAssertionAxiom =
-      ClassAssertion(Set(), classExpression, individual)
+      ClassAssertion(Set.empty, classExpression, individual)
 
     def apply(annotations: OWLAnnotation*)(classExpression: OWLClassExpression, individual: OWLIndividual): OWLClassAssertionAxiom =
       ClassAssertion(annotations.toSet, classExpression, individual)
