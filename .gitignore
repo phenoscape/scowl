@@ -7,3 +7,4 @@ scowl.iml
 .cache-main
 .cache-tests
 project/target
+bin
