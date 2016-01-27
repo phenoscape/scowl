@@ -3,7 +3,7 @@ organization  := "org.phenoscape"
 
 name          := "scowl"
 
-version       := "0.9.3-SNAPSHOT"
+version       := "0.9.3"
 
 scalaVersion  := "2.11.7"
 
