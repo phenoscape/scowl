@@ -11,7 +11,7 @@ Add the dependency to your `build.sbt`:
 ```scala
 resolvers += "Phenoscape Maven repository" at "http://phenoscape.svn.sourceforge.net/svnroot/phenoscape/trunk/maven/repository"
 
-libraryDependencies += "org.phenoscape" %% "scowl" % "0.9.3"
+libraryDependencies += "org.phenoscape" %% "scowl" % "0.9.4"
 ```
 
 Import `org.phenoscape.scowl.OWL._`, and Scowl implicit conversions will add pseudo Manchester syntax methods to native OWL API objects.
