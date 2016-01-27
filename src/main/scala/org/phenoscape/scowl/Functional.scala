@@ -241,6 +241,10 @@ object Functional {
 
     def apply(annotations: Set[OWLAnnotation], property: OWLAnnotationProperty, subject: OWLAnnotationSubject, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, subject, value, annotations)
 
+    def apply(property: OWLAnnotationProperty, subject: OWLAnnotationSubject, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = AnnotationAssertion(Set.empty, property, subject, value)
+
+    def apply(annotations: OWLAnnotation*)(property: OWLAnnotationProperty, subject: OWLAnnotationSubject, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = AnnotationAssertion(annotations.toSet, property, subject, value)
+
     def unapply(axiom: OWLAnnotationAssertionAxiom): Option[(Set[OWLAnnotation], OWLAnnotationProperty, OWLAnnotationSubject, OWLAnnotationValue)] = Option(axiom.getAnnotations.toSet, axiom.getProperty, axiom.getSubject, axiom.getValue)
 
   }
