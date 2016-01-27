@@ -3,9 +3,9 @@ organization  := "org.phenoscape"
 
 name          := "scowl"
 
-version       := "0.9.3"
+version       := "0.9.4"
 
-scalaVersion  := "2.11.7"
+crossScalaVersions := Seq("2.10.6", "2.11.7")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 
