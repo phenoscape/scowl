@@ -41,7 +41,7 @@ import org.semanticweb.owlapi.model.OWLAnnotation
 
 object OWL {
 
-  val factory = OWLManager.getOWLDataFactory
+  private val factory = OWLManager.getOWLDataFactory
 
   def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
 

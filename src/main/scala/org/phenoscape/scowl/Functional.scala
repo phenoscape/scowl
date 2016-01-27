@@ -38,7 +38,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 
 object Functional {
 
-  val factory = OWLManager.getOWLDataFactory
+  private val factory = OWLManager.getOWLDataFactory
   val OWLThing = factory.getOWLThing
 
   object ObjectIntersectionOf {
