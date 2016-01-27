@@ -33,6 +33,8 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLNamedIndividual
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual
 import org.semanticweb.owlapi.model.NodeID
+import org.semanticweb.owlapi.model.OWLAnnotationSubject
+import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 
 object Functional {
 
@@ -232,6 +234,14 @@ object Functional {
     def apply(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotation = factory.getOWLAnnotation(property, value)
 
     def unapply(annotation: OWLAnnotation): Option[(OWLAnnotationProperty, OWLAnnotationValue)] = Option((annotation.getProperty, annotation.getValue))
+
+  }
+
+  object AnnotationAssertion {
+
+    def apply(annotations: Set[OWLAnnotation], property: OWLAnnotationProperty, subject: OWLAnnotationSubject, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, subject, value, annotations)
+
+    def unapply(axiom: OWLAnnotationAssertionAxiom): Option[(Set[OWLAnnotation], OWLAnnotationProperty, OWLAnnotationSubject, OWLAnnotationValue)] = Option(axiom.getAnnotations.toSet, axiom.getProperty, axiom.getSubject, axiom.getValue)
 
   }
 
