@@ -37,7 +37,9 @@ class ScowlTest {
   def testOneOf(): Unit = {
     val ind1 = Individual("http://example.org/ind1")
     val ind2 = Individual("http://example.org/ind2")
+    val ind3 = Individual("http://example.org/ind3")
     val oneAndTwo = oneOf(ind1, ind2)
+    val oneAndTwoAndThree = ind1 + ind2 + ind3
     val longOneAndTwo = factory.getOWLObjectOneOf(ind1, ind2)
     Assert.assertEquals(longOneAndTwo, oneAndTwo)
     Assert.assertEquals(factory.getOWLObjectOneOf(ind1), oneOf(ind1))
@@ -113,7 +115,7 @@ class ScowlTest {
     ind1 Annotation (RDFSLabel, "Robespierre" @@ "en")
     ind1 Annotation (RDFSLabel, "1" ^^ XSDInteger)
 
-    XSDInteger | >(1) //TODO
+    ind1 Type (hasAge some (XSDInteger | >(1))) //TODO
     XSDInteger | (>(1), <=(10)) //TODO
   }
 

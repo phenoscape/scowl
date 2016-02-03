@@ -112,6 +112,12 @@ object OWL {
 
   }
 
+  implicit class ScowlObjectOneOf(val self: OWLObjectOneOf) extends AnyVal {
+
+    def +(ind: OWLIndividual) = factory.getOWLObjectOneOf(self.getIndividuals + ind)
+
+  }
+
   implicit class ScowlDataRange(val self: OWLDataRange) extends AnyVal {
 
     def and(other: OWLDataRange): OWLDataIntersectionOf = (self, other) match {
@@ -192,6 +198,8 @@ object OWL {
       (facts map { case (property, value) => factory.getOWLObjectPropertyAssertionAxiom(property, self, value) }).toSet
 
     def Type(owlClass: OWLClassExpression): OWLClassAssertionAxiom = factory.getOWLClassAssertionAxiom(owlClass, self)
+
+    def +(other: OWLIndividual): OWLObjectOneOf = factory.getOWLObjectOneOf(self, other)
 
   }
 
