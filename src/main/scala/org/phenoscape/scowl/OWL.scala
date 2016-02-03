@@ -38,6 +38,21 @@ import org.semanticweb.owlapi.model.OWLObjectOneOf
 import org.semanticweb.owlapi.model.OWLObjectHasSelf
 import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
 import org.semanticweb.owlapi.model.OWLAnnotation
+import org.semanticweb.owlapi.model.OWLLiteral
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression
+import org.semanticweb.owlapi.model.OWLDatatype
+import org.semanticweb.owlapi.model.OWLDataRange
+import org.semanticweb.owlapi.model.OWLDataComplementOf
+import org.semanticweb.owlapi.model.OWLDataOneOf
+import org.semanticweb.owlapi.model.OWLDataIntersectionOf
+import org.semanticweb.owlapi.model.OWLDataUnionOf
+import org.semanticweb.owlapi.vocab.OWLFacet
+import org.semanticweb.owlapi.model.OWLFacetRestriction
+import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom
+import org.semanticweb.owlapi.model.OWLDatatypeRestriction
+import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
+import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
 
 object OWL {
 
@@ -75,9 +90,13 @@ object OWL {
 
   def DataProperty(iri: String): OWLDataProperty = DataProperty(IRI.create(iri))
 
-  def not(classExpression: OWLClassExpression): OWLObjectComplementOf = OWLManager.getOWLDataFactory.getOWLObjectComplementOf(classExpression)
+  def not(classExpression: OWLClassExpression): OWLObjectComplementOf = factory.getOWLObjectComplementOf(classExpression)
+
+  def not(dataRange: OWLDataRange): OWLDataComplementOf = factory.getOWLDataComplementOf(dataRange)
 
   def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet)
+
+  def oneOf(literals: OWLLiteral*): OWLDataOneOf = factory.getOWLDataOneOf(literals.toSet)
 
   implicit class ScowlClassExpression(val self: OWLClassExpression) extends AnyVal {
 
@@ -93,11 +112,83 @@ object OWL {
 
   }
 
+  implicit class ScowlDataRange(val self: OWLDataRange) extends AnyVal {
+
+    def and(other: OWLDataRange): OWLDataIntersectionOf = (self, other) match {
+      case (s: OWLDataIntersectionOf, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf(s.getOperands ++ o.getOperands)
+      case (s: OWLDataIntersectionOf, _) => factory.getOWLDataIntersectionOf(s.getOperands + other)
+      case (_, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf(o.getOperands + self)
+      case _ => factory.getOWLDataIntersectionOf(Set(self, other))
+    }
+
+    def or(other: OWLDataRange): OWLDataUnionOf = (self, other) match {
+      case (s: OWLDataUnionOf, o: OWLDataIntersectionOf) => factory.getOWLDataUnionOf(s.getOperands ++ o.getOperands)
+      case (s: OWLDataUnionOf, _) => factory.getOWLDataUnionOf(s.getOperands + other)
+      case (_, o: OWLDataUnionOf) => factory.getOWLDataUnionOf(o.getOperands + self)
+      case _ => factory.getOWLDataUnionOf(Set(self, other))
+    }
+
+  }
+
+  implicit class ScowlDataType(val self: OWLDatatype) extends AnyVal {
+
+    def EquivalentTo(range: OWLDataRange): OWLDatatypeDefinitionAxiom = factory.getOWLDatatypeDefinitionAxiom(self, range)
+
+    def |(facet: OWLFacetRestriction) = factory.getOWLDatatypeRestriction(self, facet)
+
+    def |(facets: OWLFacetRestriction*) = factory.getOWLDatatypeRestriction(self, facets.toSet)
+
+  }
+
+  def <(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
+
+  def <=(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
+
+  def >(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
+
+  def >=(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
+
+  def <(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
+
+  def <=(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
+
+  def >(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
+
+  def >=(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
+
+  def <(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
+
+  def <=(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
+
+  def >(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
+
+  def >=(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
+
+  def <(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
+
+  def <=(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
+
+  def >(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
+
+  def >=(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
+
   implicit class ScowlIndividual(val self: OWLIndividual) extends AnyVal {
 
-    def Fact(property: OWLObjectProperty, value: OWLIndividual): OWLObjectPropertyAssertionAxiom = factory.getOWLObjectPropertyAssertionAxiom(property, self, value)
+    def Fact(property: OWLObjectPropertyExpression, value: OWLIndividual): OWLObjectPropertyAssertionAxiom = factory.getOWLObjectPropertyAssertionAxiom(property, self, value)
 
-    def Facts(facts: (OWLObjectProperty, OWLIndividual)*): Set[OWLObjectPropertyAssertionAxiom] =
+    def Fact(property: OWLDataPropertyExpression, value: OWLLiteral): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
+
+    def Fact(property: OWLDataPropertyExpression, value: String): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
+
+    def Fact(property: OWLDataPropertyExpression, value: Int): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
+
+    def Fact(property: OWLDataPropertyExpression, value: Float): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
+
+    def Fact(property: OWLDataPropertyExpression, value: Double): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
+
+    def Fact(property: OWLDataPropertyExpression, value: Boolean): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
+
+    def Facts(facts: (OWLObjectPropertyExpression, OWLIndividual)*): Set[OWLObjectPropertyAssertionAxiom] =
       (facts map { case (property, value) => factory.getOWLObjectPropertyAssertionAxiom(property, self, value) }).toSet
 
     def Type(owlClass: OWLClassExpression): OWLClassAssertionAxiom = factory.getOWLClassAssertionAxiom(owlClass, self)
@@ -132,11 +223,27 @@ object OWL {
 
   }
 
+  implicit class ScowlDataProperty(val self: OWLDataPropertyExpression) extends AnyVal {
+
+    def some(range: OWLDataRange): OWLDataSomeValuesFrom = factory.getOWLDataSomeValuesFrom(self, range)
+
+    def only(range: OWLDataRange): OWLDataAllValuesFrom = factory.getOWLDataAllValuesFrom(self, range)
+
+  }
+
   implicit class ScowlAnnotationSubject(val self: OWLAnnotationSubject) extends AnyVal {
 
     def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, self, value)
 
     def Annotation(property: OWLAnnotationProperty, value: String): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
+    def Annotation(property: OWLAnnotationProperty, value: Int): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
+    def Annotation(property: OWLAnnotationProperty, value: Float): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
+    def Annotation(property: OWLAnnotationProperty, value: Double): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
+    def Annotation(property: OWLAnnotationProperty, value: Boolean): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
 
   }
 
@@ -160,7 +267,31 @@ object OWL {
 
     def Annotation(property: OWLAnnotationProperty, value: String): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
 
+    def Annotation(property: OWLAnnotationProperty, value: Int): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
+    def Annotation(property: OWLAnnotationProperty, value: Float): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
+    def Annotation(property: OWLAnnotationProperty, value: Double): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
+    def Annotation(property: OWLAnnotationProperty, value: Boolean): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+
     def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, self.getIRI, value)
+
+  }
+
+  implicit class ScowlLiteralString(val self: String) extends AnyVal {
+
+    def ^^(datatype: OWLDatatype): OWLLiteral = factory.getOWLLiteral(self, datatype)
+
+    def ^^(datatypeIRI: IRI): OWLLiteral = factory.getOWLLiteral(self, factory.getOWLDatatype(datatypeIRI))
+
+    def ^^(datatypeIRI: String): OWLLiteral = factory.getOWLLiteral(self, factory.getOWLDatatype(IRI.create(datatypeIRI)))
+
+    /**
+     * Create plain literal with language tag
+     * '@' by itself is not a valid identifier in Scala
+     */
+    def @@(lang: String): OWLLiteral = factory.getOWLLiteral(self, lang)
 
   }
 

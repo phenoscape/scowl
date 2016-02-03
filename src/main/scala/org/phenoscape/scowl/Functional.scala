@@ -1,6 +1,7 @@
 package org.phenoscape.scowl
 
 import scala.collection.JavaConversions._
+
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLAnnotation
@@ -24,6 +25,8 @@ import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom
 import org.semanticweb.owlapi.model.OWLObjectComplementOf
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality
+import org.semanticweb.owlapi.model.OWLObjectHasSelf
+import org.semanticweb.owlapi.model.OWLObjectHasValue
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality
 import org.semanticweb.owlapi.model.OWLObjectMinCardinality
@@ -34,14 +37,12 @@ import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLObjectUnionOf
 import org.semanticweb.owlapi.model.OWLPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
-import org.semanticweb.owlapi.model.OWLObjectProperty
-import org.semanticweb.owlapi.model.OWLObjectHasSelf
-import org.semanticweb.owlapi.model.OWLObjectHasValue
+
+import Vocab._
 
 object Functional {
 
   private val factory = OWLManager.getOWLDataFactory
-  val OWLThing = factory.getOWLThing
 
   object ObjectIntersectionOf {
 

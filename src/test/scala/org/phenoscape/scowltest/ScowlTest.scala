@@ -5,6 +5,7 @@ import scala.collection.JavaConversions._
 import org.junit.Test
 import org.junit.Assert
 import org.phenoscape.scowl.OWL._
+import org.phenoscape.scowl.Vocab._
 import org.semanticweb.owlapi.apibinding.OWLManager
 
 class ScowlTest {
@@ -97,6 +98,23 @@ class ScowlTest {
     val ind2 = Individual("http://example.org/ind2")
     ind1 Fact (prop1, ind2) //TODO
     (ind1 Fact (prop1, ind2)) Annotation (rdfsLabel, Individual())
+  }
+
+  @Test
+  def testDataPropertiesAndLiterals(): Unit = {
+    val hasAge = DataProperty("http://example.org/has_age")
+    val countryName = DataProperty("http://example.org/country_name")
+    val ind1 = Individual("http://example.org/ind1")
+    ind1 Fact (hasAge, "20" ^^ XSDInteger)
+    ind1 Fact (hasAge, "20.5" ^^ XSDDouble)
+    ind1 Fact (hasAge, 20.5)
+    ind1 Fact (countryName, "Republic of France" @@ "en")
+    ind1 Fact (countryName, "République française" @@ "fr")
+    ind1 Annotation (RDFSLabel, "Robespierre" @@ "en")
+    ind1 Annotation (RDFSLabel, "1" ^^ XSDInteger)
+
+    XSDInteger | >(1) //TODO
+    XSDInteger | (>(1), <=(10)) //TODO
   }
 
 }
