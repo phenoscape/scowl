@@ -35,17 +35,25 @@ object FunctionalSyntax extends App {
   val PartOf = ObjectProperty("")
   val BearerOf = ObjectProperty("")
   val InheresIn = ObjectProperty("")
+  val Head = Class("")
+  val Eye = Class("")
+
+  val axiom = Head SubClassOf (HasPart some Eye)
+
+  axiom match {
+    case SubClassOf(_, subclass, ObjectSomeValuesFrom(ObjectProperty(propIRI), Class(fillerIRI))) => println(s"$propIRI, $fillerIRI")
+  }
 
   //  def entityFocusToQualityFocus(given: OWLClassExpression): OWLClassExpression = given match {
   //    case ObjectSomeValuesFrom(HasPart, ObjectIntersectionOf(entity, ObjectSomeValuesFrom(BearerOf, quality))) =>
   //      ObjectIntersectionOf(quality, ObjectSomeValuesFrom(InheresIn, entity))
   //  }
 
-//  def entityFocusToQualityFocus(given: OWLClassExpression): OWLClassExpression = given match {
-//    case ObjectSomeValuesFrom(HasPart, ObjectIntersectionOf(operands)) =>
-//      ObjectIntersectionOf(operands.map {
-//        case ObjectSomeValuesFrom(BearerOf, quality) => ObjectSomeValuesFrom()
-//      })
-//  }
+  //  def entityFocusToQualityFocus(given: OWLClassExpression): OWLClassExpression = given match {
+  //    case ObjectSomeValuesFrom(HasPart, ObjectIntersectionOf(operands)) =>
+  //      ObjectIntersectionOf(operands.map {
+  //        case ObjectSomeValuesFrom(BearerOf, quality) => ObjectSomeValuesFrom()
+  //      })
+  //  }
 
 }

@@ -62,13 +62,19 @@ object OWL {
 
   def Declare(entity: OWLEntity): OWLDeclarationAxiom = factory.getOWLDeclarationAxiom(entity)
 
-  object Class {
+  trait NamedObjectConstructor[T <: OWLNamedObject] {
+
+    def apply(iri: IRI): T
+
+    def apply(iri: String): T = apply(IRI.create(iri))
+
+    def unapply(entity: T): Option[IRI] = Option(entity.getIRI)
+
+  }
+
+  object Class extends NamedObjectConstructor[OWLClass] {
 
     def apply(iri: IRI): OWLClass = factory.getOWLClass(iri)
-
-    def apply(iri: String): OWLClass = apply(IRI.create(iri))
-
-    def unapply(aClass: OWLClass): Option[IRI] = Option(aClass.getIRI)
 
   }
 
@@ -78,17 +84,23 @@ object OWL {
 
   def Individual(): OWLAnonymousIndividual = factory.getOWLAnonymousIndividual()
 
-  def ObjectProperty(iri: IRI): OWLObjectProperty = factory.getOWLObjectProperty(iri)
+  object ObjectProperty extends NamedObjectConstructor[OWLObjectProperty] {
 
-  def ObjectProperty(iri: String): OWLObjectProperty = ObjectProperty(IRI.create(iri))
+    def apply(iri: IRI): OWLObjectProperty = factory.getOWLObjectProperty(iri)
 
-  def AnnotationProperty(iri: IRI): OWLAnnotationProperty = factory.getOWLAnnotationProperty(iri)
+  }
 
-  def AnnotationProperty(iri: String): OWLAnnotationProperty = AnnotationProperty(IRI.create(iri))
+  object AnnotationProperty extends NamedObjectConstructor[OWLAnnotationProperty] {
 
-  def DataProperty(iri: IRI): OWLDataProperty = factory.getOWLDataProperty(iri)
+    def apply(iri: IRI): OWLAnnotationProperty = factory.getOWLAnnotationProperty(iri)
 
-  def DataProperty(iri: String): OWLDataProperty = DataProperty(IRI.create(iri))
+  }
+
+  object DataProperty extends NamedObjectConstructor[OWLDataProperty] {
+
+    def apply(iri: IRI): OWLDataProperty = factory.getOWLDataProperty(iri)
+
+  }
 
   def not(classExpression: OWLClassExpression): OWLObjectComplementOf = factory.getOWLObjectComplementOf(classExpression)
 
