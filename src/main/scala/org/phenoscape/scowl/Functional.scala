@@ -1,7 +1,6 @@
 package org.phenoscape.scowl
 
 import scala.collection.JavaConversions._
-
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLAnnotation
@@ -37,8 +36,9 @@ import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLObjectUnionOf
 import org.semanticweb.owlapi.model.OWLPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
-
 import Vocab._
+import org.semanticweb.owlapi.model.OWLLiteral
+import org.semanticweb.owlapi.model.OWLDatatype
 
 object Functional {
 
@@ -329,6 +329,18 @@ object Functional {
 
     def unapply(axiom: OWLAnnotationAssertionAxiom): Option[(Set[OWLAnnotation], OWLAnnotationProperty, OWLAnnotationSubject, OWLAnnotationValue)] =
       Option(axiom.getAnnotations.toSet, axiom.getProperty, axiom.getSubject, axiom.getValue)
+
+  }
+
+  object ^^ {
+
+    def unapply(literal: OWLLiteral): Option[(String, OWLDatatype)] = Option(literal.getLiteral, literal.getDatatype)
+
+  }
+
+  object @@ {
+
+    def unapply(literal: OWLLiteral): Option[(String, String)] = Option(literal.getLiteral, literal.getLang)
 
   }
 

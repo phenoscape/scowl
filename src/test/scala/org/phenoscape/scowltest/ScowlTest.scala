@@ -5,6 +5,7 @@ import scala.collection.JavaConversions._
 import org.junit.Test
 import org.junit.Assert
 import org.phenoscape.scowl.OWL._
+import org.phenoscape.scowl.Functional._
 import org.phenoscape.scowl.Vocab._
 import org.semanticweb.owlapi.apibinding.OWLManager
 
@@ -117,6 +118,9 @@ class ScowlTest {
 
     ind1 Type (hasAge some (XSDInteger | >(1))) //TODO
     XSDInteger | (>(1), <=(10)) //TODO
+
+    val literalNumber = "20" ^^ XSDInteger
+    val lexicalForm ^^ datatype = literalNumber
   }
 
 }
