@@ -116,8 +116,8 @@ class ScowlTest {
     ind1 Annotation (RDFSLabel, "Robespierre" @@ "en")
     ind1 Annotation (RDFSLabel, "1" ^^ XSDInteger)
 
-    ind1 Type (hasAge some (XSDInteger | >(1))) //TODO
-    XSDInteger | (>(1), <=(10)) //TODO
+    ind1 Type (hasAge some (XSDInteger(>(1))))
+    XSDInteger(>(1), <=(10)) //TODO
 
     val literalNumber = "20" ^^ XSDInteger
     val lexicalForm ^^ datatype = literalNumber

@@ -158,11 +158,9 @@ object OWL {
 
   implicit class ScowlDataType(val self: OWLDatatype) extends AnyVal {
 
+    def apply(facet: OWLFacetRestriction, more: OWLFacetRestriction*): OWLDatatypeRestriction = factory.getOWLDatatypeRestriction(self, more.toSet + facet)
+
     def EquivalentTo(range: OWLDataRange): OWLDatatypeDefinitionAxiom = factory.getOWLDatatypeDefinitionAxiom(self, range)
-
-    def |(facet: OWLFacetRestriction) = factory.getOWLDatatypeRestriction(self, facet)
-
-    def |(facets: OWLFacetRestriction*) = factory.getOWLDatatypeRestriction(self, facets.toSet)
 
   }
 
