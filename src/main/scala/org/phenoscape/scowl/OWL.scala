@@ -55,6 +55,10 @@ import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
 import org.semanticweb.owlapi.model.OWLHasKeyAxiom
 import org.semanticweb.owlapi.model.OWLPropertyExpression
+import org.semanticweb.owlapi.model.OWLDataExactCardinality
+import org.semanticweb.owlapi.model.OWLDataMinCardinality
+import org.semanticweb.owlapi.model.OWLDataMaxCardinality
+import org.semanticweb.owlapi.model.OWLDataHasValue
 
 object OWL {
 
@@ -252,6 +256,28 @@ object OWL {
     def some(range: OWLDataRange): OWLDataSomeValuesFrom = factory.getOWLDataSomeValuesFrom(self, range)
 
     def only(range: OWLDataRange): OWLDataAllValuesFrom = factory.getOWLDataAllValuesFrom(self, range)
+
+    def exactly(cardinality: Int, range: OWLDataRange): OWLDataExactCardinality = factory.getOWLDataExactCardinality(cardinality, self, range)
+
+    def exactly(cardinality: Int): OWLDataExactCardinality = factory.getOWLDataExactCardinality(cardinality, self)
+
+    def min(cardinality: Int, range: OWLDataRange): OWLDataMinCardinality = factory.getOWLDataMinCardinality(cardinality, self, range)
+
+    def min(cardinality: Int): OWLDataMinCardinality = factory.getOWLDataMinCardinality(cardinality, self)
+
+    def max(cardinality: Int, range: OWLDataRange): OWLDataMaxCardinality = factory.getOWLDataMaxCardinality(cardinality, self, range)
+
+    def max(cardinality: Int): OWLDataMaxCardinality = factory.getOWLDataMaxCardinality(cardinality, self)
+
+    def value(literal: OWLLiteral): OWLDataHasValue = factory.getOWLDataHasValue(self, literal)
+
+    def value(literal: Int): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
+
+    def value(literal: Float): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
+
+    def value(literal: Double): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
+
+    def value(literal: Boolean): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
 
   }
 
