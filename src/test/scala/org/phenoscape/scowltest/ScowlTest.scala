@@ -123,4 +123,15 @@ class ScowlTest {
     val lexicalForm ^^ datatype = literalNumber
   }
 
+  @Test
+  def testKeys(): Unit = {
+    val prop1 = ObjectProperty("http://example.org/prop1")
+    val prop2 = ObjectProperty("http://example.org/prop2")
+    val hasAge = DataProperty("http://example.org/has_age")
+    val class1 = Class("http://example.org/class1")
+    class1 HasKey (prop1)
+    class1 HasKey (hasAge)
+    class1 HasKey (prop1, hasAge)
+  }
+
 }

@@ -39,6 +39,9 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import Vocab._
 import org.semanticweb.owlapi.model.OWLLiteral
 import org.semanticweb.owlapi.model.OWLDatatype
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression
+import org.semanticweb.owlapi.model.OWLPropertyExpression
+import org.semanticweb.owlapi.model.OWLHasKeyAxiom
 
 object Functional {
 
@@ -259,6 +262,22 @@ object Functional {
 
     def unapply(axiom: OWLDisjointUnionAxiom): Option[(Set[OWLAnnotation], OWLClass, Set[_ <: OWLClassExpression])] =
       Option((axiom.getAnnotations.toSet, axiom.getOWLClass, axiom.getClassExpressions.toSet))
+
+  }
+
+  object HasKey {
+
+    def apply(annotations: Set[OWLAnnotation], classExpression: OWLClassExpression, objectProperties: Set[OWLObjectPropertyExpression], dataProperties: Set[OWLDataPropertyExpression]): OWLHasKeyAxiom =
+      factory.getOWLHasKeyAxiom(classExpression, objectProperties ++ dataProperties, annotations)
+
+    def apply(annotations: OWLAnnotation*)(classExpression: OWLClassExpression, properties: OWLPropertyExpression[_, _]*): OWLHasKeyAxiom =
+      factory.getOWLHasKeyAxiom(classExpression, properties.toSet, annotations.toSet)
+
+    def apply(classExpression: OWLClassExpression, properties: OWLPropertyExpression[_, _]*): OWLHasKeyAxiom =
+      factory.getOWLHasKeyAxiom(classExpression, properties.toSet)
+
+    def unapply(axiom: OWLHasKeyAxiom): Option[(Set[OWLAnnotation], OWLClassExpression, Set[OWLObjectPropertyExpression], Set[OWLDataPropertyExpression])] =
+      Option(axiom.getAnnotations.toSet, axiom.getClassExpression, axiom.getObjectPropertyExpressions.toSet, axiom.getDataPropertyExpressions.toSet)
 
   }
 
