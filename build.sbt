@@ -3,7 +3,7 @@ organization  := "org.phenoscape"
 
 name          := "scowl"
 
-version       := "0.9.4"
+version       := "1.0-SNAPSHOT"
 
 crossScalaVersions := Seq("2.10.6", "2.11.7")
 
