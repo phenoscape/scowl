@@ -1,4 +1,4 @@
-package org.phenoscape.scowl
+package org.phenoscape.scowl.omn
 
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 

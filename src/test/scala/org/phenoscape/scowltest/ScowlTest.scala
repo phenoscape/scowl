@@ -4,9 +4,7 @@ import scala.collection.JavaConversions._
 
 import org.junit.Test
 import org.junit.Assert
-import org.phenoscape.scowl.OWL._
-import org.phenoscape.scowl.Functional._
-import org.phenoscape.scowl.Vocab._
+import org.phenoscape.scowl._
 import org.semanticweb.owlapi.apibinding.OWLManager
 
 class ScowlTest {

@@ -1,4 +1,4 @@
-package org.phenoscape.scowl
+package org.phenoscape
 
 import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.apibinding.OWLManager
@@ -59,62 +59,21 @@ import org.semanticweb.owlapi.model.OWLDataExactCardinality
 import org.semanticweb.owlapi.model.OWLDataMinCardinality
 import org.semanticweb.owlapi.model.OWLDataMaxCardinality
 import org.semanticweb.owlapi.model.OWLDataHasValue
+import org.phenoscape.scowl.omn.ScowlPropertyChain
 
-object OWL {
+package object scowl extends Vocab
+    with ofn.Entities
+    with ofn.AnnotationAxioms
+    with ofn.ClassAxioms
+    with ofn.IndividualAxioms
+    with ofn.ObjectExpressions
+    with ofn.DataExpressions
+    with omn.ClassExpressions
+    with omn.Facets {
 
-  private val factory = OWLManager.getOWLDataFactory
+  protected[scowl] val factory = OWLManager.getOWLDataFactory
 
-  def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
-
-  def Declare(entity: OWLEntity): OWLDeclarationAxiom = factory.getOWLDeclarationAxiom(entity)
-
-  trait NamedObjectConstructor[T <: OWLNamedObject] {
-
-    def apply(iri: IRI): T
-
-    def apply(iri: String): T = apply(IRI.create(iri))
-
-    def unapply(entity: T): Option[IRI] = Option(entity.getIRI)
-
-  }
-
-  object Class extends NamedObjectConstructor[OWLClass] {
-
-    def apply(iri: IRI): OWLClass = factory.getOWLClass(iri)
-
-  }
-
-  def Individual(iri: IRI): OWLNamedIndividual = factory.getOWLNamedIndividual(iri)
-
-  def Individual(iri: String): OWLNamedIndividual = Individual(IRI.create(iri))
-
-  def Individual(): OWLAnonymousIndividual = factory.getOWLAnonymousIndividual()
-
-  object ObjectProperty extends NamedObjectConstructor[OWLObjectProperty] {
-
-    def apply(iri: IRI): OWLObjectProperty = factory.getOWLObjectProperty(iri)
-
-  }
-
-  object AnnotationProperty extends NamedObjectConstructor[OWLAnnotationProperty] {
-
-    def apply(iri: IRI): OWLAnnotationProperty = factory.getOWLAnnotationProperty(iri)
-
-  }
-
-  object DataProperty extends NamedObjectConstructor[OWLDataProperty] {
-
-    def apply(iri: IRI): OWLDataProperty = factory.getOWLDataProperty(iri)
-
-  }
-
-  def not(classExpression: OWLClassExpression): OWLObjectComplementOf = factory.getOWLObjectComplementOf(classExpression)
-
-  def not(dataRange: OWLDataRange): OWLDataComplementOf = factory.getOWLDataComplementOf(dataRange)
-
-  def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet)
-
-  def oneOf(literals: OWLLiteral*): OWLDataOneOf = factory.getOWLDataOneOf(literals.toSet)
+  // Implicit value classes cannot be placed inside a trait and so must be defined here
 
   implicit class ScowlClassExpression(val self: OWLClassExpression) extends AnyVal {
 
@@ -163,38 +122,6 @@ object OWL {
     def EquivalentTo(range: OWLDataRange): OWLDatatypeDefinitionAxiom = factory.getOWLDatatypeDefinitionAxiom(self, range)
 
   }
-
-  def <(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
-
-  def <=(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
-
-  def >(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
-
-  def >=(value: OWLLiteral) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
-
-  def <(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
-
-  def <=(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
-
-  def >(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
-
-  def >=(value: Int) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
-
-  def <(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
-
-  def <=(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
-
-  def >(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
-
-  def >=(value: Float) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
-
-  def <(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MAX_EXCLUSIVE, value)
-
-  def <=(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MAX_INCLUSIVE, value)
-
-  def >(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MIN_EXCLUSIVE, value)
-
-  def >=(value: Double) = factory.getOWLFacetRestriction(OWLFacet.MIN_INCLUSIVE, value)
 
   implicit class ScowlIndividual(val self: OWLIndividual) extends AnyVal {
 

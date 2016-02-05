@@ -2,9 +2,7 @@ package org.phenoscape.scowl
 
 import org.semanticweb.owlapi.apibinding.OWLManager
 
-object Vocab {
-
-  private val factory = OWLManager.getOWLDataFactory
+trait Vocab {
 
   val XSDInteger = factory.getIntegerOWLDatatype
 
