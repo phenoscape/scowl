@@ -1,6 +1,7 @@
 package org.phenoscape.scowl
 
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.vocab.OWL2Datatype
 
 trait Vocab {
 
@@ -11,6 +12,8 @@ trait Vocab {
   val XSDDouble = factory.getDoubleOWLDatatype
 
   val XSDBoolean = factory.getBooleanOWLDatatype
+
+  val XSDNonNegativeInteger = OWL2Datatype.XSD_NON_NEGATIVE_INTEGER.getDatatype(factory)
 
   val OWLThing = factory.getOWLThing
 

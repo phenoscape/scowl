@@ -1,74 +1,79 @@
 package org.phenoscape
 
 import scala.collection.JavaConversions._
+import org.phenoscape.scowl.omn.ScowlNegativeObjectPropertyValue
+import org.phenoscape.scowl.omn.ScowlPropertyChain
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
+import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.model.OWLAnnotationProperty
 import org.semanticweb.owlapi.model.OWLAnnotationSubject
 import org.semanticweb.owlapi.model.OWLAnnotationValue
-import org.semanticweb.owlapi.model.OWLAnonymousIndividual
 import org.semanticweb.owlapi.model.OWLAxiom
-import org.semanticweb.owlapi.model.OWLClass
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
+import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
+import org.semanticweb.owlapi.model.OWLDataExactCardinality
+import org.semanticweb.owlapi.model.OWLDataHasValue
+import org.semanticweb.owlapi.model.OWLDataIntersectionOf
+import org.semanticweb.owlapi.model.OWLDataMaxCardinality
+import org.semanticweb.owlapi.model.OWLDataMinCardinality
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression
+import org.semanticweb.owlapi.model.OWLDataRange
+import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
+import org.semanticweb.owlapi.model.OWLDataUnionOf
+import org.semanticweb.owlapi.model.OWLDatatype
+import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom
+import org.semanticweb.owlapi.model.OWLDatatypeRestriction
+import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
+import org.semanticweb.owlapi.model.OWLFacetRestriction
+import org.semanticweb.owlapi.model.OWLHasKeyAxiom
 import org.semanticweb.owlapi.model.OWLIndividual
-import org.semanticweb.owlapi.model.OWLNamedIndividual
+import org.semanticweb.owlapi.model.OWLLiteral
 import org.semanticweb.owlapi.model.OWLNamedObject
+import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom
-import org.semanticweb.owlapi.model.OWLObjectComplementOf
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality
+import org.semanticweb.owlapi.model.OWLObjectHasSelf
 import org.semanticweb.owlapi.model.OWLObjectHasValue
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality
 import org.semanticweb.owlapi.model.OWLObjectMinCardinality
-import org.semanticweb.owlapi.model.OWLObjectProperty
+import org.semanticweb.owlapi.model.OWLObjectOneOf
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLObjectUnionOf
-import org.semanticweb.owlapi.model.OWLOntology
+import org.semanticweb.owlapi.model.OWLPropertyExpression
+import org.semanticweb.owlapi.model.OWLSameIndividualAxiom
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
-import org.semanticweb.owlapi.model.OWLDataProperty
-import org.semanticweb.owlapi.model.OWLEntity
-import org.semanticweb.owlapi.model.OWLDeclarationAxiom
-import org.semanticweb.owlapi.model.OWLObjectOneOf
-import org.semanticweb.owlapi.model.OWLObjectHasSelf
-import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
-import org.semanticweb.owlapi.model.OWLAnnotation
-import org.semanticweb.owlapi.model.OWLLiteral
-import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
-import org.semanticweb.owlapi.model.OWLDatatype
-import org.semanticweb.owlapi.model.OWLDataRange
-import org.semanticweb.owlapi.model.OWLDataComplementOf
-import org.semanticweb.owlapi.model.OWLDataOneOf
-import org.semanticweb.owlapi.model.OWLDataIntersectionOf
-import org.semanticweb.owlapi.model.OWLDataUnionOf
-import org.semanticweb.owlapi.vocab.OWLFacet
-import org.semanticweb.owlapi.model.OWLFacetRestriction
-import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom
-import org.semanticweb.owlapi.model.OWLDatatypeRestriction
-import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
-import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
-import org.semanticweb.owlapi.model.OWLHasKeyAxiom
-import org.semanticweb.owlapi.model.OWLPropertyExpression
-import org.semanticweb.owlapi.model.OWLDataExactCardinality
-import org.semanticweb.owlapi.model.OWLDataMinCardinality
-import org.semanticweb.owlapi.model.OWLDataMaxCardinality
-import org.semanticweb.owlapi.model.OWLDataHasValue
-import org.phenoscape.scowl.omn.ScowlPropertyChain
+import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
+import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom
+import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom
+import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom
+import org.phenoscape.scowl.omn.ScowlNegativeDataPropertyValue
+import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom
+import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom
+import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom
+import org.phenoscape.scowl.omn.PropertyCharacteristic
+import org.semanticweb.owlapi.model.OWLObjectPropertyCharacteristicAxiom
+import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom
 
 package object scowl extends Vocab
     with ofn.Entities
     with ofn.AnnotationAxioms
     with ofn.ClassAxioms
     with ofn.IndividualAxioms
+    with ofn.PropertyAxioms
     with ofn.ObjectExpressions
     with ofn.DataExpressions
     with omn.ClassExpressions
+    with omn.PropertyCharacteristics
     with omn.Facets {
 
   protected[scowl] val factory = OWLManager.getOWLDataFactory
@@ -85,7 +90,7 @@ package object scowl extends Vocab
 
     def EquivalentTo(other: OWLClassExpression): OWLEquivalentClassesAxiom = factory.getOWLEquivalentClassesAxiom(self, other)
 
-    def DisjointFrom(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(self, other)
+    def DisjointWith(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(self, other)
 
     def HasKey(property: OWLPropertyExpression[_, _], more: OWLPropertyExpression[_, _]*): OWLHasKeyAxiom = factory.getOWLHasKeyAxiom(self, more.toSet + property)
 
@@ -127,6 +132,10 @@ package object scowl extends Vocab
 
     def Fact(property: OWLObjectPropertyExpression, value: OWLIndividual): OWLObjectPropertyAssertionAxiom = factory.getOWLObjectPropertyAssertionAxiom(property, self, value)
 
+    //TODO clean up Facts to handle multiple kinds of facts
+    def Facts(facts: (OWLObjectPropertyExpression, OWLIndividual)*): Set[OWLObjectPropertyAssertionAxiom] =
+      (facts map { case (property, value) => factory.getOWLObjectPropertyAssertionAxiom(property, self, value) }).toSet
+
     def Fact(property: OWLDataPropertyExpression, value: OWLLiteral): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
 
     def Fact(property: OWLDataPropertyExpression, value: String): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
@@ -139,12 +148,20 @@ package object scowl extends Vocab
 
     def Fact(property: OWLDataPropertyExpression, value: Boolean): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
 
-    def Facts(facts: (OWLObjectPropertyExpression, OWLIndividual)*): Set[OWLObjectPropertyAssertionAxiom] =
-      (facts map { case (property, value) => factory.getOWLObjectPropertyAssertionAxiom(property, self, value) }).toSet
+    def Fact(negative: ScowlNegativeObjectPropertyValue): OWLNegativeObjectPropertyAssertionAxiom = factory.getOWLNegativeObjectPropertyAssertionAxiom(negative.property, self, negative.value)
+
+    def Fact(negative: ScowlNegativeDataPropertyValue): OWLNegativeDataPropertyAssertionAxiom = factory.getOWLNegativeDataPropertyAssertionAxiom(negative.property, self, negative.value)
 
     def Type(owlClass: OWLClassExpression): OWLClassAssertionAxiom = factory.getOWLClassAssertionAxiom(owlClass, self)
 
+    def Types(owlClass: OWLClassExpression, more: OWLClassExpression*): Set[OWLClassAssertionAxiom] =
+      (more.toSet + owlClass).map(factory.getOWLClassAssertionAxiom(_, self))
+
     def +(other: OWLIndividual): OWLObjectOneOf = factory.getOWLObjectOneOf(self, other)
+
+    def SameAs(other: OWLIndividual, more: OWLIndividual*): OWLSameIndividualAxiom = factory.getOWLSameIndividualAxiom(more.toSet + other)
+
+    def DifferentFrom(other: OWLIndividual, more: OWLIndividual*): OWLDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(more.toSet + other)
 
   }
 
@@ -168,11 +185,23 @@ package object scowl extends Vocab
 
     def value(individual: OWLIndividual): OWLObjectHasValue = factory.getOWLObjectHasValue(self, individual)
 
+    def SubPropertyOf(other: OWLObjectPropertyExpression): OWLSubObjectPropertyOfAxiom = factory.getOWLSubObjectPropertyOfAxiom(self, other)
+
     def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = new ScowlPropertyChain(self, property)
 
     def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = factory.getOWLSubPropertyChainOfAxiom(chain.properties, self)
 
     def Self: OWLObjectHasSelf = factory.getOWLObjectHasSelf(self)
+
+    def Domain(domain: OWLClassExpression): OWLObjectPropertyDomainAxiom = factory.getOWLObjectPropertyDomainAxiom(self, domain)
+
+    def Range(range: OWLClassExpression): OWLObjectPropertyRangeAxiom = factory.getOWLObjectPropertyRangeAxiom(self, range)
+
+    def InverseOf(other: OWLObjectPropertyExpression): OWLInverseObjectPropertiesAxiom = factory.getOWLInverseObjectPropertiesAxiom(self, other)
+
+    def DisjointWith(other: OWLObjectPropertyExpression): OWLDisjointObjectPropertiesAxiom = factory.getOWLDisjointObjectPropertiesAxiom(self, other)
+
+    def Characteristic[T <: OWLObjectPropertyCharacteristicAxiom](characteristic: PropertyCharacteristic[OWLClassExpression, OWLObjectPropertyExpression, T]) = characteristic.axiom(self)
 
   }
 
@@ -203,6 +232,10 @@ package object scowl extends Vocab
     def value(literal: Double): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
 
     def value(literal: Boolean): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
+
+    def Domain(domain: OWLClassExpression): OWLDataPropertyDomainAxiom = factory.getOWLDataPropertyDomainAxiom(self, domain)
+
+    def Range(range: OWLDataRange): OWLDataPropertyRangeAxiom = factory.getOWLDataPropertyRangeAxiom(self, range)
 
   }
 

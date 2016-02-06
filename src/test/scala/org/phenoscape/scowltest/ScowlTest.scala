@@ -132,4 +132,16 @@ class ScowlTest {
     class1 HasKey (prop1, hasAge)
   }
 
+  @Test
+  def testSameAndDifferent(): Unit = {
+    val ind1 = Individual("http://example.org/ind1")
+    val ind2 = Individual("http://example.org/ind2")
+    val ind3 = Individual("http://example.org/ind3")
+    ind1 SameAs ind2
+    ind1 SameAs (ind2, ind3)
+    ind1 DifferentFrom ind2
+    ind1 DifferentFrom (ind2, ind3)
+
+  }
+
 }

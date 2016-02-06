@@ -90,13 +90,13 @@ trait NaryClassAxiom[T <: OWLNaryClassAxiom] {
   def apply(annotations: Set[OWLAnnotation], classExpressions: Set[_ <: OWLClassExpression]): T
 
   def apply(classExpressions: Set[_ <: OWLClassExpression]): T =
-    apply(Set[OWLAnnotation](), classExpressions)
+    apply(Set.empty[OWLAnnotation], classExpressions)
 
   def apply(annotations: OWLAnnotation*)(classExpressions: OWLClassExpression*): T =
     apply(annotations.toSet, classExpressions.toSet)
 
   def apply(classExpressions: OWLClassExpression*): T =
-    apply(Set[OWLAnnotation](), classExpressions.toSet)
+    apply(Set.empty[OWLAnnotation], classExpressions.toSet)
 
   def unapply(axiom: T): Option[(Set[OWLAnnotation], Set[_ <: OWLClassExpression])] =
     Option((axiom.getAnnotations.toSet, axiom.getClassExpressions.toSet))
