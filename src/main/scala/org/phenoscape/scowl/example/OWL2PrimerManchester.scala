@@ -150,7 +150,7 @@ object OWL2PrimerManchester {
    */
   val MyBirthdayGuests = Class(s"$ns#MyBirthdayGuests")
 
-  MyBirthdayGuests EquivalentTo (Bill + John + Mary)
+  MyBirthdayGuests EquivalentTo (Bill ~ John ~ Mary)
 
   /**
    * 6.1 Property Characteristics
@@ -192,18 +192,43 @@ object OWL2PrimerManchester {
   val hasGrandparent = ObjectProperty(s"$ns#hasGrandparent")
 
   hasGrandparent SubPropertyChain (hasParent o hasParent)
-  
+
   /**
    * 6.3 Keys
    */
-  
+
   val hasSSN = DataProperty(s"$ns#hasSSN")
-  
+
   Person HasKey hasSSN
-  
+
   /**
    * 7 Advanced Use of Datatypes
    */
-  
+  val PersonAge = Datatype(s"$ns#PersonAge")
+
+  PersonAge EquivalentTo XSDInteger(>=(0), <=(150))
+
+  val MajorAge = Datatype(s"$ns#MajorAge")
+  val MinorAge = Datatype(s"$ns#MinorAge")
+
+  MajorAge EquivalentTo (PersonAge and not(MinorAge))
+
+  val ToddlerAge = Datatype(s"$ns#ToddlerAge")
+
+  ToddlerAge EquivalentTo (("1" ^^ XSDInteger) ~ ("2" ^^ XSDInteger))
+
+  hasAge Characteristic Functional
+
+  val Teenager = Class(s"$ns#Teenager")
+
+  Teenager SubClassOf (hasAge some XSDInteger(>(12), <=(19)))
+
+  /**
+   * 8.1 Annotating Axioms and Entities
+   */
+
+  Person Annotation (RDFSComment, "Represents the set of all people.")
+
+  (Man SubClassOf Person) Annotation (RDFSComment, "States that every man is a person.")
 
 }

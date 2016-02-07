@@ -21,4 +21,6 @@ trait Vocab {
 
   val RDFSLabel = factory.getRDFSLabel
 
+  val RDFSComment = factory.getRDFSComment
+
 }
