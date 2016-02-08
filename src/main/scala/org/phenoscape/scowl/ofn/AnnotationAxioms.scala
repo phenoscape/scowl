@@ -3,6 +3,7 @@ package org.phenoscape.scowl.ofn
 import scala.collection.JavaConversions._
 
 import org.phenoscape.scowl.factory
+import org.phenoscape.scowl.Literalable
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.model.OWLAnnotationProperty
@@ -34,6 +35,11 @@ trait AnnotationAxioms {
 
     def apply(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotation =
       factory.getOWLAnnotation(property, value)
+
+    def apply[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAnnotation = {
+      val literalable = implicitly[Literalable[T]]
+      factory.getOWLAnnotation(property, literalable.toLiteral(value))
+    }
 
     def unapply(annotation: OWLAnnotation): Option[(OWLAnnotationProperty, OWLAnnotationValue)] =
       Option((annotation.getProperty, annotation.getValue))

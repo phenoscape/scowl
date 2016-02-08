@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLClass
 import org.semanticweb.owlapi.model.OWLAxiom
 import org.phenoscape.scowl.factory
 import scala.collection.JavaConversions._
+import org.semanticweb.owlapi.model.OWLDatatype
 
 trait Entities {
 
@@ -61,6 +62,12 @@ trait Entities {
   object DataProperty extends NamedObjectConstructor[OWLDataProperty] {
 
     def apply(iri: IRI): OWLDataProperty = factory.getOWLDataProperty(iri)
+
+  }
+
+  object Datatype extends NamedObjectConstructor[OWLDatatype] {
+
+    def apply(iri: IRI): OWLDatatype = factory.getOWLDatatype(iri)
 
   }
 

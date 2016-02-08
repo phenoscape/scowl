@@ -38,7 +38,7 @@ class ScowlTest {
     val ind2 = Individual("http://example.org/ind2")
     val ind3 = Individual("http://example.org/ind3")
     val oneAndTwo = oneOf(ind1, ind2)
-    val oneAndTwoAndThree = ind1 + ind2 + ind3
+    val oneAndTwoAndThree = ind1 ~ ind2 ~ ind3
     val longOneAndTwo = factory.getOWLObjectOneOf(ind1, ind2)
     Assert.assertEquals(longOneAndTwo, oneAndTwo)
     Assert.assertEquals(factory.getOWLObjectOneOf(ind1), oneOf(ind1))

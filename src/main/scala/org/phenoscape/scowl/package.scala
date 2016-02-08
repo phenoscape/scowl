@@ -138,21 +138,14 @@ package object scowl extends Vocab
     def Facts(facts: (OWLObjectPropertyExpression, OWLIndividual)*): Set[OWLObjectPropertyAssertionAxiom] =
       (facts map { case (property, value) => factory.getOWLObjectPropertyAssertionAxiom(property, self, value) }).toSet
 
-    def Fact(property: OWLDataPropertyExpression, value: OWLLiteral): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
-
-    def Fact(property: OWLDataPropertyExpression, value: String): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
-
-    def Fact(property: OWLDataPropertyExpression, value: Int): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
-
-    def Fact(property: OWLDataPropertyExpression, value: Float): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
-
-    def Fact(property: OWLDataPropertyExpression, value: Double): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
-
-    def Fact(property: OWLDataPropertyExpression, value: Boolean): OWLDataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(property, self, value)
+    def Fact[T: Literalable](property: OWLDataPropertyExpression, value: T): OWLDataPropertyAssertionAxiom = {
+      val literalable = implicitly[Literalable[T]]
+      factory.getOWLDataPropertyAssertionAxiom(property, self, literalable.toLiteral(value))
+    }
 
     def Fact(negative: ScowlNegativeObjectPropertyValue): OWLNegativeObjectPropertyAssertionAxiom = factory.getOWLNegativeObjectPropertyAssertionAxiom(negative.property, self, negative.value)
 
-    def Fact(negative: ScowlNegativeDataPropertyValue): OWLNegativeDataPropertyAssertionAxiom = factory.getOWLNegativeDataPropertyAssertionAxiom(negative.property, self, negative.value)
+    def Fact[T: Literalable](negative: ScowlNegativeDataPropertyValue[T]): OWLNegativeDataPropertyAssertionAxiom = factory.getOWLNegativeDataPropertyAssertionAxiom(negative.property, self, negative.literal)
 
     def Type(owlClass: OWLClassExpression): OWLClassAssertionAxiom = factory.getOWLClassAssertionAxiom(owlClass, self)
 
@@ -225,15 +218,10 @@ package object scowl extends Vocab
 
     def max(cardinality: Int): OWLDataMaxCardinality = factory.getOWLDataMaxCardinality(cardinality, self)
 
-    def value(literal: OWLLiteral): OWLDataHasValue = factory.getOWLDataHasValue(self, literal)
-
-    def value(literal: Int): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
-
-    def value(literal: Float): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
-
-    def value(literal: Double): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
-
-    def value(literal: Boolean): OWLDataHasValue = factory.getOWLDataHasValue(self, factory.getOWLLiteral(literal))
+    def value[T: Literalable](value: T): OWLDataHasValue = {
+      val literalable = implicitly[Literalable[T]]
+      factory.getOWLDataHasValue(self, literalable.toLiteral(value))
+    }
 
     def Domain(domain: OWLClassExpression): OWLDataPropertyDomainAxiom = factory.getOWLDataPropertyDomainAxiom(self, domain)
 
@@ -247,15 +235,10 @@ package object scowl extends Vocab
 
     def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, self, value)
 
-    def Annotation(property: OWLAnnotationProperty, value: String): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Int): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Float): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Double): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Boolean): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+    def Annotation[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAnnotationAssertionAxiom = {
+      val literalable = implicitly[Literalable[T]]
+      Annotation(property, literalable.toLiteral(value))
+    }
 
   }
 
@@ -265,21 +248,9 @@ package object scowl extends Vocab
       self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value)))
     }
 
-    def Annotation(property: OWLAnnotationProperty, value: String): OWLAxiom = {
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, factory.getOWLLiteral(value))))
-    }
-
-    def Annotation(property: OWLAnnotationProperty, value: Int): OWLAxiom = {
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, factory.getOWLLiteral(value))))
-    }
-    def Annotation(property: OWLAnnotationProperty, value: Float): OWLAxiom = {
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, factory.getOWLLiteral(value))))
-    }
-    def Annotation(property: OWLAnnotationProperty, value: Double): OWLAxiom = {
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, factory.getOWLLiteral(value))))
-    }
-    def Annotation(property: OWLAnnotationProperty, value: Boolean): OWLAxiom = {
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, factory.getOWLLiteral(value))))
+    def Annotation[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAxiom = {
+      val literalable = implicitly[Literalable[T]]
+      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, literalable.toLiteral(value))))
     }
 
     def Annotation(property: OWLAnnotationProperty, value: OWLNamedObject): OWLAxiom = {
@@ -294,15 +265,10 @@ package object scowl extends Vocab
 
   implicit class ScowlNamedObject(val self: OWLNamedObject) extends AnyVal {
 
-    def Annotation(property: OWLAnnotationProperty, value: String): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Int): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Float): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Double): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
-
-    def Annotation(property: OWLAnnotationProperty, value: Boolean): OWLAnnotationAssertionAxiom = Annotation(property, factory.getOWLLiteral(value))
+    def Annotation[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAnnotationAssertionAxiom = {
+      val literalable = implicitly[Literalable[T]]
+      Annotation(property, literalable.toLiteral(value))
+    }
 
     def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, self.getIRI, value)
 
@@ -326,13 +292,65 @@ package object scowl extends Vocab
 
   implicit class ScowlLiteral(val self: OWLLiteral) extends AnyVal {
 
-    def ~(other: OWLLiteral): OWLDataOneOf = factory.getOWLDataOneOf(self, other)
+    def ~[T: Literalable](value: T): OWLDataOneOf = {
+      val literalable = implicitly[Literalable[T]]
+      factory.getOWLDataOneOf(self, literalable.toLiteral(value))
+    }
 
   }
 
   implicit class ScowlDataOneOf(val self: OWLDataOneOf) extends AnyVal {
 
-    def ~(literal: OWLLiteral): OWLDataOneOf = factory.getOWLDataOneOf(self.getValues + literal)
+    def ~[T: Literalable](value: T): OWLDataOneOf = {
+      val literalable = implicitly[Literalable[T]]
+      factory.getOWLDataOneOf(self.getValues + literalable.toLiteral(value))
+    }
+
+  }
+
+  sealed trait Literalable[T] {
+
+    def toLiteral(value: T): OWLLiteral
+
+  }
+
+  object Literalable {
+
+    implicit object IntLiterable extends Literalable[Int] {
+
+      def toLiteral(value: Int): OWLLiteral = factory.getOWLLiteral(value)
+
+    }
+
+    implicit object FloatLiterable extends Literalable[Float] {
+
+      def toLiteral(value: Float): OWLLiteral = factory.getOWLLiteral(value)
+
+    }
+
+    implicit object DoubleLiterable extends Literalable[Double] {
+
+      def toLiteral(value: Double): OWLLiteral = factory.getOWLLiteral(value)
+
+    }
+
+    implicit object StringLiterable extends Literalable[String] {
+
+      def toLiteral(value: String): OWLLiteral = factory.getOWLLiteral(value)
+
+    }
+
+    implicit object BooleanLiterable extends Literalable[Boolean] {
+
+      def toLiteral(value: Boolean): OWLLiteral = factory.getOWLLiteral(value)
+
+    }
+
+    implicit object LiteralLiterable extends Literalable[OWLLiteral] {
+
+      def toLiteral(value: OWLLiteral): OWLLiteral = value
+
+    }
 
   }
 

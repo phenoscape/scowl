@@ -2,6 +2,7 @@ package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
 import org.phenoscape.scowl.factory
+import org.phenoscape.scowl.Literalable
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
@@ -36,15 +37,19 @@ trait IndividualAxioms {
 
   object DataPropertyAssertion extends DataPropertyAssertionAxiom[OWLDataPropertyAssertionAxiom] {
 
-    def apply(annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: OWLLiteral): OWLDataPropertyAssertionAxiom =
-      factory.getOWLDataPropertyAssertionAxiom(property, subject, value, annotations)
+    def apply[V: Literalable](annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: V): OWLDataPropertyAssertionAxiom = {
+      val literalable = implicitly[Literalable[V]]
+      factory.getOWLDataPropertyAssertionAxiom(property, subject, literalable.toLiteral(value), annotations)
+    }
 
   }
 
   object NegativeDataPropertyAssertion extends DataPropertyAssertionAxiom[OWLNegativeDataPropertyAssertionAxiom] {
 
-    def apply(annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: OWLLiteral): OWLNegativeDataPropertyAssertionAxiom =
-      factory.getOWLNegativeDataPropertyAssertionAxiom(property, subject, value, annotations)
+    def apply[V: Literalable](annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: V): OWLNegativeDataPropertyAssertionAxiom = {
+      val literalable = implicitly[Literalable[V]]
+      factory.getOWLNegativeDataPropertyAssertionAxiom(property, subject, literalable.toLiteral(value), annotations)
+    }
 
   }
 
@@ -97,12 +102,12 @@ trait ObjectPropertyAssertionAxiom[T <: OWLPropertyAssertionAxiom[OWLObjectPrope
 
 trait DataPropertyAssertionAxiom[T <: OWLPropertyAssertionAxiom[OWLDataPropertyExpression, OWLLiteral]] {
 
-  def apply(annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: OWLLiteral): T
+  def apply[V: Literalable](annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: V): T
 
-  def apply(annotations: OWLAnnotation*)(property: OWLDataPropertyExpression, subject: OWLIndividual, value: OWLLiteral): T =
+  def apply[V: Literalable](annotations: OWLAnnotation*)(property: OWLDataPropertyExpression, subject: OWLIndividual, value: V): T =
     apply(annotations.toSet, property, subject, value)
 
-  def apply(property: OWLDataPropertyExpression, subject: OWLIndividual, value: OWLLiteral): T =
+  def apply[V: Literalable](property: OWLDataPropertyExpression, subject: OWLIndividual, value: V): T =
     apply(Set.empty, property, subject, value)
 
   def unapply(axiom: T): Option[(Set[OWLAnnotation], OWLDataPropertyExpression, OWLIndividual, OWLLiteral)] =

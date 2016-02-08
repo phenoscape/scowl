@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLHasKeyAxiom
 import org.semanticweb.owlapi.model.OWLIndividual
 import org.semanticweb.owlapi.model.OWLLiteral
 import org.phenoscape.scowl.factory
+import org.phenoscape.scowl.Literalable
 import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression
@@ -30,7 +31,7 @@ trait ClassExpressions {
 
   def not(property: OWLObjectPropertyExpression, value: OWLIndividual): ScowlNegativeObjectPropertyValue = ScowlNegativeObjectPropertyValue(property, value)
 
-  def not(property: OWLDataPropertyExpression, value: OWLLiteral): ScowlNegativeDataPropertyValue = ScowlNegativeDataPropertyValue(property, value)
+  def not[T: Literalable](property: OWLDataPropertyExpression, value: T): ScowlNegativeDataPropertyValue[T] = ScowlNegativeDataPropertyValue(property, value)
 
   def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet)
 
