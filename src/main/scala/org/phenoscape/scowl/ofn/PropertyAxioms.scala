@@ -1,17 +1,26 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
+
 import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLAnnotation
+import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
+import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression
+import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom
+import org.semanticweb.owlapi.model.OWLDataRange
+import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom
+import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom
+import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom
 import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom
+import org.semanticweb.owlapi.model.OWLPropertyExpression
+import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
-import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom
-import org.semanticweb.owlapi.model.OWLDataRange
-import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom
+import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom
+import org.semanticweb.owlapi.model.OWLUnaryPropertyAxiom
 
 trait PropertyAxioms {
 
@@ -80,4 +89,59 @@ trait PropertyAxioms {
 
   }
 
+  object InverseObjectProperties {
+
+    def apply(annotations: Set[OWLAnnotation], property1: OWLObjectPropertyExpression, property2: OWLObjectPropertyExpression): OWLInverseObjectPropertiesAxiom =
+      factory.getOWLInverseObjectPropertiesAxiom(property1, property2, annotations)
+
+    def apply(property1: OWLObjectPropertyExpression, property2: OWLObjectPropertyExpression): OWLInverseObjectPropertiesAxiom =
+      apply(Set.empty, property1, property2)
+
+    def unapply(axiom: OWLInverseObjectPropertiesAxiom): Option[(Set[OWLAnnotation], OWLObjectPropertyExpression, OWLObjectPropertyExpression)] =
+      Option(axiom.getAnnotations.toSet, axiom.getFirstProperty, axiom.getSecondProperty)
+
+  }
+
+  object SymmetricObjectProperty extends UnaryObjectPropertyAxiom[OWLSymmetricObjectPropertyAxiom, OWLObjectPropertyExpression] {
+
+    val constructor = factory.getOWLSymmetricObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+
+  object AsymmetricObjectProperty extends UnaryObjectPropertyAxiom[OWLAsymmetricObjectPropertyAxiom, OWLObjectPropertyExpression] {
+
+    val constructor = factory.getOWLAsymmetricObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+
+  object ReflexiveObjectProperty extends UnaryObjectPropertyAxiom[OWLReflexiveObjectPropertyAxiom, OWLObjectPropertyExpression] {
+
+    val constructor = factory.getOWLReflexiveObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+  
+  object FunctionalObjectProperty extends UnaryObjectPropertyAxiom[OWLFunctionalObjectPropertyAxiom, OWLObjectPropertyExpression] {
+
+    val constructor = factory.getOWLFunctionalObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+  
+  object FunctionalDataProperty extends UnaryObjectPropertyAxiom[OWLFunctionalDataPropertyAxiom, OWLDataPropertyExpression] {
+
+    val constructor = factory.getOWLFunctionalDataPropertyAxiom(_: OWLDataPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+
+}
+
+trait UnaryObjectPropertyAxiom[T <: OWLUnaryPropertyAxiom[P], P <: OWLPropertyExpression[_, _]] {
+
+  def constructor: (P, Set[OWLAnnotation]) => T
+
+  def apply(annotations: Set[OWLAnnotation], property: P): T = constructor(property, annotations)
+
+  def apply(property: P): T = apply(Set.empty, property)
+
+  def unapply(axiom: T): Option[(Set[OWLAnnotation], P)] =
+    Option(axiom.getAnnotations.toSet, axiom.getProperty)
 }
