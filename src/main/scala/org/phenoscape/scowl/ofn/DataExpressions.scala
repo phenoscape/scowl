@@ -1,12 +1,17 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
-
 import org.phenoscape.scowl.factory
+import org.phenoscape.scowl.Literalable
 import org.semanticweb.owlapi.model.OWLDataOneOf
 import org.semanticweb.owlapi.model.OWLDatatype
-
 import org.semanticweb.owlapi.model.OWLLiteral
+import org.semanticweb.owlapi.model.OWLDataRange
+import org.semanticweb.owlapi.model.OWLAnnotation
+import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom
+import org.semanticweb.owlapi.model.OWLFacetRestriction
+import org.semanticweb.owlapi.model.OWLDatatypeRestriction
+import org.semanticweb.owlapi.vocab.OWLFacet
 
 trait DataExpressions {
 
@@ -34,5 +39,46 @@ trait DataExpressions {
       Option(expression.getValues.toSet)
 
   }
+
+  object DatatypeRestriction {
+
+    def apply(datatype: OWLDatatype, restrictions: Set[OWLFacetRestriction]): OWLDatatypeRestriction =
+      factory.getOWLDatatypeRestriction(datatype, restrictions)
+
+    def apply(datatype: OWLDatatype, restrictions: OWLFacetRestriction*): OWLDatatypeRestriction =
+      apply(datatype, restrictions.toSet)
+
+    def unapply(datatypeRestriction: OWLDatatypeRestriction): Option[(OWLDatatype, Set[OWLFacetRestriction])] =
+      Option(datatypeRestriction.getDatatype, datatypeRestriction.getFacetRestrictions.toSet)
+
+  }
+
+  object XSDMinInclusive extends FacetRestriction(OWLFacet.MIN_EXCLUSIVE)
+
+  object XSDMaxInclusive extends FacetRestriction(OWLFacet.MAX_EXCLUSIVE)
+
+  object DatatypeDefinition {
+
+    def apply(annotations: Set[OWLAnnotation], datatype: OWLDatatype, datarange: OWLDataRange): OWLDatatypeDefinitionAxiom =
+      factory.getOWLDatatypeDefinitionAxiom(datatype, datarange, annotations)
+
+    def apply(datatype: OWLDatatype, datarange: OWLDataRange): OWLDatatypeDefinitionAxiom =
+      apply(Set.empty, datatype, datarange)
+
+    def unapply(axiom: OWLDatatypeDefinitionAxiom): Option[(Set[OWLAnnotation], OWLDatatype, OWLDataRange)] =
+      Option(axiom.getAnnotations.toSet, axiom.getDatatype, axiom.getDataRange)
+
+  }
+
+}
+
+class FacetRestriction(facet: OWLFacet) {
+
+  def apply[T: Literalable](value: T): OWLFacetRestriction = {
+    val literalable = implicitly[Literalable[T]]
+    factory.getOWLFacetRestriction(facet, literalable.toLiteral(value))
+  }
+
+  def unapply(facetRestriction: OWLFacetRestriction): Option[OWLLiteral] = Option(facetRestriction.getFacetValue)
 
 }

@@ -146,4 +146,14 @@ trait ObjectExpressions extends Vocab {
 
   }
 
+  case class ObjectPropertyChain(properties: List[OWLObjectPropertyExpression])
+
+  object ObjectPropertyChain {
+
+    def apply(properties: OWLObjectPropertyExpression*): ObjectPropertyChain = ObjectPropertyChain(properties.toList)
+
+  }
+
+  //sealed trait SubObjectPropertyExpression ??
+
 }

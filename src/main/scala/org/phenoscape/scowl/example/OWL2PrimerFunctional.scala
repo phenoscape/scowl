@@ -208,32 +208,35 @@ object OWL2PrimerFunctional {
 
   AsymmetricObjectProperty(hasChild)
 
-  hasParent DisjointWith hasSpouse
+  DisjointObjectProperties(hasParent, hasSpouse)
 
   val hasRelative = ObjectProperty(s"$ns#hasRelative")
 
-  hasRelative Characteristic Reflexive
+  ReflexiveObjectProperty(hasRelative)
 
   val parentOf = ObjectProperty(s"$ns#parentOf")
 
-  parentOf Characteristic Irreflexive
+  IrreflexiveObjectProperty(parentOf)
 
   val hasHusband = ObjectProperty(s"$ns#hasHusband")
 
-  hasHusband Characteristic Functional
+  FunctionalObjectProperty(hasHusband)
 
-  hasHusband Characteristic InverseFunctional
+  InverseFunctionalObjectProperty(hasHusband)
 
   val hasAncestor = ObjectProperty(s"$ns#hasAncestor")
 
-  hasAncestor Characteristic Transitive
+  TransitiveObjectProperty(hasAncestor)
 
   /**
    * 6.2 Property Chains
    */
   val hasGrandparent = ObjectProperty(s"$ns#hasGrandparent")
 
-  hasGrandparent SubPropertyChain (hasParent o hasParent)
+  //FIXME need implementation for ObjectPropertyChain
+  //  SubObjectPropertyOf(
+  //    ObjectPropertyChain(hasParent, hasParent),
+  //    hasGrandparent)
 
   /**
    * 6.3 Keys
@@ -241,7 +244,7 @@ object OWL2PrimerFunctional {
 
   val hasSSN = DataProperty(s"$ns#hasSSN")
 
-  Person HasKey hasSSN
+  HasKey(Person, hasSSN)
 
   /**
    * 7 Advanced Use of Datatypes
@@ -249,6 +252,12 @@ object OWL2PrimerFunctional {
   val PersonAge = Datatype(s"$ns#PersonAge")
 
   PersonAge EquivalentTo XSDInteger(>=(0), <=(150))
+
+  DatatypeDefinition(
+    PersonAge,
+    DatatypeRestriction(XSDInteger,
+      XSDMinInclusive(0),
+      XSDMaxInclusive(150)))
 
   val MajorAge = Datatype(s"$ns#MajorAge")
   val MinorAge = Datatype(s"$ns#MinorAge")

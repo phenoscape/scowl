@@ -1,7 +1,6 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
-
 import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom
@@ -21,6 +20,10 @@ import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLUnaryPropertyAxiom
+import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom
+import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom
+import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom
+import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom
 
 trait PropertyAxioms {
 
@@ -102,6 +105,25 @@ trait PropertyAxioms {
 
   }
 
+  object DisjointObjectProperties {
+
+    def apply(annotations: Set[OWLAnnotation], properties: Set[OWLObjectPropertyExpression]): OWLDisjointObjectPropertiesAxiom =
+      factory.getOWLDisjointObjectPropertiesAxiom(properties, annotations)
+
+    def apply(properties: OWLObjectPropertyExpression*): OWLDisjointObjectPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties.toSet)
+
+    def apply(properties: Set[OWLObjectPropertyExpression]): OWLDisjointObjectPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties)
+
+    def apply(annotations: OWLAnnotation*)(properties: OWLObjectPropertyExpression*): OWLDisjointObjectPropertiesAxiom =
+      apply(annotations.toSet, properties.toSet)
+
+    def unapply(axiom: OWLDisjointObjectPropertiesAxiom): Option[(Set[OWLAnnotation], Set[OWLObjectPropertyExpression])] =
+      Option(axiom.getAnnotations.toSet, axiom.getProperties.toSet)
+
+  }
+
   object SymmetricObjectProperty extends UnaryObjectPropertyAxiom[OWLSymmetricObjectPropertyAxiom, OWLObjectPropertyExpression] {
 
     val constructor = factory.getOWLSymmetricObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
@@ -119,16 +141,34 @@ trait PropertyAxioms {
     val constructor = factory.getOWLReflexiveObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
 
   }
-  
+
+  object IrreflexiveObjectProperty extends UnaryObjectPropertyAxiom[OWLIrreflexiveObjectPropertyAxiom, OWLObjectPropertyExpression] {
+
+    val constructor = factory.getOWLIrreflexiveObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+
   object FunctionalObjectProperty extends UnaryObjectPropertyAxiom[OWLFunctionalObjectPropertyAxiom, OWLObjectPropertyExpression] {
 
     val constructor = factory.getOWLFunctionalObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
 
   }
-  
+
   object FunctionalDataProperty extends UnaryObjectPropertyAxiom[OWLFunctionalDataPropertyAxiom, OWLDataPropertyExpression] {
 
     val constructor = factory.getOWLFunctionalDataPropertyAxiom(_: OWLDataPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+
+  object InverseFunctionalObjectProperty extends UnaryObjectPropertyAxiom[OWLInverseFunctionalObjectPropertyAxiom, OWLObjectPropertyExpression] {
+
+    val constructor = factory.getOWLInverseFunctionalObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
+
+  }
+
+  object TransitiveObjectProperty extends UnaryObjectPropertyAxiom[OWLTransitiveObjectPropertyAxiom, OWLObjectPropertyExpression] {
+
+    val constructor = factory.getOWLTransitiveObjectPropertyAxiom(_: OWLObjectPropertyExpression, _: Set[OWLAnnotation])
 
   }
 
@@ -145,3 +185,4 @@ trait UnaryObjectPropertyAxiom[T <: OWLUnaryPropertyAxiom[P], P <: OWLPropertyEx
   def unapply(axiom: T): Option[(Set[OWLAnnotation], P)] =
     Option(axiom.getAnnotations.toSet, axiom.getProperty)
 }
+
