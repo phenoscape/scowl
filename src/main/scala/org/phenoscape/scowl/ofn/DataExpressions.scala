@@ -12,6 +12,8 @@ import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom
 import org.semanticweb.owlapi.model.OWLFacetRestriction
 import org.semanticweb.owlapi.model.OWLDatatypeRestriction
 import org.semanticweb.owlapi.vocab.OWLFacet
+import org.semanticweb.owlapi.model.OWLDataIntersectionOf
+import org.semanticweb.owlapi.model.OWLDataComplementOf
 
 trait DataExpressions {
 
@@ -67,6 +69,25 @@ trait DataExpressions {
 
     def unapply(axiom: OWLDatatypeDefinitionAxiom): Option[(Set[OWLAnnotation], OWLDatatype, OWLDataRange)] =
       Option(axiom.getAnnotations.toSet, axiom.getDatatype, axiom.getDataRange)
+
+  }
+
+  object DataIntersectionOf {
+
+    def apply(dataRanges: Set[OWLDataRange]): OWLDataIntersectionOf = factory.getOWLDataIntersectionOf(dataRanges)
+
+    def apply(dataRange1: OWLDataRange, dataRange2: OWLDataRange, more: OWLDataRange*): OWLDataIntersectionOf =
+      apply(more.toSet + dataRange1 + dataRange2)
+
+    def unapply(intersection: OWLDataIntersectionOf): Option[Set[OWLDataRange]] = Option(intersection.getOperands.toSet)
+
+  }
+
+  object DataComplementOf {
+
+    def apply(range: OWLDataRange): OWLDataComplementOf = factory.getOWLDataComplementOf(range)
+
+    def unapply(complement: OWLDataComplementOf): Option[OWLDataRange] = Option(complement.getDataRange)
 
   }
 

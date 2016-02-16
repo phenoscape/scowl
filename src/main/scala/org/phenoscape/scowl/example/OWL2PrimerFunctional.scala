@@ -98,8 +98,6 @@ object OWL2PrimerFunctional {
 
   val Father = Class(s"$ns#Father")
 
-  Parent EquivalentTo (Mother or Father)
-
   EquivalentClasses(
     Parent,
     ObjectUnionOf(Mother, Father))
@@ -233,10 +231,11 @@ object OWL2PrimerFunctional {
    */
   val hasGrandparent = ObjectProperty(s"$ns#hasGrandparent")
 
-  //FIXME need implementation for ObjectPropertyChain
-  //  SubObjectPropertyOf(
-  //    ObjectPropertyChain(hasParent, hasParent),
-  //    hasGrandparent)
+  // This deviates slightly from OWL functional syntax; due to OWL API structure 
+  // we are not able to unify SubObjectProperty and property chain axioms
+  SubObjectPropertyChainOf(
+    List(hasParent, hasParent),
+    hasGrandparent)
 
   /**
    * 6.3 Keys
@@ -251,8 +250,6 @@ object OWL2PrimerFunctional {
    */
   val PersonAge = Datatype(s"$ns#PersonAge")
 
-  PersonAge EquivalentTo XSDInteger(>=(0), <=(150))
-
   DatatypeDefinition(
     PersonAge,
     DatatypeRestriction(XSDInteger,
@@ -262,7 +259,11 @@ object OWL2PrimerFunctional {
   val MajorAge = Datatype(s"$ns#MajorAge")
   val MinorAge = Datatype(s"$ns#MinorAge")
 
-  MajorAge EquivalentTo (PersonAge and not(MinorAge))
+  DatatypeDefinition(
+    MajorAge,
+    DataIntersectionOf(
+      PersonAge,
+      DataComplementOf(MinorAge)))
 
   val ToddlerAge = Datatype(s"$ns#ToddlerAge")
 
