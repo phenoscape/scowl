@@ -33,12 +33,9 @@ trait AnnotationAxioms {
 
   object Annotation {
 
-    def apply(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotation =
-      factory.getOWLAnnotation(property, value)
-
-    def apply[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAnnotation = {
-      val literalable = implicitly[Literalable[T]]
-      factory.getOWLAnnotation(property, literalable.toLiteral(value))
+    def apply[T: AnnotationValuer](property: OWLAnnotationProperty, value: T): OWLAnnotation = {
+      val valuer = implicitly[AnnotationValuer[T]]
+      factory.getOWLAnnotation(property, valuer.toAnnotationValue(value))
     }
 
     def unapply(annotation: OWLAnnotation): Option[(OWLAnnotationProperty, OWLAnnotationValue)] =
