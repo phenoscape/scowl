@@ -65,6 +65,7 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
 import org.semanticweb.owlapi.model.OWLDataPropertyCharacteristicAxiom
+import org.semanticweb.owlapi.model.OWLAnonymousIndividual
 
 package object scowl extends Vocab
     with ofn.Entities
@@ -308,49 +309,99 @@ package object scowl extends Vocab
 
   }
 
-  sealed trait Literalable[T] {
+  trait Literalable[-T] extends AnnotationValuer[T] {
 
     def toLiteral(value: T): OWLLiteral
 
+    def toAnnotationValue(value: T): OWLAnnotationValue = toLiteral(value)
+
   }
 
-  object Literalable {
+  implicit object IntLiterable extends Literalable[Int] {
 
-    implicit object IntLiterable extends Literalable[Int] {
+    def toLiteral(value: Int): OWLLiteral = factory.getOWLLiteral(value)
 
-      def toLiteral(value: Int): OWLLiteral = factory.getOWLLiteral(value)
+  }
+
+  implicit object FloatLiterable extends Literalable[Float] {
+
+    def toLiteral(value: Float): OWLLiteral = factory.getOWLLiteral(value)
+
+  }
+
+  implicit object DoubleLiterable extends Literalable[Double] {
+
+    def toLiteral(value: Double): OWLLiteral = factory.getOWLLiteral(value)
+
+  }
+
+  implicit object StringLiterable extends Literalable[String] {
+
+    def toLiteral(value: String): OWLLiteral = factory.getOWLLiteral(value)
+
+  }
+
+  implicit object BooleanLiterable extends Literalable[Boolean] {
+
+    def toLiteral(value: Boolean): OWLLiteral = factory.getOWLLiteral(value)
+
+  }
+
+  implicit object LiteralLiterable extends Literalable[OWLLiteral] {
+
+    def toLiteral(value: OWLLiteral): OWLLiteral = value
+
+  }
+
+  trait Annotatable[-T] {
+
+    def toAnnotationSubject(value: T): OWLAnnotationSubject
+
+  }
+
+  object Annotatable {
+
+    implicit object NamedObjectAnnotatable extends Annotatable[OWLNamedObject] {
+
+      def toAnnotationSubject(value: OWLNamedObject): OWLAnnotationSubject = value.getIRI
 
     }
 
-    implicit object FloatLiterable extends Literalable[Float] {
+    implicit object IRIAnnotatable extends Annotatable[IRI] {
 
-      def toLiteral(value: Float): OWLLiteral = factory.getOWLLiteral(value)
-
-    }
-
-    implicit object DoubleLiterable extends Literalable[Double] {
-
-      def toLiteral(value: Double): OWLLiteral = factory.getOWLLiteral(value)
+      def toAnnotationSubject(value: IRI): OWLAnnotationSubject = value
 
     }
 
-    implicit object StringLiterable extends Literalable[String] {
+    implicit object AnonymousAnnotatable extends Annotatable[OWLAnonymousIndividual] {
 
-      def toLiteral(value: String): OWLLiteral = factory.getOWLLiteral(value)
-
-    }
-
-    implicit object BooleanLiterable extends Literalable[Boolean] {
-
-      def toLiteral(value: Boolean): OWLLiteral = factory.getOWLLiteral(value)
+      def toAnnotationSubject(value: OWLAnonymousIndividual): OWLAnnotationSubject = value
 
     }
 
-    implicit object LiteralLiterable extends Literalable[OWLLiteral] {
+  }
 
-      def toLiteral(value: OWLLiteral): OWLLiteral = value
+  trait AnnotationValuer[-T] {
 
-    }
+    def toAnnotationValue(value: T): OWLAnnotationValue
+
+  }
+
+  implicit object IRIAnnotationValuer extends AnnotationValuer[IRI] {
+
+    def toAnnotationValue(value: IRI): OWLAnnotationValue = value
+
+  }
+
+  implicit object AnonymousAnnotationValuer extends AnnotationValuer[OWLAnonymousIndividual] {
+
+    def toAnnotationValue(value: OWLAnonymousIndividual): OWLAnnotationValue = value
+
+  }
+
+  implicit object NamedObjectValuer extends AnnotationValuer[OWLNamedObject] {
+
+    def toAnnotationValue(value: OWLNamedObject): OWLAnnotationValue = value.getIRI
 
   }
 

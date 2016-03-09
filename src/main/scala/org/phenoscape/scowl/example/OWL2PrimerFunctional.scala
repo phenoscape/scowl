@@ -267,20 +267,29 @@ object OWL2PrimerFunctional {
 
   val ToddlerAge = Datatype(s"$ns#ToddlerAge")
 
-  ToddlerAge EquivalentTo (("1" ^^ XSDInteger) ~ ("2" ^^ XSDInteger))
+  DatatypeDefinition(
+    ToddlerAge,
+    DataOneOf("1" ^^ XSDInteger, "2" ^^ XSDInteger))
 
-  hasAge Characteristic Functional
+  FunctionalDataProperty(hasAge)
 
   val Teenager = Class(s"$ns#Teenager")
 
-  Teenager SubClassOf (hasAge some XSDInteger(>(12), <=(19)))
+  SubClassOf(
+    Teenager,
+    DataSomeValuesFrom(hasAge,
+      DatatypeRestriction(XSDInteger,
+        XSDMinInclusive(12),
+        XSDMinInclusive(19))))
 
   /**
    * 8.1 Annotating Axioms and Entities
    */
+  AnnotationAssertion(RDFSComment, Person, "Represents the set of all people.")
 
-  Person Annotation (RDFSComment, "Represents the set of all people.")
-
-  (Man SubClassOf Person) Annotation (RDFSComment, "States that every man is a person.")
+  SubClassOf(
+    Annotation(RDFSComment, "States that every man is a person."))(
+      Man,
+      Person)
 
 }

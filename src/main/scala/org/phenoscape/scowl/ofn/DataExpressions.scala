@@ -14,6 +14,9 @@ import org.semanticweb.owlapi.model.OWLDatatypeRestriction
 import org.semanticweb.owlapi.vocab.OWLFacet
 import org.semanticweb.owlapi.model.OWLDataIntersectionOf
 import org.semanticweb.owlapi.model.OWLDataComplementOf
+import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression
+import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
 
 trait DataExpressions {
 
@@ -88,6 +91,26 @@ trait DataExpressions {
     def apply(range: OWLDataRange): OWLDataComplementOf = factory.getOWLDataComplementOf(range)
 
     def unapply(complement: OWLDataComplementOf): Option[OWLDataRange] = Option(complement.getDataRange)
+
+  }
+
+  object DataSomeValuesFrom {
+
+    def apply(property: OWLDataPropertyExpression, range: OWLDataRange): OWLDataSomeValuesFrom =
+      factory.getOWLDataSomeValuesFrom(property, range)
+
+    def unapply(expression: OWLDataSomeValuesFrom): Option[(OWLDataPropertyExpression, OWLDataRange)] =
+      Option(expression.getProperty, expression.getFiller)
+
+  }
+
+  object DataAllValuesFrom {
+
+    def apply(property: OWLDataPropertyExpression, range: OWLDataRange): OWLDataAllValuesFrom =
+      factory.getOWLDataAllValuesFrom(property, range)
+
+    def unapply(expression: OWLDataAllValuesFrom): Option[(OWLDataPropertyExpression, OWLDataRange)] =
+      Option(expression.getProperty, expression.getFiller)
 
   }
 

@@ -1,17 +1,17 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
-
 import org.phenoscape.scowl.factory
 import org.phenoscape.scowl.Literalable
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.model.OWLAnnotationProperty
-
 import org.semanticweb.owlapi.model.OWLAnnotationSubject
 import org.semanticweb.owlapi.model.OWLAnnotationValue
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom
 import org.semanticweb.owlapi.model.OWLEntity
+import org.phenoscape.scowl.Annotatable
+import org.phenoscape.scowl.AnnotationValuer
 
 trait AnnotationAxioms {
 
@@ -48,13 +48,16 @@ trait AnnotationAxioms {
 
   object AnnotationAssertion {
 
-    def apply(annotations: Set[OWLAnnotation], property: OWLAnnotationProperty, subject: OWLAnnotationSubject, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom =
-      factory.getOWLAnnotationAssertionAxiom(property, subject, value, annotations)
+    def apply[T: Annotatable, V: AnnotationValuer](annotations: Set[OWLAnnotation], property: OWLAnnotationProperty, subject: T, value: V): OWLAnnotationAssertionAxiom = {
+      val annotatable = implicitly[Annotatable[T]]
+      val valuer = implicitly[AnnotationValuer[V]]
+      factory.getOWLAnnotationAssertionAxiom(property, annotatable.toAnnotationSubject(subject), valuer.toAnnotationValue(value), annotations)
+    }
 
-    def apply(property: OWLAnnotationProperty, subject: OWLAnnotationSubject, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom =
+    def apply[T: Annotatable, V: AnnotationValuer](property: OWLAnnotationProperty, subject: T, value: V): OWLAnnotationAssertionAxiom =
       AnnotationAssertion(Set.empty, property, subject, value)
 
-    def apply(annotations: OWLAnnotation*)(property: OWLAnnotationProperty, subject: OWLAnnotationSubject, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = AnnotationAssertion(annotations.toSet, property, subject, value)
+    def apply[T: Annotatable, V: AnnotationValuer](annotations: OWLAnnotation*)(property: OWLAnnotationProperty, subject: T, value: V): OWLAnnotationAssertionAxiom = AnnotationAssertion(annotations.toSet, property, subject, value)
 
     def unapply(axiom: OWLAnnotationAssertionAxiom): Option[(Set[OWLAnnotation], OWLAnnotationProperty, OWLAnnotationSubject, OWLAnnotationValue)] =
       Option(axiom.getAnnotations.toSet, axiom.getProperty, axiom.getSubject, axiom.getValue)
