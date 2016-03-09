@@ -234,41 +234,32 @@ package object scowl extends Vocab
 
   implicit class ScowlAnnotationSubject(val self: OWLAnnotationSubject) extends AnyVal {
 
-    def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, self, value)
-
-    def Annotation[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAnnotationAssertionAxiom = {
-      val literalable = implicitly[Literalable[T]]
-      Annotation(property, literalable.toLiteral(value))
+    def Annotation[T: AnnotationValuer](property: OWLAnnotationProperty, value: T): OWLAnnotationAssertionAxiom = {
+      val valuer = implicitly[AnnotationValuer[T]]
+      factory.getOWLAnnotationAssertionAxiom(property, self, valuer.toAnnotationValue(value))
     }
 
   }
 
   implicit class ScowlAxiom(val self: OWLAxiom) extends AnyVal {
 
-    def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAxiom = {
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value)))
+    def Annotation[T: AnnotationValuer](property: OWLAnnotationProperty, value: T): OWLAxiom = {
+      val valuer = implicitly[AnnotationValuer[T]]
+      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, valuer.toAnnotationValue(value))))
     }
 
-    def Annotation[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAxiom = {
-      val literalable = implicitly[Literalable[T]]
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, literalable.toLiteral(value))))
-    }
-
-    def Annotation(property: OWLAnnotationProperty, value: OWLNamedObject): OWLAxiom = {
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, value.getIRI)))
-    }
-
-    def Annotations(annotations: (OWLAnnotationProperty, OWLNamedObject)*): OWLAxiom = {
-      self.getAnnotatedAxiom(annotations.map { case (property, value) => factory.getOWLAnnotation(property, value.getIRI) }.toSet[OWLAnnotation])
+    def Annotations[T: AnnotationValuer](annotations: (OWLAnnotationProperty, T)*): OWLAxiom = {
+      val valuer = implicitly[AnnotationValuer[T]]
+      self.getAnnotatedAxiom(annotations.map { case (property, value) => factory.getOWLAnnotation(property, valuer.toAnnotationValue(value)) }.toSet[OWLAnnotation])
     }
 
   }
 
   implicit class ScowlNamedObject(val self: OWLNamedObject) extends AnyVal {
 
-    def Annotation[T: Literalable](property: OWLAnnotationProperty, value: T): OWLAnnotationAssertionAxiom = {
-      val literalable = implicitly[Literalable[T]]
-      Annotation(property, literalable.toLiteral(value))
+    def Annotation[T: AnnotationValuer](property: OWLAnnotationProperty, value: T): OWLAnnotationAssertionAxiom = {
+      val valuer = implicitly[AnnotationValuer[T]]
+      Annotation(property, valuer.toAnnotationValue(value))
     }
 
     def Annotation(property: OWLAnnotationProperty, value: OWLAnnotationValue): OWLAnnotationAssertionAxiom = factory.getOWLAnnotationAssertionAxiom(property, self.getIRI, value)
@@ -367,15 +358,9 @@ package object scowl extends Vocab
 
     }
 
-    implicit object IRIAnnotatable extends Annotatable[IRI] {
+    implicit object AnnotationSubjectAnnotatable extends Annotatable[OWLAnnotationSubject] {
 
-      def toAnnotationSubject(value: IRI): OWLAnnotationSubject = value
-
-    }
-
-    implicit object AnonymousAnnotatable extends Annotatable[OWLAnonymousIndividual] {
-
-      def toAnnotationSubject(value: OWLAnonymousIndividual): OWLAnnotationSubject = value
+      def toAnnotationSubject(value: OWLAnnotationSubject): OWLAnnotationSubject = value
 
     }
 
@@ -387,15 +372,9 @@ package object scowl extends Vocab
 
   }
 
-  implicit object IRIAnnotationValuer extends AnnotationValuer[IRI] {
+  implicit object AnnotationValueValuer extends AnnotationValuer[OWLAnnotationValue] {
 
-    def toAnnotationValue(value: IRI): OWLAnnotationValue = value
-
-  }
-
-  implicit object AnonymousAnnotationValuer extends AnnotationValuer[OWLAnonymousIndividual] {
-
-    def toAnnotationValue(value: OWLAnonymousIndividual): OWLAnnotationValue = value
+    def toAnnotationValue(value: OWLAnnotationValue): OWLAnnotationValue = value
 
   }
 
