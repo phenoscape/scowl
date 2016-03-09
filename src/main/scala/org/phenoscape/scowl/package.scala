@@ -1,6 +1,9 @@
 package org.phenoscape
 
 import scala.collection.JavaConversions._
+
+import org.phenoscape.scowl.converters.AnnotationValuer
+import org.phenoscape.scowl.converters.Literalable
 import org.phenoscape.scowl.omn.PropertyCharacteristic
 import org.phenoscape.scowl.omn.ScowlNegativeDataPropertyValue
 import org.phenoscape.scowl.omn.ScowlNegativeObjectPropertyValue
@@ -23,6 +26,7 @@ import org.semanticweb.owlapi.model.OWLDataMaxCardinality
 import org.semanticweb.owlapi.model.OWLDataMinCardinality
 import org.semanticweb.owlapi.model.OWLDataOneOf
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom
+import org.semanticweb.owlapi.model.OWLDataPropertyCharacteristicAxiom
 import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom
@@ -64,8 +68,6 @@ import org.semanticweb.owlapi.model.OWLSameIndividualAxiom
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
-import org.semanticweb.owlapi.model.OWLDataPropertyCharacteristicAxiom
-import org.semanticweb.owlapi.model.OWLAnonymousIndividual
 
 package object scowl extends Vocab
     with ofn.Entities
@@ -77,7 +79,9 @@ package object scowl extends Vocab
     with ofn.DataExpressions
     with omn.ClassExpressions
     with omn.PropertyCharacteristics
-    with omn.Facets {
+    with omn.Facets
+    with converters.AnnotationSubjects
+    with converters.Values {
 
   protected[scowl] val factory = OWLManager.getOWLDataFactory
 
@@ -297,90 +301,6 @@ package object scowl extends Vocab
       val literalable = implicitly[Literalable[T]]
       factory.getOWLDataOneOf(self.getValues + literalable.toLiteral(value))
     }
-
-  }
-
-  trait Literalable[-T] extends AnnotationValuer[T] {
-
-    def toLiteral(value: T): OWLLiteral
-
-    def toAnnotationValue(value: T): OWLAnnotationValue = toLiteral(value)
-
-  }
-
-  implicit object IntLiterable extends Literalable[Int] {
-
-    def toLiteral(value: Int): OWLLiteral = factory.getOWLLiteral(value)
-
-  }
-
-  implicit object FloatLiterable extends Literalable[Float] {
-
-    def toLiteral(value: Float): OWLLiteral = factory.getOWLLiteral(value)
-
-  }
-
-  implicit object DoubleLiterable extends Literalable[Double] {
-
-    def toLiteral(value: Double): OWLLiteral = factory.getOWLLiteral(value)
-
-  }
-
-  implicit object StringLiterable extends Literalable[String] {
-
-    def toLiteral(value: String): OWLLiteral = factory.getOWLLiteral(value)
-
-  }
-
-  implicit object BooleanLiterable extends Literalable[Boolean] {
-
-    def toLiteral(value: Boolean): OWLLiteral = factory.getOWLLiteral(value)
-
-  }
-
-  implicit object LiteralLiterable extends Literalable[OWLLiteral] {
-
-    def toLiteral(value: OWLLiteral): OWLLiteral = value
-
-  }
-
-  trait Annotatable[-T] {
-
-    def toAnnotationSubject(value: T): OWLAnnotationSubject
-
-  }
-
-  object Annotatable {
-
-    implicit object NamedObjectAnnotatable extends Annotatable[OWLNamedObject] {
-
-      def toAnnotationSubject(value: OWLNamedObject): OWLAnnotationSubject = value.getIRI
-
-    }
-
-    implicit object AnnotationSubjectAnnotatable extends Annotatable[OWLAnnotationSubject] {
-
-      def toAnnotationSubject(value: OWLAnnotationSubject): OWLAnnotationSubject = value
-
-    }
-
-  }
-
-  trait AnnotationValuer[-T] {
-
-    def toAnnotationValue(value: T): OWLAnnotationValue
-
-  }
-
-  implicit object AnnotationValueValuer extends AnnotationValuer[OWLAnnotationValue] {
-
-    def toAnnotationValue(value: OWLAnnotationValue): OWLAnnotationValue = value
-
-  }
-
-  implicit object NamedObjectValuer extends AnnotationValuer[OWLNamedObject] {
-
-    def toAnnotationValue(value: OWLNamedObject): OWLAnnotationValue = value.getIRI
 
   }
 

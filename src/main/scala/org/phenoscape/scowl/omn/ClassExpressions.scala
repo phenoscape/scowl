@@ -1,27 +1,22 @@
 package org.phenoscape.scowl.omn
 
+import scala.collection.JavaConversions._
+
+import org.phenoscape.scowl.converters.Literalable
+import org.phenoscape.scowl.factory
+
 import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
-import org.semanticweb.owlapi.model.OWLObjectOneOf
-import org.semanticweb.owlapi.model.OWLObjectUnionOf
-import org.semanticweb.owlapi.model.OWLObjectComplementOf
 import org.semanticweb.owlapi.model.OWLDataComplementOf
-import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
-import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
-import org.semanticweb.owlapi.model.OWLPropertyExpression
 import org.semanticweb.owlapi.model.OWLDataOneOf
-import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression
 import org.semanticweb.owlapi.model.OWLDataRange
-import org.semanticweb.owlapi.model.OWLNamedIndividual
-import org.semanticweb.owlapi.model.OWLHasKeyAxiom
 import org.semanticweb.owlapi.model.OWLIndividual
 import org.semanticweb.owlapi.model.OWLLiteral
-import org.phenoscape.scowl.factory
-import org.phenoscape.scowl.Literalable
-import scala.collection.JavaConversions._
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
+import org.semanticweb.owlapi.model.OWLNamedIndividual
+import org.semanticweb.owlapi.model.OWLObjectComplementOf
 import org.semanticweb.owlapi.model.OWLObjectInverseOf
+import org.semanticweb.owlapi.model.OWLObjectOneOf
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 
 trait ClassExpressions {
 

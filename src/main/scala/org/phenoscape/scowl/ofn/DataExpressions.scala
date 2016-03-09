@@ -2,7 +2,6 @@ package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
 import org.phenoscape.scowl.factory
-import org.phenoscape.scowl.Literalable
 import org.semanticweb.owlapi.model.OWLDataOneOf
 import org.semanticweb.owlapi.model.OWLDatatype
 import org.semanticweb.owlapi.model.OWLLiteral
@@ -17,6 +16,7 @@ import org.semanticweb.owlapi.model.OWLDataComplementOf
 import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression
 import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
+import org.phenoscape.scowl.converters.Literalable
 
 trait DataExpressions {
 
