@@ -19,11 +19,7 @@ trait Entities {
 
   def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
 
-  object Class extends NamedObjectConstructor[OWLClass] {
-
-    def apply(iri: IRI): OWLClass = factory.getOWLClass(iri)
-
-  }
+  object Class extends NamedObjectConstructor[OWLClass](factory.getOWLClass)
 
   def Individual(iri: IRI): OWLNamedIndividual = factory.getOWLNamedIndividual(iri)
 
@@ -31,11 +27,7 @@ trait Entities {
 
   def Individual(): OWLAnonymousIndividual = factory.getOWLAnonymousIndividual()
 
-  object NamedIndividual extends NamedObjectConstructor[OWLNamedIndividual] {
-
-    def apply(iri: IRI): OWLNamedIndividual = factory.getOWLNamedIndividual(iri)
-
-  }
+  object NamedIndividual extends NamedObjectConstructor[OWLNamedIndividual](factory.getOWLNamedIndividual)
 
   object AnonymousIndividual {
 
@@ -47,35 +39,19 @@ trait Entities {
 
   }
 
-  object ObjectProperty extends NamedObjectConstructor[OWLObjectProperty] {
+  object ObjectProperty extends NamedObjectConstructor[OWLObjectProperty](factory.getOWLObjectProperty)
 
-    def apply(iri: IRI): OWLObjectProperty = factory.getOWLObjectProperty(iri)
+  object AnnotationProperty extends NamedObjectConstructor[OWLAnnotationProperty](factory.getOWLAnnotationProperty)
 
-  }
+  object DataProperty extends NamedObjectConstructor[OWLDataProperty](factory.getOWLDataProperty)
 
-  object AnnotationProperty extends NamedObjectConstructor[OWLAnnotationProperty] {
-
-    def apply(iri: IRI): OWLAnnotationProperty = factory.getOWLAnnotationProperty(iri)
-
-  }
-
-  object DataProperty extends NamedObjectConstructor[OWLDataProperty] {
-
-    def apply(iri: IRI): OWLDataProperty = factory.getOWLDataProperty(iri)
-
-  }
-
-  object Datatype extends NamedObjectConstructor[OWLDatatype] {
-
-    def apply(iri: IRI): OWLDatatype = factory.getOWLDatatype(iri)
-
-  }
+  object Datatype extends NamedObjectConstructor[OWLDatatype](factory.getOWLDatatype)
 
 }
 
-trait NamedObjectConstructor[T <: OWLNamedObject] {
+class NamedObjectConstructor[T <: OWLNamedObject](constructor: IRI => T) {
 
-  def apply(iri: IRI): T
+  def apply(iri: IRI): T = constructor(iri)
 
   def apply(iri: String): T = apply(IRI.create(iri))
 
