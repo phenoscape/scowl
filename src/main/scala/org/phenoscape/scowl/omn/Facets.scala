@@ -1,10 +1,12 @@
 package org.phenoscape.scowl.omn
 
 import org.phenoscape.scowl.converters.Literalable
-import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.vocab.OWLFacet
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait Facets {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   def <[T: Literalable](value: T) = {
     val literalable = implicitly[Literalable[T]]

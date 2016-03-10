@@ -2,7 +2,6 @@ package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
 import org.phenoscape.scowl.Vocab
-import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.model.OWLIndividual
 import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom
@@ -18,8 +17,11 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLObjectUnionOf
 import org.semanticweb.owlapi.model.OWLObjectInverseOf
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait ObjectExpressions extends Vocab {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   object ObjectIntersectionOf {
 

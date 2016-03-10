@@ -1,9 +1,7 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
-
 import org.phenoscape.scowl.converters.Literalable
-import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
@@ -19,8 +17,11 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.model.OWLPropertyAssertionAxiom
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait IndividualAxioms {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   object ObjectPropertyAssertion extends ObjectPropertyAssertionAxiom[OWLObjectPropertyAssertionAxiom] {
 

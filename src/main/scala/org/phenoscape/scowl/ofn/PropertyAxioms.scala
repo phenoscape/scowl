@@ -1,8 +1,6 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
-
-import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
@@ -26,8 +24,11 @@ import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLUnaryPropertyAxiom
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait PropertyAxioms {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   object SubObjectPropertyOf {
 

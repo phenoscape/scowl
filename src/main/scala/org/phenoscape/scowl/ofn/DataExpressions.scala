@@ -1,7 +1,6 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
-import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLDataOneOf
 import org.semanticweb.owlapi.model.OWLDatatype
 import org.semanticweb.owlapi.model.OWLLiteral
@@ -17,8 +16,11 @@ import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression
 import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
 import org.phenoscape.scowl.converters.Literalable
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait DataExpressions {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   object ^^ {
 
@@ -117,6 +119,8 @@ trait DataExpressions {
 }
 
 class FacetRestriction(facet: OWLFacet) {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   def apply[T: Literalable](value: T): OWLFacetRestriction = {
     val literalable = implicitly[Literalable[T]]

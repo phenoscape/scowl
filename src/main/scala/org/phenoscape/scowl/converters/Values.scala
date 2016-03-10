@@ -3,9 +3,11 @@ package org.phenoscape.scowl.converters
 import org.semanticweb.owlapi.model.OWLLiteral
 import org.semanticweb.owlapi.model.OWLNamedObject
 import org.semanticweb.owlapi.model.OWLAnnotationValue
-import org.phenoscape.scowl.factory
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait Values {
+
+  private val factory = OWLManager.getOWLDataFactory
 
   implicit object IntLiterable extends Literalable[Int] {
 

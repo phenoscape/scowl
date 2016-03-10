@@ -83,7 +83,7 @@ package object scowl extends Vocab
     with converters.AnnotationSubjects
     with converters.Values {
 
-  protected[scowl] val factory = OWLManager.getOWLDataFactory
+  private val factory = OWLManager.getOWLDataFactory
 
   // Implicit value classes cannot be placed inside a trait and so must be defined here
 

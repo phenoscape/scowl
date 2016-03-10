@@ -11,11 +11,12 @@ import org.semanticweb.owlapi.model.OWLObjectProperty
 import org.semanticweb.owlapi.model.OWLOntology
 import org.semanticweb.owlapi.model.OWLClass
 import org.semanticweb.owlapi.model.OWLAxiom
-import org.phenoscape.scowl.factory
 import scala.collection.JavaConversions._
 import org.semanticweb.owlapi.model.OWLDatatype
 
 trait Entities {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   def Ontology(iri: String, axioms: Set[OWLAxiom]): OWLOntology = OWLManager.createOWLOntologyManager().createOntology(axioms, IRI.create(iri))
 

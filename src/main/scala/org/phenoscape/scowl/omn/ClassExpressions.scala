@@ -1,10 +1,7 @@
 package org.phenoscape.scowl.omn
 
 import scala.collection.JavaConversions._
-
 import org.phenoscape.scowl.converters.Literalable
-import org.phenoscape.scowl.factory
-
 import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.model.OWLDataComplementOf
 import org.semanticweb.owlapi.model.OWLDataOneOf
@@ -17,8 +14,11 @@ import org.semanticweb.owlapi.model.OWLObjectComplementOf
 import org.semanticweb.owlapi.model.OWLObjectInverseOf
 import org.semanticweb.owlapi.model.OWLObjectOneOf
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait ClassExpressions {
+  
+  private val factory = OWLManager.getOWLDataFactory
 
   def not(classExpression: OWLClassExpression): OWLObjectComplementOf = factory.getOWLObjectComplementOf(classExpression)
 

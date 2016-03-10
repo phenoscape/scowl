@@ -1,10 +1,8 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
-
 import org.phenoscape.scowl.converters.Annotatable
 import org.phenoscape.scowl.converters.AnnotationValuer
-import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom
 import org.semanticweb.owlapi.model.OWLAnnotationProperty
@@ -12,8 +10,11 @@ import org.semanticweb.owlapi.model.OWLAnnotationSubject
 import org.semanticweb.owlapi.model.OWLAnnotationValue
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom
 import org.semanticweb.owlapi.model.OWLEntity
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait AnnotationAxioms {
+
+  private val factory = OWLManager.getOWLDataFactory
 
   object Declaration {
 

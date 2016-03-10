@@ -5,6 +5,8 @@ import org.semanticweb.owlapi.vocab.OWL2Datatype
 
 trait Vocab {
 
+  private val factory = OWLManager.getOWLDataFactory
+
   val XSDInteger = factory.getIntegerOWLDatatype
 
   val XSDFloat = factory.getFloatOWLDatatype

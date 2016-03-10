@@ -1,6 +1,5 @@
 package org.phenoscape.scowl.omn
 
-import org.phenoscape.scowl.factory
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom
@@ -18,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLProperty
 import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom
 import org.semanticweb.owlapi.model.OWLDataPropertyCharacteristicAxiom
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression
+import org.semanticweb.owlapi.apibinding.OWLManager
 
 sealed trait PropertyCharacteristic[T <: OWLObjectPropertyCharacteristicAxiom, U <: OWLDataPropertyCharacteristicAxiom] {
 
@@ -36,6 +36,8 @@ sealed trait ObjectPropertyOnlyCharacteristic[T <: OWLObjectPropertyCharacterist
 }
 
 trait PropertyCharacteristics {
+
+  private val factory = OWLManager.getOWLDataFactory
 
   object Symmetric extends ObjectPropertyOnlyCharacteristic[OWLSymmetricObjectPropertyAxiom] {
 
