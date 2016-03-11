@@ -2,11 +2,35 @@ package org.phenoscape.scowl.example
 
 import org.phenoscape.scowl._
 import org.semanticweb.owlapi.model.OWLClassExpression
+import org.semanticweb.owlapi.apibinding.OWLManager
+import scala.collection.JavaConversions._
 
-object FunctionalSyntax extends App {
+object ReadMeExamples {
 
   /**
-   * Example of using pattern matching with functional syntax extractors
+   * Add some axioms and programmatically generated GCIs to an ontology
+   */
+  val manager = OWLManager.createOWLOntologyManager()
+  val ontology = manager.createOntology()
+  val PartOf = ObjectProperty("http://example.org/part_of")
+  val HasPart = ObjectProperty("http://example.org/has_part")
+  val DevelopsFrom = ObjectProperty("http://example.org/develops_from")
+  val Eye = Class("http://example.org/eye")
+  val Head = Class("http://example.org/head")
+  val Tail = Class("http://example.org/tail")
+
+  manager.addAxiom(ontology, Eye SubClassOf (PartOf some Head))
+  manager.addAxiom(ontology, Eye SubClassOf (not(PartOf some Tail)))
+
+  val gcis = for {
+    term <- ontology.getClassesInSignature(true)
+  } yield {
+    (not(HasPart some term)) SubClassOf (not(HasPart some (DevelopsFrom some term)))
+  }
+  manager.addAxioms(ontology, gcis)
+
+  /**
+   * Using pattern matching extractors to implement negation normal form
    */
   def nnf(given: OWLClassExpression): OWLClassExpression = given match {
     case Class(_) => given
@@ -28,31 +52,25 @@ object FunctionalSyntax extends App {
     case ObjectComplementOf(ObjectExactCardinality(num, property, filler)) => ObjectUnionOf(ObjectMinCardinality(num + 1, property, filler), ObjectMaxCardinality(math.max(num - 1, 0), property, filler))
   }
 
-  // has_part some (entity and (bearer_of some quality))
-
-  val HasPart = ObjectProperty("")
-  val PartOf = ObjectProperty("")
-  val BearerOf = ObjectProperty("")
-  val InheresIn = ObjectProperty("")
-  val Head = Class("")
-  val Eye = Class("")
-
-  val axiom = Head SubClassOf (HasPart some Eye)
-
-  axiom match {
-    case SubClassOf(_, subclass, ObjectSomeValuesFrom(ObjectProperty(propIRI), Class(fillerIRI))) => println(s"$propIRI, $fillerIRI")
+  /**
+   * Using pattern matching extractors in for comprehensions
+   */
+  // Print all properties and fillers used in existential restrictions in subclass axioms
+  for {
+    SubClassOf(_, subclass, ObjectSomeValuesFrom(property, filler)) <- ontology.getAxioms
+  } yield {
+    println(s"$property $filler")
   }
 
-  //  def entityFocusToQualityFocus(given: OWLClassExpression): OWLClassExpression = given match {
-  //    case ObjectSomeValuesFrom(HasPart, ObjectIntersectionOf(entity, ObjectSomeValuesFrom(BearerOf, quality))) =>
-  //      ObjectIntersectionOf(quality, ObjectSomeValuesFrom(InheresIn, entity))
-  //  }
-
-  //  def entityFocusToQualityFocus(given: OWLClassExpression): OWLClassExpression = given match {
-  //    case ObjectSomeValuesFrom(HasPart, ObjectIntersectionOf(operands)) =>
-  //      ObjectIntersectionOf(operands.map {
-  //        case ObjectSomeValuesFrom(BearerOf, quality) => ObjectSomeValuesFrom()
-  //      })
-  //  }
+  // Make an index of language tags to label valuess
+  val langValuePairs = for {
+    AnnotationAssertion(_, RDFSLabel, _, value @@ lang) <- ontology.getAxioms
+  } yield {
+    lang -> value
+  }
+  val langToValues: Map[String, Set[String]] = langValuePairs.foldLeft(Map.empty[String, Set[String]]) {
+    case (langIndex, (lang, value)) =>
+      langIndex.updated(lang, langIndex.getOrElse(value, Set.empty) ++ Set(value))
+  }
 
 }
