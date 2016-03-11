@@ -72,7 +72,7 @@ for {
   println(s"$property $filler")
 }
 
-// Make an index of language tags to label valuess
+// Make an index of language tags to label values
 val langValuePairs = for {
   AnnotationAssertion(_, RDFSLabel, _, value @@ lang) <- ontology.getAxioms
 } yield {
