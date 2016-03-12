@@ -50,6 +50,7 @@ object ReadMeExamples {
     case ObjectComplementOf(ObjectMinCardinality(num, property, filler)) => ObjectMaxCardinality(math.max(num - 1, 0), property, filler)
     case ObjectComplementOf(ObjectMaxCardinality(num, property, filler)) => ObjectMinCardinality(num + 1, property, filler)
     case ObjectComplementOf(ObjectExactCardinality(num, property, filler)) => ObjectUnionOf(ObjectMinCardinality(num + 1, property, filler), ObjectMaxCardinality(math.max(num - 1, 0), property, filler))
+    case _ => ???
   }
 
   /**
@@ -62,9 +63,9 @@ object ReadMeExamples {
     println(s"$property $filler")
   }
 
-  // Make an index of language tags to label valuess
+  // Make an index of language tags to label values
   val langValuePairs = for {
-    AnnotationAssertion(_, RDFSLabel, _, value @@ lang) <- ontology.getAxioms
+    AnnotationAssertion(_, RDFSLabel, _, value @@ Some(lang)) <- ontology.getAxioms
   } yield {
     lang -> value
   }

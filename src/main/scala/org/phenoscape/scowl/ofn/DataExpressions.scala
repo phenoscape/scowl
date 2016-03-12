@@ -19,7 +19,7 @@ import org.phenoscape.scowl.converters.Literalable
 import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait DataExpressions {
-  
+
   private val factory = OWLManager.getOWLDataFactory
 
   object ^^ {
@@ -30,7 +30,9 @@ trait DataExpressions {
 
   object @@ {
 
-    def unapply(literal: OWLLiteral): Option[(String, String)] = Option(literal.getLiteral, literal.getLang)
+    def unapply(literal: OWLLiteral): Option[(String, Option[String])] = Option(
+      literal.getLiteral,
+      if (literal.hasLang) Some(literal.getLang) else None)
 
   }
 
@@ -119,7 +121,7 @@ trait DataExpressions {
 }
 
 class FacetRestriction(facet: OWLFacet) {
-  
+
   private val factory = OWLManager.getOWLDataFactory
 
   def apply[T: Literalable](value: T): OWLFacetRestriction = {

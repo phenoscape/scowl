@@ -144,4 +144,20 @@ class ScowlTest {
 
   }
 
+  @Test
+  def testExtractors: Unit = {
+    val class1 = Class("http://example.org/class1")
+    val class2 = Class("http://example.org/class2")
+    val axioms = Set(
+      class1 Annotation (RDFSLabel, "cat" @@ "en"),
+      class1 Annotation (RDFSLabel, "chat" @@ "fr"),
+      class2 Annotation (RDFSLabel, 42),
+      class2 Annotation (RDFSComment, "hello"),
+      class1 SubClassOf class2)
+    val langValuePairs = for {
+      AnnotationAssertion(_, RDFSLabel, _, value @@ Some(lang)) <- axioms
+    } yield lang -> value
+    Assert.assertEquals(Set("en" -> "cat", "fr" -> "chat"), langValuePairs)
+  }
+
 }
