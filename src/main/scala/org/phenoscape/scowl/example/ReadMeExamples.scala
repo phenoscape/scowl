@@ -4,6 +4,7 @@ import org.phenoscape.scowl._
 import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.apibinding.OWLManager
 import scala.collection.JavaConversions._
+import org.semanticweb.owlapi.model.parameters.Imports
 
 object ReadMeExamples {
 
@@ -23,7 +24,7 @@ object ReadMeExamples {
   manager.addAxiom(ontology, Eye SubClassOf (not(PartOf some Tail)))
 
   val gcis = for {
-    term <- ontology.getClassesInSignature(true)
+    term <- ontology.getClassesInSignature(Imports.INCLUDED)
   } yield {
     (not(HasPart some term)) SubClassOf (not(HasPart some (DevelopsFrom some term)))
   }
@@ -58,14 +59,14 @@ object ReadMeExamples {
    */
   // Print all properties and fillers used in existential restrictions in subclass axioms
   for {
-    SubClassOf(_, subclass, ObjectSomeValuesFrom(property, filler)) <- ontology.getAxioms
+    SubClassOf(_, subclass, ObjectSomeValuesFrom(property, filler)) <- ontology.getAxioms(Imports.INCLUDED)
   } yield {
     println(s"$property $filler")
   }
 
   // Make an index of language tags to label values
   val langValuePairs = for {
-    AnnotationAssertion(_, RDFSLabel, _, value @@ Some(lang)) <- ontology.getAxioms
+    AnnotationAssertion(_, RDFSLabel, _, value @@ Some(lang)) <- ontology.getAxioms(Imports.INCLUDED)
   } yield {
     lang -> value
   }

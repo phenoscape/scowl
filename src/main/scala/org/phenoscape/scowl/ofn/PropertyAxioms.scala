@@ -190,7 +190,7 @@ trait PropertyAxioms {
 
 }
 
-trait UnaryObjectPropertyAxiom[T <: OWLUnaryPropertyAxiom[P], P <: OWLPropertyExpression[_, _]] {
+trait UnaryObjectPropertyAxiom[T <: OWLUnaryPropertyAxiom[P], P <: OWLPropertyExpression] {
 
   def constructor: (P, Set[OWLAnnotation]) => T
 

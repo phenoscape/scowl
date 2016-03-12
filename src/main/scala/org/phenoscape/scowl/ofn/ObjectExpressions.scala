@@ -68,7 +68,7 @@ trait ObjectExpressions extends Vocab {
       factory.getOWLObjectHasValue(property, value)
 
     def unapply(expression: OWLObjectHasValue): Option[(OWLObjectPropertyExpression, OWLIndividual)] =
-      Option((expression.getProperty, expression.getValue))
+      Option((expression.getProperty, expression.getFiller))
 
   }
 

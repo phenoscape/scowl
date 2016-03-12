@@ -1,6 +1,7 @@
 package org.phenoscape.scowltest
 
 import scala.collection.JavaConversions._
+import scala.language.postfixOps
 
 import org.junit.Test
 import org.junit.Assert

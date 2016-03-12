@@ -99,7 +99,7 @@ package object scowl extends Vocab
 
     def DisjointWith(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(self, other)
 
-    def HasKey(property: OWLPropertyExpression[_, _], more: OWLPropertyExpression[_, _]*): OWLHasKeyAxiom = factory.getOWLHasKeyAxiom(self, more.toSet + property)
+    def HasKey(property: OWLPropertyExpression, more: OWLPropertyExpression*): OWLHasKeyAxiom = factory.getOWLHasKeyAxiom(self, more.toSet + property)
 
   }
 

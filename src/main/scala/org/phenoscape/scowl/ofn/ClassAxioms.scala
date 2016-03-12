@@ -73,10 +73,10 @@ trait ClassAxioms {
     def apply(annotations: Set[OWLAnnotation], classExpression: OWLClassExpression, objectProperties: Set[OWLObjectPropertyExpression], dataProperties: Set[OWLDataPropertyExpression]): OWLHasKeyAxiom =
       factory.getOWLHasKeyAxiom(classExpression, objectProperties ++ dataProperties, annotations)
 
-    def apply(annotations: OWLAnnotation*)(classExpression: OWLClassExpression, properties: OWLPropertyExpression[_, _]*): OWLHasKeyAxiom =
+    def apply(annotations: OWLAnnotation*)(classExpression: OWLClassExpression, properties: OWLPropertyExpression*): OWLHasKeyAxiom =
       factory.getOWLHasKeyAxiom(classExpression, properties.toSet, annotations.toSet)
 
-    def apply(classExpression: OWLClassExpression, properties: OWLPropertyExpression[_, _]*): OWLHasKeyAxiom =
+    def apply(classExpression: OWLClassExpression, properties: OWLPropertyExpression*): OWLHasKeyAxiom =
       factory.getOWLHasKeyAxiom(classExpression, properties.toSet)
 
     def unapply(axiom: OWLHasKeyAxiom): Option[(Set[OWLAnnotation], OWLClassExpression, Set[OWLObjectPropertyExpression], Set[OWLDataPropertyExpression])] =
