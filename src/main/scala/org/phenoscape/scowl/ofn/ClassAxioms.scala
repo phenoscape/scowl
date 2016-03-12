@@ -16,7 +16,7 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait ClassAxioms {
-  
+
   private val factory = OWLManager.getOWLDataFactory
 
   object SubClassOf {
@@ -55,13 +55,13 @@ trait ClassAxioms {
       factory.getOWLDisjointUnionAxiom(aClass, classExpressions, annotations)
 
     def apply(aClass: OWLClass, classExpressions: Set[_ <: OWLClassExpression]): OWLDisjointUnionAxiom =
-      DisjointUnion(Set[OWLAnnotation](), aClass, classExpressions)
+      DisjointUnion(Set.empty[OWLAnnotation], aClass, classExpressions)
 
     def apply(annotations: OWLAnnotation*)(aClass: OWLClass, classExpressions: OWLClassExpression*): OWLDisjointUnionAxiom =
       DisjointUnion(annotations.toSet, aClass, classExpressions.toSet)
 
     def apply(aClass: OWLClass, classExpressions: OWLClassExpression*): OWLDisjointUnionAxiom =
-      DisjointUnion(Set[OWLAnnotation](), aClass, classExpressions.toSet)
+      DisjointUnion(Set.empty[OWLAnnotation], aClass, classExpressions.toSet)
 
     def unapply(axiom: OWLDisjointUnionAxiom): Option[(Set[OWLAnnotation], OWLClass, Set[_ <: OWLClassExpression])] =
       Option((axiom.getAnnotations.toSet, axiom.getOWLClass, axiom.getClassExpressions.toSet))
