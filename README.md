@@ -17,7 +17,9 @@ libraryDependencies += "org.phenoscape" %% "scowl" % "1.0.1"
 Import `org.phenoscape.scowl._`, and Scowl implicit conversions will add pseudo Manchester syntax methods to native OWL API objects. Additionally, functional syntax-style constructors and extractors will be in scope.
 
 ## Examples
-[Code](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/ReadMeExamples.scala)
+Implementations of all the examples from the [OWL 2 Web Ontology Language 
+Primer](https://www.w3.org/TR/owl2-primer/) are provided in [Manchester syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerManchester.scala) and [Functional syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerFunctional.scala). The examples below are also available in 
+[code](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/ReadMeExamples.scala).
 ### Add some axioms and programmatically generated GCIs to an ontology
 ```scala
 val manager = OWLManager.createOWLOntologyManager()
