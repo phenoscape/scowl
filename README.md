@@ -22,6 +22,30 @@ Scowl 1.0.1 is built with OWL API 3.5. Scowl 1.1 will support OWL API 4.
 Implementations of all the examples from the [OWL 2 Web Ontology Language 
 Primer](https://www.w3.org/TR/owl2-primer/) are provided in [Manchester syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerManchester.scala) and [Functional syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerFunctional.scala). The examples below are also available in 
 [code](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/ReadMeExamples.scala).
+
+### Scowl expressions use and return native OWL API objects
+```scala
+import org.phenoscape.scowl._
+// import org.phenoscape.scowl._
+
+val hasParent = ObjectProperty("http://www.co-ode.org/roberts/family-tree.owl#hasParent")
+// hasParent: org.semanticweb.owlapi.model.OWLObjectProperty = <http://www.co-ode.org/roberts/family-tree.owl#hasParent>
+
+val isParentOf = ObjectProperty("http://www.co-ode.org/roberts/family-tree.owl#isParentOf")
+// isParentOf: org.semanticweb.owlapi.model.OWLObjectProperty = <http://www.co-ode.org/roberts/family-tree.owl#isParentOf>
+
+val isSiblingOf = ObjectProperty("http://www.co-ode.org/roberts/family-tree.owl#isSiblingOf")
+// isSiblingOf: org.semanticweb.owlapi.model.OWLObjectProperty = <http://www.co-ode.org/roberts/family-tree.owl#isSiblingOf>
+
+val Person = Class("http://www.co-ode.org/roberts/family-tree.owl#Person")
+// Person: org.semanticweb.owlapi.model.OWLClass = <http://www.co-ode.org/roberts/family-tree.owl#Person>
+
+val FirstCousin = Class("http://www.co-ode.org/roberts/family-tree.owl#FirstCousin")
+// FirstCousin: org.semanticweb.owlapi.model.OWLClass = <http://www.co-ode.org/roberts/family-tree.owl#FirstCousin>
+
+val axiom = FirstCousin EquivalentTo (Person and (hasParent some (Person and (isSiblingOf some (Person and (isParentOf some Person))))))
+// axiom: org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom = EquivalentClasses(<http://www.co-ode.org/roberts/family-tree.owl#FirstCousin> ObjectIntersectionOf(<http://www.co-ode.org/roberts/family-tree.owl#Person> ObjectSomeValuesFrom(<http://www.co-ode.org/roberts/family-tree.owl#hasParent> ObjectIntersectionOf(<http://www.co-ode.org/roberts/family-tree.owl#Person> ObjectSomeValuesFrom(<http://www.co-ode.org/roberts/family-tree.owl#isSiblingOf> ObjectIntersectionOf(<http://www.co-ode.org/roberts/family-tree.owl#Person> ObjectSomeValuesFrom(<http://www.co-ode.org/roberts/family-tree.owl#isParentOf> <http://www.co-ode.org/roberts/family-tree.owl#Person>)))))) )
+```
 ### Add some axioms and programmatically generated GCIs to an ontology
 ```scala
 val manager = OWLManager.createOWLOntologyManager()
