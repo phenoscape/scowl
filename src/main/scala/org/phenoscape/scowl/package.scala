@@ -1,13 +1,15 @@
 package org.phenoscape
 
 import scala.collection.JavaConversions._
-
 import org.phenoscape.scowl.converters.AnnotationValuer
 import org.phenoscape.scowl.converters.Literalable
+import org.phenoscape.scowl.converters.SWRLDArgish
+import org.phenoscape.scowl.converters.SWRLIArgish
 import org.phenoscape.scowl.omn.PropertyCharacteristic
 import org.phenoscape.scowl.omn.ScowlNegativeDataPropertyValue
 import org.phenoscape.scowl.omn.ScowlNegativeObjectPropertyValue
 import org.phenoscape.scowl.omn.ScowlPropertyChain
+import org.phenoscape.scowl.omn.ScowlSWRLConjunction
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
 import org.semanticweb.owlapi.model.OWLAnnotation
@@ -68,6 +70,12 @@ import org.semanticweb.owlapi.model.OWLSameIndividualAxiom
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
+import org.semanticweb.owlapi.model.SWRLAtom
+import org.semanticweb.owlapi.model.SWRLClassAtom
+import org.semanticweb.owlapi.model.SWRLDataPropertyAtom
+import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom
+import org.semanticweb.owlapi.model.SWRLRule
+import org.semanticweb.owlapi.model.SWRLDataRangeAtom
 
 package object scowl extends Vocab
     with ofn.Entities
@@ -80,8 +88,10 @@ package object scowl extends Vocab
     with omn.ClassExpressions
     with omn.PropertyCharacteristics
     with omn.Facets
+    with omn.SWRLAtoms
     with converters.AnnotationSubjects
-    with converters.Values {
+    with converters.Values
+    with converters.SWRLArgs {
 
   private val factory = OWLManager.getOWLDataFactory
 
@@ -100,6 +110,11 @@ package object scowl extends Vocab
     def DisjointWith(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(self, other)
 
     def HasKey(property: OWLPropertyExpression, more: OWLPropertyExpression*): OWLHasKeyAxiom = factory.getOWLHasKeyAxiom(self, more.toSet + property)
+
+    def apply[T: SWRLIArgish](arg: T): SWRLClassAtom = {
+      val argish = implicitly[SWRLIArgish[T]]
+      factory.getSWRLClassAtom(self, argish.toArgument(arg))
+    }
 
   }
 
@@ -123,6 +138,11 @@ package object scowl extends Vocab
       case (s: OWLDataUnionOf, _) => factory.getOWLDataUnionOf(s.getOperands + other)
       case (_, o: OWLDataUnionOf) => factory.getOWLDataUnionOf(o.getOperands + self)
       case _ => factory.getOWLDataUnionOf(Set(self, other))
+    }
+
+    def apply[T: SWRLDArgish](arg: T): SWRLDataRangeAtom = {
+      val argish = implicitly[SWRLDArgish[T]]
+      factory.getSWRLDataRangeAtom(self, argish.toArgument(arg))
     }
 
   }
@@ -203,6 +223,12 @@ package object scowl extends Vocab
 
     def Characteristic[T <: OWLObjectPropertyCharacteristicAxiom](characteristic: PropertyCharacteristic[T, _]): T = characteristic.axiom(self)
 
+    def apply[S: SWRLIArgish, O: SWRLIArgish](subj: S, obj: O): SWRLObjectPropertyAtom = {
+      val argishS = implicitly[SWRLIArgish[S]]
+      val argishO = implicitly[SWRLIArgish[O]]
+      factory.getSWRLObjectPropertyAtom(self, argishS.toArgument(subj), argishO.toArgument(obj))
+    }
+
   }
 
   implicit class ScowlDataProperty(val self: OWLDataPropertyExpression) extends AnyVal {
@@ -233,6 +259,12 @@ package object scowl extends Vocab
     def Range(range: OWLDataRange): OWLDataPropertyRangeAxiom = factory.getOWLDataPropertyRangeAxiom(self, range)
 
     def Characteristic[T <: OWLDataPropertyCharacteristicAxiom](characteristic: PropertyCharacteristic[_, T]): T = characteristic.axiom(self)
+
+    def apply[S: SWRLIArgish, V: SWRLDArgish](subj: S, value: V): SWRLDataPropertyAtom = {
+      val argishS = implicitly[SWRLIArgish[S]]
+      val argishV = implicitly[SWRLDArgish[V]]
+      factory.getSWRLDataPropertyAtom(self, argishS.toArgument(subj), argishV.toArgument(value))
+    }
 
   }
 
@@ -301,6 +333,16 @@ package object scowl extends Vocab
       val literalable = implicitly[Literalable[T]]
       factory.getOWLDataOneOf(self.getValues + literalable.toLiteral(value))
     }
+
+  }
+
+  implicit class ScowlSWRLAtom(val self: SWRLAtom) extends AnyVal {
+
+    def ^(other: SWRLAtom): ScowlSWRLConjunction = ScowlSWRLConjunction(Set(self, other))
+
+    def -->(head: ScowlSWRLConjunction): SWRLRule = factory.getSWRLRule(Set(self), head.atoms)
+
+    def -->(head: SWRLAtom): SWRLRule = factory.getSWRLRule(Set(self), Set(head))
 
   }
 
