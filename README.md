@@ -11,12 +11,12 @@ Add the dependency to your `build.sbt`:
 ```scala
 resolvers += "Phenoscape Maven repository" at "http://phenoscape.svn.sourceforge.net/svnroot/phenoscape/trunk/maven/repository"
 
-libraryDependencies += "org.phenoscape" %% "scowl" % "1.0.2"
+libraryDependencies += "org.phenoscape" %% "scowl" % "1.1"
 ```
 
 Import `org.phenoscape.scowl._`, and Scowl implicit conversions will add pseudo Manchester syntax methods to native OWL API objects. Additionally, functional syntax-style constructors and extractors will be in scope.
 
-Scowl 1.0.2 is built with OWL API 3.5. Scowl 1.1 will support OWL API 4.
+Scowl 1.1 is built with OWL API 4.x. For OWL API 3.5, use Scowl 1.0.2. Scowl is cross-compiled to support both Scala 2.10 and 2.11.
 
 ## Examples
 Implementations of all the examples from the [OWL 2 Web Ontology Language 
