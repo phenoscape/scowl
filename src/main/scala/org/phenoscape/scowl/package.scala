@@ -159,9 +159,9 @@ package object scowl extends Vocab
 
     def ~(other: OWLIndividual): OWLObjectOneOf = factory.getOWLObjectOneOf(self, other)
 
-    def SameAs(other: OWLIndividual, more: OWLIndividual*): OWLSameIndividualAxiom = factory.getOWLSameIndividualAxiom(more.toSet + other)
+    def SameAs(other: OWLIndividual, more: OWLIndividual*): OWLSameIndividualAxiom = factory.getOWLSameIndividualAxiom(more.toSet + other + self)
 
-    def DifferentFrom(other: OWLIndividual, more: OWLIndividual*): OWLDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(more.toSet + other)
+    def DifferentFrom(other: OWLIndividual, more: OWLIndividual*): OWLDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(more.toSet + other + self)
 
   }
 
