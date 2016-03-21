@@ -18,7 +18,7 @@ trait SWRLArgs {
 
     val iriPrefix = "urn:swrl#"
 
-    def toArgument(arg: Symbol): SWRLVariable = factory.getSWRLVariable(IRI.create(s"$iriPrefix${arg.toString}"))
+    def toArgument(arg: Symbol): SWRLVariable = factory.getSWRLVariable(IRI.create(s"$iriPrefix${arg.name}"))
 
   }
 
