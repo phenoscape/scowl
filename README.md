@@ -22,8 +22,8 @@ Scowl 1.1 is built with OWL API 4.x. For OWL API 3.5, use Scowl 1.0.2. Scowl is 
 The easiest way to get started is to see how the DSL can be used to implement all the examples from the [OWL 2 Web Ontology Language 
 Primer](https://www.w3.org/TR/owl2-primer/):
 
-* [Manchester syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerManchester.scala)
-* [Functional syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerFunctional.scala). 
+* [Manchester syntax style](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerManchester.scala)
+* [Functional syntax style](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerFunctional.scala)
 
 The examples below are also available in 
 [code](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/ReadMeExamples.scala).
