@@ -8,6 +8,33 @@ import org.semanticweb.owlapi.model.parameters.Imports
 
 object ReadMeExamples {
 
+  val factory = OWLManager.getOWLDataFactory
+
+  /**
+   * Scowl expressions use and return native OWL API objects
+   */
+
+  val hasParent = ObjectProperty("http://www.co-ode.org/roberts/family-tree.owl#hasParent")
+
+  val isParentOf = ObjectProperty("http://www.co-ode.org/roberts/family-tree.owl#isParentOf")
+
+  val isSiblingOf = ObjectProperty("http://www.co-ode.org/roberts/family-tree.owl#isSiblingOf")
+
+  val Person = Class("http://www.co-ode.org/roberts/family-tree.owl#Person")
+
+  val FirstCousin = Class("http://www.co-ode.org/roberts/family-tree.owl#FirstCousin")
+
+  val axiom = FirstCousin EquivalentTo (Person and (hasParent some (Person and (isSiblingOf some (Person and (isParentOf some Person))))))
+
+  factory.getOWLEquivalentClassesAxiom(FirstCousin,
+    factory.getOWLObjectIntersectionOf(
+      Person,
+      factory.getOWLObjectSomeValuesFrom(hasParent, factory.getOWLObjectIntersectionOf(
+        Person,
+        factory.getOWLObjectSomeValuesFrom(isSiblingOf, factory.getOWLObjectIntersectionOf(
+          Person,
+          factory.getOWLObjectSomeValuesFrom(isParentOf, Person)))))))
+
   /**
    * Add some axioms and programmatically generated GCIs to an ontology
    */
