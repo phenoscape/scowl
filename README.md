@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/phenoscape/scowl.png)](http://travis-ci.org/phenoscape/scowl)
 
-Scowl is a Scala library allowing a declarative approach to composing OWL expressions and axioms using the [OWL API](http://owlapi.sourceforge.net).
+Scowl provides a Scala DSL allowing a declarative approach to composing OWL expressions and axioms using the [OWL API](http://owlapi.sourceforge.net).
 
 ## Usage
 
@@ -19,8 +19,13 @@ Import `org.phenoscape.scowl._`, and Scowl implicit conversions will add pseudo 
 Scowl 1.1 is built with OWL API 4.x. For OWL API 3.5, use Scowl 1.0.2. Scowl is cross-compiled to support both Scala 2.10 and 2.11.
 
 ## Examples
-Implementations of all the examples from the [OWL 2 Web Ontology Language 
-Primer](https://www.w3.org/TR/owl2-primer/) are provided in [Manchester syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerManchester.scala) and [Functional syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerFunctional.scala). The examples below are also available in 
+The easiest way to get started is to see how the DSL can be used to implement all the examples from the [OWL 2 Web Ontology Language 
+Primer](https://www.w3.org/TR/owl2-primer/):
+
+* [Manchester syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerManchester.scala)
+* [Functional syntax](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/OWL2PrimerFunctional.scala). 
+
+The examples below are also available in 
 [code](https://github.com/phenoscape/scowl/blob/master/src/main/scala/org/phenoscape/scowl/example/ReadMeExamples.scala).
 
 ### Scowl expressions use and return native OWL API objects
