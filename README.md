@@ -117,6 +117,9 @@ val langToValues: Map[String, Set[String]] = langValuePairs.foldLeft(Map.empty[S
 }
 ```
 
+## Funding
+Development of Scowl has been supported by National Science Foundation grant DBI-1062404 to the University of North Carolina.
+
 ## License
 
 Scowl is open source under the [MIT License](http://opensource.org/licenses/MIT).  See [LICENSE](LICENSE) for more information.
