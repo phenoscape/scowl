@@ -1,0 +1,23 @@
+{
+  "@context": "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+    {
+      "@id": "http://orcid.org/0000-0002-8688-6599",
+      "@type": "Person",
+      "email": "jbalhoff@rti.org",
+      "name": "Jim Balhoff",
+      "affiliation": "RTI International"
+    }
+  ],
+  "identifier": "http://dx.doi.org/10.5281/zenodo.51556",
+  "codeRepository": "https://github.com/phenoscape/scowl",
+  "datePublished": "2016-05-17",
+  "dateModified": "2016-05-17",
+  "dateCreated": "2016-05-17",
+  "description": "A Scala DSL for programming with the OWL API.",
+  "keywords": "OWL, ontology",
+  "license": "MIT",
+  "title": "Scowl",
+  "version": "v1.1"
+}
