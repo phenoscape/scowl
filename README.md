@@ -117,6 +117,9 @@ val langToValues: Map[String, Set[String]] = langValuePairs.foldLeft(Map.empty[S
 }
 ```
 
+## Question or problem?
+If you have questions about how to use Scowl, feel free to send an email to balhoff@gmail.com, or [open an issue on the tracker](https://github.com/phenoscape/scowl/issues). [Contributions are welcome](CONTRIBUTING.md).
+
 ## Funding
 Development of Scowl has been supported by National Science Foundation grant DBI-1062404 to the University of North Carolina.
 
