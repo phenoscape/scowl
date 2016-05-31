@@ -1,6 +1,6 @@
 # Scowl
 
-[![Build Status](https://secure.travis-ci.org/phenoscape/scowl.png)](http://travis-ci.org/phenoscape/scowl)
+[![status](http://joss.theoj.org/papers/1b9d09aab8754997884a04c081cfc019/status.svg)](http://joss.theoj.org/papers/1b9d09aab8754997884a04c081cfc019) [![Build Status](https://secure.travis-ci.org/phenoscape/scowl.png)](http://travis-ci.org/phenoscape/scowl)
 
 Scowl provides a Scala DSL allowing a declarative approach to composing OWL expressions and axioms using the [OWL API](http://owlapi.sourceforge.net).
 
