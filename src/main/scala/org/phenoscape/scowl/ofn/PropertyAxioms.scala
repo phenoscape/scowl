@@ -1,6 +1,8 @@
 package org.phenoscape.scowl.ofn
 
 import scala.collection.JavaConversions._
+
+import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLClassExpression
@@ -8,7 +10,10 @@ import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom
 import org.semanticweb.owlapi.model.OWLDataRange
+import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom
 import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom
+import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom
+import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom
 import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom
 import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom
@@ -19,15 +24,15 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom
 import org.semanticweb.owlapi.model.OWLPropertyExpression
 import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom
+import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
 import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom
 import org.semanticweb.owlapi.model.OWLUnaryPropertyAxiom
-import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait PropertyAxioms {
-  
+
   private val factory = OWLManager.getOWLDataFactory
 
   object SubObjectPropertyOf {
@@ -53,6 +58,57 @@ trait PropertyAxioms {
 
     def unapply(axiom: OWLSubPropertyChainOfAxiom): Option[(Set[OWLAnnotation], List[OWLObjectPropertyExpression], OWLObjectPropertyExpression)] =
       Option(axiom.getAnnotations.toSet, axiom.getPropertyChain.toList, axiom.getSuperProperty)
+
+  }
+
+  object SubDataPropertyOf {
+
+    def apply(annotations: Set[OWLAnnotation], subProperty: OWLDataPropertyExpression, superProperty: OWLDataPropertyExpression): OWLSubDataPropertyOfAxiom =
+      factory.getOWLSubDataPropertyOfAxiom(subProperty, superProperty)
+
+    def apply(subProperty: OWLDataPropertyExpression, superProperty: OWLDataPropertyExpression): OWLSubDataPropertyOfAxiom =
+      apply(Set.empty, subProperty, superProperty)
+
+    def unapply(axiom: OWLSubDataPropertyOfAxiom): Option[(Set[OWLAnnotation], OWLDataPropertyExpression, OWLDataPropertyExpression)] =
+      Option(axiom.getAnnotations.toSet, axiom.getSubProperty, axiom.getSuperProperty)
+
+  }
+
+  object EquivalentObjectProperties {
+
+    def apply(annotations: Set[OWLAnnotation], propertyExpressions: Set[OWLObjectPropertyExpression]): OWLEquivalentObjectPropertiesAxiom =
+      factory.getOWLEquivalentObjectPropertiesAxiom(propertyExpressions, annotations)
+
+    def apply(properties: OWLObjectPropertyExpression*): OWLEquivalentObjectPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties.toSet)
+
+    def apply(properties: Set[OWLObjectPropertyExpression]): OWLEquivalentObjectPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties)
+
+    def apply(annotations: OWLAnnotation*)(properties: OWLObjectPropertyExpression*): OWLEquivalentObjectPropertiesAxiom =
+      apply(annotations.toSet, properties.toSet)
+
+    def unapply(axiom: OWLEquivalentObjectPropertiesAxiom): Option[(Set[OWLAnnotation], Set[OWLObjectPropertyExpression])] =
+      Option(axiom.getAnnotations.toSet, axiom.getProperties.toSet)
+
+  }
+
+  object EquivalentDataProperties {
+
+    def apply(annotations: Set[OWLAnnotation], propertyExpressions: Set[OWLDataPropertyExpression]): OWLEquivalentDataPropertiesAxiom =
+      factory.getOWLEquivalentDataPropertiesAxiom(propertyExpressions, annotations)
+
+    def apply(properties: OWLDataPropertyExpression*): OWLEquivalentDataPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties.toSet)
+
+    def apply(properties: Set[OWLDataPropertyExpression]): OWLEquivalentDataPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties)
+
+    def apply(annotations: OWLAnnotation*)(properties: OWLDataPropertyExpression*): OWLEquivalentDataPropertiesAxiom =
+      apply(annotations.toSet, properties.toSet)
+
+    def unapply(axiom: OWLEquivalentDataPropertiesAxiom): Option[(Set[OWLAnnotation], Set[OWLDataPropertyExpression])] =
+      Option(axiom.getAnnotations.toSet, axiom.getProperties.toSet)
 
   }
 
@@ -136,6 +192,25 @@ trait PropertyAxioms {
       apply(annotations.toSet, properties.toSet)
 
     def unapply(axiom: OWLDisjointObjectPropertiesAxiom): Option[(Set[OWLAnnotation], Set[OWLObjectPropertyExpression])] =
+      Option(axiom.getAnnotations.toSet, axiom.getProperties.toSet)
+
+  }
+
+  object DisjointDataProperties {
+
+    def apply(annotations: Set[OWLAnnotation], properties: Set[OWLDataPropertyExpression]): OWLDisjointDataPropertiesAxiom =
+      factory.getOWLDisjointDataPropertiesAxiom(properties, annotations)
+
+    def apply(properties: OWLDataPropertyExpression*): OWLDisjointDataPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties.toSet)
+
+    def apply(properties: Set[OWLDataPropertyExpression]): OWLDisjointDataPropertiesAxiom =
+      apply(Set.empty[OWLAnnotation], properties)
+
+    def apply(annotations: OWLAnnotation*)(properties: OWLDataPropertyExpression*): OWLDisjointDataPropertiesAxiom =
+      apply(annotations.toSet, properties.toSet)
+
+    def unapply(axiom: OWLDisjointDataPropertiesAxiom): Option[(Set[OWLAnnotation], Set[OWLDataPropertyExpression])] =
       Option(axiom.getAnnotations.toSet, axiom.getProperties.toSet)
 
   }
