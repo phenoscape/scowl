@@ -5,6 +5,22 @@ name          := "scowl"
 
 version       := "1.2"
 
+publishMavenStyle := true
+
+publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+        Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+        Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
+
+publishArtifact in Test := false
+
+licenses := Seq("MIT license" -> url("https://opensource.org/licenses/MIT"))
+
+homepage := Some(url("https://github.com/phenoscape/scowl"))
+
 crossScalaVersions := Seq("2.10.6", "2.11.7")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
@@ -18,3 +34,17 @@ libraryDependencies ++= {
     "org.scalaz"             %% "scalaz-core"            % "7.2.1" % Test
   )
 }
+
+pomExtra := (
+    <scm>
+        <url>git@github.com:phenoscape/scowl.git</url>
+        <connection>scm:git:git@github.com:phenoscape/scowl.git</connection>
+    </scm>
+    <developers>
+        <developer>
+            <id>balhoff</id>
+            <name>Jim Balhoff</name>
+            <email>jim@balhoff.org<email>
+        </developer>
+    </developers>
+)
