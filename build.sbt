@@ -44,7 +44,7 @@ pomExtra := (
         <developer>
             <id>balhoff</id>
             <name>Jim Balhoff</name>
-            <email>jim@balhoff.org<email>
+            <email>jim@balhoff.org</email>
         </developer>
     </developers>
 )
