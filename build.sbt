@@ -3,7 +3,7 @@ organization  := "org.phenoscape"
 
 name          := "scowl"
 
-version       := "1.2.1"
+version       := "1.3-SNAPSHOT"
 
 publishMavenStyle := true
 
@@ -21,7 +21,7 @@ licenses := Seq("MIT license" -> url("https://opensource.org/licenses/MIT"))
 
 homepage := Some(url("https://github.com/phenoscape/scowl"))
 
-crossScalaVersions := Seq("2.10.6", "2.11.7")
+crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
@@ -30,8 +30,8 @@ javaOptions += "-Xmx8G"
 libraryDependencies ++= {
   Seq(
     "net.sourceforge.owlapi" %  "owlapi-distribution"    % "4.2.7",
-    "org.scalatest"          %% "scalatest"              % "2.2.6" % Test,
-    "org.scalaz"             %% "scalaz-core"            % "7.2.1" % Test
+    "org.scalatest"          %% "scalatest"              % "3.0.1" % Test,
+    "org.scalaz"             %% "scalaz-core"            % "7.2.10" % Test
   )
 }
 
