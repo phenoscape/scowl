@@ -7,9 +7,11 @@ import org.phenoscape.scowl._
 import org.scalatest._
 import org.semanticweb.owlapi.apibinding.OWLManager
 import org.semanticweb.owlapi.model.IRI
+import org.semanticweb.owlapi.model.OWLAxiom
 import org.semanticweb.owlapi.vocab.OWLFacet
 import org.semanticweb.owlapi.vocab.SWRLBuiltInsVocabulary
 import org.semanticweb.owlapi.vocab.XSDVocabulary
+import org.semanticweb.owlapi.search.EntitySearcher
 
 class ScowlTest extends UnitSpec {
 
@@ -86,6 +88,12 @@ class ScowlTest extends UnitSpec {
       AnnotationAssertion(_, RDFSLabel, _, value @@ Some(lang)) <- axioms
     } yield lang -> value
     langValuePairs should equal(Set("en" -> "cat", "fr" -> "chat"))
+
+    val ont = OWLManager.createOWLOntologyManager().createOntology(Set[OWLAxiom](class1 Annotation (RDFSLabel, "cat" @@ "en")))
+    val values = for {
+      Annotation(_, _, value @@ _) <- EntitySearcher.getAnnotations(class1, ont)
+    } yield value
+    values.toSet should equal(Set("cat"))
   }
 
   "SWRL syntax" should "equal standard API" in {
