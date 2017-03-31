@@ -1,6 +1,6 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.semanticweb.owlapi.model.OWLDataOneOf
 import org.semanticweb.owlapi.model.OWLDatatype
 import org.semanticweb.owlapi.model.OWLLiteral
@@ -42,23 +42,23 @@ trait DataExpressions {
       apply(literals.toSet)
 
     def apply(literals: Set[_ <: OWLLiteral]): OWLDataOneOf =
-      factory.getOWLDataOneOf(literals)
+      factory.getOWLDataOneOf(literals.asJava)
 
     def unapply(expression: OWLDataOneOf): Option[Set[_ <: OWLLiteral]] =
-      Option(expression.getValues.toSet)
+      Option(expression.getValues.asScala.toSet)
 
   }
 
   object DatatypeRestriction {
 
     def apply(datatype: OWLDatatype, restrictions: Set[OWLFacetRestriction]): OWLDatatypeRestriction =
-      factory.getOWLDatatypeRestriction(datatype, restrictions)
+      factory.getOWLDatatypeRestriction(datatype, restrictions.asJava)
 
     def apply(datatype: OWLDatatype, restrictions: OWLFacetRestriction*): OWLDatatypeRestriction =
       apply(datatype, restrictions.toSet)
 
     def unapply(datatypeRestriction: OWLDatatypeRestriction): Option[(OWLDatatype, Set[OWLFacetRestriction])] =
-      Option(datatypeRestriction.getDatatype, datatypeRestriction.getFacetRestrictions.toSet)
+      Option(datatypeRestriction.getDatatype, datatypeRestriction.getFacetRestrictions.asScala.toSet)
 
   }
 
@@ -69,24 +69,24 @@ trait DataExpressions {
   object DatatypeDefinition {
 
     def apply(annotations: Set[OWLAnnotation], datatype: OWLDatatype, datarange: OWLDataRange): OWLDatatypeDefinitionAxiom =
-      factory.getOWLDatatypeDefinitionAxiom(datatype, datarange, annotations)
+      factory.getOWLDatatypeDefinitionAxiom(datatype, datarange, annotations.asJava)
 
     def apply(datatype: OWLDatatype, datarange: OWLDataRange): OWLDatatypeDefinitionAxiom =
       apply(Set.empty, datatype, datarange)
 
     def unapply(axiom: OWLDatatypeDefinitionAxiom): Option[(Set[OWLAnnotation], OWLDatatype, OWLDataRange)] =
-      Option(axiom.getAnnotations.toSet, axiom.getDatatype, axiom.getDataRange)
+      Option(axiom.getAnnotations.asScala.toSet, axiom.getDatatype, axiom.getDataRange)
 
   }
 
   object DataIntersectionOf {
 
-    def apply(dataRanges: Set[OWLDataRange]): OWLDataIntersectionOf = factory.getOWLDataIntersectionOf(dataRanges)
+    def apply(dataRanges: Set[OWLDataRange]): OWLDataIntersectionOf = factory.getOWLDataIntersectionOf(dataRanges.asJava)
 
     def apply(dataRange1: OWLDataRange, dataRange2: OWLDataRange, more: OWLDataRange*): OWLDataIntersectionOf =
       apply(more.toSet + dataRange1 + dataRange2)
 
-    def unapply(intersection: OWLDataIntersectionOf): Option[Set[OWLDataRange]] = Option(intersection.getOperands.toSet)
+    def unapply(intersection: OWLDataIntersectionOf): Option[Set[OWLDataRange]] = Option(intersection.getOperands.asScala.toSet)
 
   }
 

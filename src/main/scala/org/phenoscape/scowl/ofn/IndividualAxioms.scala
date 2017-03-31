@@ -1,6 +1,6 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.phenoscape.scowl.converters.Literalable
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom
@@ -26,14 +26,14 @@ trait IndividualAxioms {
   object ObjectPropertyAssertion extends ObjectPropertyAssertionAxiom[OWLObjectPropertyAssertionAxiom] {
 
     def apply(annotations: Set[OWLAnnotation], property: OWLObjectPropertyExpression, subject: OWLIndividual, target: OWLIndividual): OWLObjectPropertyAssertionAxiom =
-      factory.getOWLObjectPropertyAssertionAxiom(property, subject, target, annotations)
+      factory.getOWLObjectPropertyAssertionAxiom(property, subject, target, annotations.asJava)
 
   }
 
   object NegativeObjectPropertyAssertion extends ObjectPropertyAssertionAxiom[OWLNegativeObjectPropertyAssertionAxiom] {
 
     def apply(annotations: Set[OWLAnnotation], property: OWLObjectPropertyExpression, subject: OWLIndividual, target: OWLIndividual): OWLNegativeObjectPropertyAssertionAxiom =
-      factory.getOWLNegativeObjectPropertyAssertionAxiom(property, subject, target, annotations)
+      factory.getOWLNegativeObjectPropertyAssertionAxiom(property, subject, target, annotations.asJava)
 
   }
 
@@ -41,7 +41,7 @@ trait IndividualAxioms {
 
     def apply[V: Literalable](annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: V): OWLDataPropertyAssertionAxiom = {
       val literalable = implicitly[Literalable[V]]
-      factory.getOWLDataPropertyAssertionAxiom(property, subject, literalable.toLiteral(value), annotations)
+      factory.getOWLDataPropertyAssertionAxiom(property, subject, literalable.toLiteral(value), annotations.asJava)
     }
 
   }
@@ -50,7 +50,7 @@ trait IndividualAxioms {
 
     def apply[V: Literalable](annotations: Set[OWLAnnotation], property: OWLDataPropertyExpression, subject: OWLIndividual, value: V): OWLNegativeDataPropertyAssertionAxiom = {
       val literalable = implicitly[Literalable[V]]
-      factory.getOWLNegativeDataPropertyAssertionAxiom(property, subject, literalable.toLiteral(value), annotations)
+      factory.getOWLNegativeDataPropertyAssertionAxiom(property, subject, literalable.toLiteral(value), annotations.asJava)
     }
 
   }
@@ -58,7 +58,7 @@ trait IndividualAxioms {
   object ClassAssertion {
 
     def apply(annotations: Set[OWLAnnotation], classExpression: OWLClassExpression, individual: OWLIndividual): OWLClassAssertionAxiom =
-      factory.getOWLClassAssertionAxiom(classExpression, individual, annotations)
+      factory.getOWLClassAssertionAxiom(classExpression, individual, annotations.asJava)
 
     def apply(classExpression: OWLClassExpression, individual: OWLIndividual): OWLClassAssertionAxiom =
       ClassAssertion(Set.empty, classExpression, individual)
@@ -67,21 +67,21 @@ trait IndividualAxioms {
       ClassAssertion(annotations.toSet, classExpression, individual)
 
     def unapply(axiom: OWLClassAssertionAxiom): Option[(Set[OWLAnnotation], OWLClassExpression, OWLIndividual)] =
-      Option(axiom.getAnnotations.toSet, axiom.getClassExpression, axiom.getIndividual)
+      Option(axiom.getAnnotations.asScala.toSet, axiom.getClassExpression, axiom.getIndividual)
 
   }
 
   object SameIndividual extends NaryIndividualsAxiom[OWLSameIndividualAxiom] {
 
     def apply(annotations: Set[OWLAnnotation], individuals: Set[_ <: OWLIndividual]): OWLSameIndividualAxiom =
-      factory.getOWLSameIndividualAxiom(individuals.toSet, annotations.toSet)
+      factory.getOWLSameIndividualAxiom(individuals.toSet.asJava, annotations.toSet.asJava)
 
   }
 
   object DifferentIndividuals extends NaryIndividualsAxiom[OWLDifferentIndividualsAxiom] {
 
     def apply(annotations: Set[OWLAnnotation], individuals: Set[_ <: OWLIndividual]): OWLDifferentIndividualsAxiom =
-      factory.getOWLDifferentIndividualsAxiom(individuals.toSet, annotations.toSet)
+      factory.getOWLDifferentIndividualsAxiom(individuals.toSet.asJava, annotations.toSet.asJava)
 
   }
 
@@ -98,7 +98,7 @@ trait ObjectPropertyAssertionAxiom[T <: OWLPropertyAssertionAxiom[OWLObjectPrope
     apply(Set.empty, property, subject, target)
 
   def unapply(axiom: T): Option[(Set[OWLAnnotation], OWLObjectPropertyExpression, OWLIndividual, OWLIndividual)] =
-    Option(axiom.getAnnotations.toSet, axiom.getProperty, axiom.getSubject, axiom.getObject)
+    Option(axiom.getAnnotations.asScala.toSet, axiom.getProperty, axiom.getSubject, axiom.getObject)
 
 }
 
@@ -113,7 +113,7 @@ trait DataPropertyAssertionAxiom[T <: OWLPropertyAssertionAxiom[OWLDataPropertyE
     apply(Set.empty, property, subject, value)
 
   def unapply(axiom: T): Option[(Set[OWLAnnotation], OWLDataPropertyExpression, OWLIndividual, OWLLiteral)] =
-    Option(axiom.getAnnotations.toSet, axiom.getProperty, axiom.getSubject, axiom.getObject)
+    Option(axiom.getAnnotations.asScala.toSet, axiom.getProperty, axiom.getSubject, axiom.getObject)
 
 }
 
@@ -131,6 +131,6 @@ trait NaryIndividualsAxiom[T <: OWLNaryIndividualAxiom] {
     apply(annotations.toSet, individuals.toSet)
 
   def unapply(axiom: T): Option[(Set[OWLAnnotation], Set[OWLIndividual])] =
-    Option(axiom.getAnnotations.toSet, axiom.getIndividuals.toSet)
+    Option(axiom.getAnnotations.asScala.toSet, axiom.getIndividuals.asScala.toSet)
 
 }

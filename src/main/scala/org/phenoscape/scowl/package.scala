@@ -1,6 +1,6 @@
 package org.phenoscape
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 import org.phenoscape.scowl.converters.AnnotationValuer
 import org.phenoscape.scowl.converters.Literalable
@@ -104,9 +104,9 @@ package object scowl extends Vocab
 
   implicit class ScowlClassExpression(val self: OWLClassExpression) extends AnyVal {
 
-    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf(self.asConjunctSet + other)
+    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf((self.asConjunctSet.asScala + other).asJava)
 
-    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf(self.asDisjunctSet + other)
+    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf((self.asDisjunctSet.asScala + other).asJava)
 
     def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(self, other)
 
@@ -114,7 +114,7 @@ package object scowl extends Vocab
 
     def DisjointWith(other: OWLClassExpression): OWLDisjointClassesAxiom = factory.getOWLDisjointClassesAxiom(self, other)
 
-    def HasKey(property: OWLPropertyExpression, more: OWLPropertyExpression*): OWLHasKeyAxiom = factory.getOWLHasKeyAxiom(self, more.toSet + property)
+    def HasKey(property: OWLPropertyExpression, more: OWLPropertyExpression*): OWLHasKeyAxiom = factory.getOWLHasKeyAxiom(self, (more.toSet + property).asJava)
 
     def apply[T: SWRLIArgish](arg: T): SWRLClassAtom = {
       val argish = implicitly[SWRLIArgish[T]]
@@ -125,24 +125,24 @@ package object scowl extends Vocab
 
   implicit class ScowlObjectOneOf(val self: OWLObjectOneOf) extends AnyVal {
 
-    def ~(ind: OWLIndividual) = factory.getOWLObjectOneOf(self.getIndividuals + ind)
+    def ~(ind: OWLIndividual) = factory.getOWLObjectOneOf((self.getIndividuals.asScala + ind).asJava)
 
   }
 
   implicit class ScowlDataRange(val self: OWLDataRange) extends AnyVal {
 
     def and(other: OWLDataRange): OWLDataIntersectionOf = (self, other) match {
-      case (s: OWLDataIntersectionOf, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf(s.getOperands ++ o.getOperands)
-      case (s: OWLDataIntersectionOf, _) => factory.getOWLDataIntersectionOf(s.getOperands + other)
-      case (_, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf(o.getOperands + self)
-      case _ => factory.getOWLDataIntersectionOf(Set(self, other))
+      case (s: OWLDataIntersectionOf, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf((s.getOperands.asScala ++ o.getOperands.asScala).asJava)
+      case (s: OWLDataIntersectionOf, _) => factory.getOWLDataIntersectionOf((s.getOperands.asScala + other).asJava)
+      case (_, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf((o.getOperands.asScala + self).asJava)
+      case _ => factory.getOWLDataIntersectionOf(Set(self, other).asJava)
     }
 
     def or(other: OWLDataRange): OWLDataUnionOf = (self, other) match {
-      case (s: OWLDataUnionOf, o: OWLDataIntersectionOf) => factory.getOWLDataUnionOf(s.getOperands ++ o.getOperands)
-      case (s: OWLDataUnionOf, _) => factory.getOWLDataUnionOf(s.getOperands + other)
-      case (_, o: OWLDataUnionOf) => factory.getOWLDataUnionOf(o.getOperands + self)
-      case _ => factory.getOWLDataUnionOf(Set(self, other))
+      case (s: OWLDataUnionOf, o: OWLDataIntersectionOf) => factory.getOWLDataUnionOf((s.getOperands.asScala ++ o.getOperands.asScala).asJava)
+      case (s: OWLDataUnionOf, _) => factory.getOWLDataUnionOf((s.getOperands.asScala + other).asJava)
+      case (_, o: OWLDataUnionOf) => factory.getOWLDataUnionOf((o.getOperands.asScala + self).asJava)
+      case _ => factory.getOWLDataUnionOf(Set(self, other).asJava)
     }
 
     def apply[T: SWRLDArgish](arg: T): SWRLDataRangeAtom = {
@@ -154,7 +154,7 @@ package object scowl extends Vocab
 
   implicit class ScowlDataType(val self: OWLDatatype) extends AnyVal {
 
-    def apply(facet: OWLFacetRestriction, more: OWLFacetRestriction*): OWLDatatypeRestriction = factory.getOWLDatatypeRestriction(self, more.toSet + facet)
+    def apply(facet: OWLFacetRestriction, more: OWLFacetRestriction*): OWLDatatypeRestriction = factory.getOWLDatatypeRestriction(self, (more.toSet + facet).asJava)
 
     def EquivalentTo(range: OWLDataRange): OWLDatatypeDefinitionAxiom = factory.getOWLDatatypeDefinitionAxiom(self, range)
 
@@ -184,9 +184,9 @@ package object scowl extends Vocab
 
     def ~(other: OWLIndividual): OWLObjectOneOf = factory.getOWLObjectOneOf(self, other)
 
-    def SameAs(other: OWLIndividual, more: OWLIndividual*): OWLSameIndividualAxiom = factory.getOWLSameIndividualAxiom(more.toSet + other + self)
+    def SameAs(other: OWLIndividual, more: OWLIndividual*): OWLSameIndividualAxiom = factory.getOWLSameIndividualAxiom((more.toSet + other + self).asJava)
 
-    def DifferentFrom(other: OWLIndividual, more: OWLIndividual*): OWLDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom(more.toSet + other + self)
+    def DifferentFrom(other: OWLIndividual, more: OWLIndividual*): OWLDifferentIndividualsAxiom = factory.getOWLDifferentIndividualsAxiom((more.toSet + other + self).asJava)
 
   }
 
@@ -216,7 +216,7 @@ package object scowl extends Vocab
 
     def o(property: OWLObjectPropertyExpression): ScowlPropertyChain = new ScowlPropertyChain(self, property)
 
-    def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = factory.getOWLSubPropertyChainOfAxiom(chain.properties, self)
+    def SubPropertyChain(chain: ScowlPropertyChain): OWLSubPropertyChainOfAxiom = factory.getOWLSubPropertyChainOfAxiom(chain.properties.asJava, self)
 
     def Self: OWLObjectHasSelf = factory.getOWLObjectHasSelf(self)
 
@@ -294,12 +294,12 @@ package object scowl extends Vocab
 
     def Annotation[T: AnnotationValuer](property: OWLAnnotationProperty, value: T): OWLAxiom = {
       val valuer = implicitly[AnnotationValuer[T]]
-      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, valuer.toAnnotationValue(value))))
+      self.getAnnotatedAxiom(Set(factory.getOWLAnnotation(property, valuer.toAnnotationValue(value))).asJava)
     }
 
     def Annotations[T: AnnotationValuer](annotations: (OWLAnnotationProperty, T)*): OWLAxiom = {
       val valuer = implicitly[AnnotationValuer[T]]
-      self.getAnnotatedAxiom(annotations.map { case (property, value) => factory.getOWLAnnotation(property, valuer.toAnnotationValue(value)) }.toSet[OWLAnnotation])
+      self.getAnnotatedAxiom((annotations.map { case (property, value) => factory.getOWLAnnotation(property, valuer.toAnnotationValue(value)) }.toSet[OWLAnnotation]).asJava)
     }
 
   }
@@ -344,7 +344,7 @@ package object scowl extends Vocab
 
     def ~[T: Literalable](value: T): OWLDataOneOf = {
       val literalable = implicitly[Literalable[T]]
-      factory.getOWLDataOneOf(self.getValues + literalable.toLiteral(value))
+      factory.getOWLDataOneOf((self.getValues.asScala + literalable.toLiteral(value)).asJava)
     }
 
   }
@@ -353,9 +353,9 @@ package object scowl extends Vocab
 
     def ^(other: SWRLAtom): ScowlSWRLConjunction = ScowlSWRLConjunction(Set(self, other))
 
-    def -->(head: ScowlSWRLConjunction): SWRLRule = factory.getSWRLRule(Set(self), head.atoms)
+    def -->(head: ScowlSWRLConjunction): SWRLRule = factory.getSWRLRule(Set(self).asJava, head.atoms.asJava)
 
-    def -->(head: SWRLAtom): SWRLRule = factory.getSWRLRule(Set(self), Set(head))
+    def -->(head: SWRLAtom): SWRLRule = factory.getSWRLRule(Set(self).asJava, Set(head).asJava)
 
   }
 

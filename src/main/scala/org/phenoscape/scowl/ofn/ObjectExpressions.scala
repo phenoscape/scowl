@@ -1,6 +1,6 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.phenoscape.scowl.Vocab
 import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.model.OWLIndividual
@@ -29,10 +29,10 @@ trait ObjectExpressions extends Vocab {
       apply(operands.toSet)
 
     def apply(operands: Set[_ <: OWLClassExpression]): OWLObjectIntersectionOf =
-      factory.getOWLObjectIntersectionOf(operands)
+      factory.getOWLObjectIntersectionOf(operands.asJava)
 
     def unapply(expression: OWLObjectIntersectionOf): Option[Set[_ <: OWLClassExpression]] =
-      Option(expression.getOperands.toSet)
+      Option(expression.getOperands.asScala.toSet)
 
   }
 
@@ -42,10 +42,10 @@ trait ObjectExpressions extends Vocab {
       apply(operands.toSet)
 
     def apply(operands: Set[_ <: OWLClassExpression]): OWLObjectUnionOf =
-      factory.getOWLObjectUnionOf(operands)
+      factory.getOWLObjectUnionOf(operands.asJava)
 
     def unapply(expression: OWLObjectUnionOf): Option[Set[_ <: OWLClassExpression]] =
-      Option(expression.getOperands.toSet)
+      Option(expression.getOperands.asScala.toSet)
 
   }
 
@@ -55,10 +55,10 @@ trait ObjectExpressions extends Vocab {
       apply(individuals.toSet)
 
     def apply(individuals: Set[_ <: OWLIndividual]): OWLObjectOneOf =
-      factory.getOWLObjectOneOf(individuals)
+      factory.getOWLObjectOneOf(individuals.asJava)
 
     def unapply(expression: OWLObjectOneOf): Option[Set[_ <: OWLIndividual]] =
-      Option(expression.getIndividuals.toSet)
+      Option(expression.getIndividuals.asScala.toSet)
 
   }
 

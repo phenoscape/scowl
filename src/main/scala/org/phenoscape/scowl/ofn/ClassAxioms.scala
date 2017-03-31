@@ -1,6 +1,6 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.semanticweb.owlapi.model.OWLAnnotation
 import org.semanticweb.owlapi.model.OWLClass
 import org.semanticweb.owlapi.model.OWLClassExpression
@@ -22,7 +22,7 @@ trait ClassAxioms {
   object SubClassOf {
 
     def apply(annotations: Set[OWLAnnotation], subClass: OWLClassExpression, superClass: OWLClassExpression): OWLSubClassOfAxiom =
-      factory.getOWLSubClassOfAxiom(subClass, superClass, annotations)
+      factory.getOWLSubClassOfAxiom(subClass, superClass, annotations.asJava)
 
     def apply(annotations: OWLAnnotation*)(subClass: OWLClassExpression, superClass: OWLClassExpression): OWLSubClassOfAxiom =
       SubClassOf(annotations.toSet, subClass, superClass)
@@ -31,28 +31,28 @@ trait ClassAxioms {
       SubClassOf(Set.empty, subClass, superClass)
 
     def unapply(axiom: OWLSubClassOfAxiom): Option[(Set[OWLAnnotation], OWLClassExpression, OWLClassExpression)] =
-      Option((axiom.getAnnotations.toSet, axiom.getSubClass, axiom.getSuperClass))
+      Option((axiom.getAnnotations.asScala.toSet, axiom.getSubClass, axiom.getSuperClass))
 
   }
 
   object EquivalentClasses extends NaryClassAxiom[OWLEquivalentClassesAxiom] {
 
     def apply(annotations: Set[OWLAnnotation], classExpressions: Set[_ <: OWLClassExpression]): OWLEquivalentClassesAxiom =
-      factory.getOWLEquivalentClassesAxiom(classExpressions, annotations)
+      factory.getOWLEquivalentClassesAxiom(classExpressions.asJava, annotations.asJava)
 
   }
 
   object DisjointClasses extends NaryClassAxiom[OWLDisjointClassesAxiom] {
 
     def apply(annotations: Set[OWLAnnotation], classExpressions: Set[_ <: OWLClassExpression]): OWLDisjointClassesAxiom =
-      factory.getOWLDisjointClassesAxiom(classExpressions, annotations)
+      factory.getOWLDisjointClassesAxiom(classExpressions.asJava, annotations.asJava)
 
   }
 
   object DisjointUnion {
 
     def apply(annotations: Set[OWLAnnotation], aClass: OWLClass, classExpressions: Set[_ <: OWLClassExpression]): OWLDisjointUnionAxiom =
-      factory.getOWLDisjointUnionAxiom(aClass, classExpressions, annotations)
+      factory.getOWLDisjointUnionAxiom(aClass, classExpressions.asJava, annotations.asJava)
 
     def apply(aClass: OWLClass, classExpressions: Set[_ <: OWLClassExpression]): OWLDisjointUnionAxiom =
       DisjointUnion(Set.empty[OWLAnnotation], aClass, classExpressions)
@@ -64,23 +64,23 @@ trait ClassAxioms {
       DisjointUnion(Set.empty[OWLAnnotation], aClass, classExpressions.toSet)
 
     def unapply(axiom: OWLDisjointUnionAxiom): Option[(Set[OWLAnnotation], OWLClass, Set[_ <: OWLClassExpression])] =
-      Option((axiom.getAnnotations.toSet, axiom.getOWLClass, axiom.getClassExpressions.toSet))
+      Option((axiom.getAnnotations.asScala.toSet, axiom.getOWLClass, axiom.getClassExpressions.asScala.toSet))
 
   }
 
   object HasKey {
 
     def apply(annotations: Set[OWLAnnotation], classExpression: OWLClassExpression, objectProperties: Set[OWLObjectPropertyExpression], dataProperties: Set[OWLDataPropertyExpression]): OWLHasKeyAxiom =
-      factory.getOWLHasKeyAxiom(classExpression, objectProperties ++ dataProperties, annotations)
+      factory.getOWLHasKeyAxiom(classExpression, (objectProperties ++ dataProperties).asJava, annotations.asJava)
 
     def apply(annotations: OWLAnnotation*)(classExpression: OWLClassExpression, properties: OWLPropertyExpression*): OWLHasKeyAxiom =
-      factory.getOWLHasKeyAxiom(classExpression, properties.toSet, annotations.toSet)
+      factory.getOWLHasKeyAxiom(classExpression, properties.toSet.asJava, annotations.toSet.asJava)
 
     def apply(classExpression: OWLClassExpression, properties: OWLPropertyExpression*): OWLHasKeyAxiom =
-      factory.getOWLHasKeyAxiom(classExpression, properties.toSet)
+      factory.getOWLHasKeyAxiom(classExpression, properties.toSet.asJava)
 
     def unapply(axiom: OWLHasKeyAxiom): Option[(Set[OWLAnnotation], OWLClassExpression, Set[OWLObjectPropertyExpression], Set[OWLDataPropertyExpression])] =
-      Option(axiom.getAnnotations.toSet, axiom.getClassExpression, axiom.getObjectPropertyExpressions.toSet, axiom.getDataPropertyExpressions.toSet)
+      Option(axiom.getAnnotations.asScala.toSet, axiom.getClassExpression, axiom.getObjectPropertyExpressions.asScala.toSet, axiom.getDataPropertyExpressions.asScala.toSet)
 
   }
 
@@ -100,6 +100,6 @@ trait NaryClassAxiom[T <: OWLNaryClassAxiom] {
     apply(Set.empty[OWLAnnotation], classExpressions.toSet)
 
   def unapply(axiom: T): Option[(Set[OWLAnnotation], Set[_ <: OWLClassExpression])] =
-    Option((axiom.getAnnotations.toSet, axiom.getClassExpressions.toSet))
+    Option((axiom.getAnnotations.asScala.toSet, axiom.getClassExpressions.asScala.toSet))
 
 }

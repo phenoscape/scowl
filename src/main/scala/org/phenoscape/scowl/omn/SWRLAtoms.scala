@@ -1,6 +1,6 @@
 package org.phenoscape.scowl.omn
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.phenoscape.scowl.converters.SWRLDArgish
 import org.phenoscape.scowl.converters.SWRLIArgish
 import org.semanticweb.owlapi.apibinding.OWLManager
@@ -37,7 +37,7 @@ case class SWRLBuiltIn(iri: IRI) {
 
   def apply[T: SWRLDArgish](args: T*): SWRLBuiltInAtom = {
     val argish = implicitly[SWRLDArgish[T]]
-    factory.getSWRLBuiltInAtom(iri, args.map(argish.toArgument))
+    factory.getSWRLBuiltInAtom(iri, args.map(argish.toArgument).asJava)
   }
 
 }

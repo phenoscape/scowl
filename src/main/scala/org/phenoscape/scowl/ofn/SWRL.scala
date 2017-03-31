@@ -1,6 +1,6 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.phenoscape.scowl.converters.SWRLArgs
 import org.phenoscape.scowl.converters.SWRLDArgish
 import org.phenoscape.scowl.converters.SWRLIArgish
@@ -33,7 +33,7 @@ trait SWRL {
   object DLSafeRule {
 
     def apply(annotations: Set[OWLAnnotation], body: Set[_ <: SWRLAtom], head: Set[_ <: SWRLAtom]): SWRLRule =
-      factory.getSWRLRule(body, head, annotations)
+      factory.getSWRLRule(body.asJava, head.asJava, annotations.asJava)
 
     def apply(body: Set[_ <: SWRLAtom], head: Set[_ <: SWRLAtom]): SWRLRule =
       DLSafeRule(Set.empty, body, head)
@@ -42,7 +42,7 @@ trait SWRL {
       DLSafeRule(annotations.toSet, body, head)
 
     def unapply(rule: SWRLRule): Option[(Set[OWLAnnotation], Set[SWRLAtom], Set[SWRLAtom])] =
-      Option(rule.getAnnotations.toSet, rule.getBody.toSet, rule.getHead.toSet)
+      Option(rule.getAnnotations.asScala.toSet, rule.getBody.asScala.toSet, rule.getHead.asScala.toSet)
 
   }
 
@@ -100,11 +100,11 @@ trait SWRL {
 
     def apply[T: SWRLDArgish](iri: IRI, args: T*): SWRLBuiltInAtom = {
       val argish = implicitly[SWRLDArgish[T]]
-      factory.getSWRLBuiltInAtom(iri, args.map(argish.toArgument))
+      factory.getSWRLBuiltInAtom(iri, args.map(argish.toArgument).asJava)
     }
 
     def unapply(atom: SWRLBuiltInAtom): Option[(IRI, Seq[SWRLDArgument])] = {
-      Option(atom.getPredicate, atom.getArguments)
+      Option(atom.getPredicate, atom.getArguments.asScala)
     }
 
   }

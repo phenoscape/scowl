@@ -1,6 +1,6 @@
 package org.phenoscape.scowl.omn
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.phenoscape.scowl.converters.Literalable
 import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.model.OWLDataComplementOf
@@ -17,7 +17,7 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
 import org.semanticweb.owlapi.apibinding.OWLManager
 
 trait ClassExpressions {
-  
+
   private val factory = OWLManager.getOWLDataFactory
 
   def not(classExpression: OWLClassExpression): OWLObjectComplementOf = factory.getOWLObjectComplementOf(classExpression)
@@ -28,9 +28,9 @@ trait ClassExpressions {
 
   def not[T: Literalable](property: OWLDataPropertyExpression, value: T): ScowlNegativeDataPropertyValue[T] = ScowlNegativeDataPropertyValue(property, value)
 
-  def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet)
+  def oneOf(individuals: OWLNamedIndividual*): OWLObjectOneOf = factory.getOWLObjectOneOf(individuals.toSet.asJava)
 
-  def oneOf(literals: OWLLiteral*): OWLDataOneOf = factory.getOWLDataOneOf(literals.toSet)
+  def oneOf(literals: OWLLiteral*): OWLDataOneOf = factory.getOWLDataOneOf(literals.toSet.asJava)
 
   def inverse(property: OWLObjectPropertyExpression): OWLObjectInverseOf = factory.getOWLObjectInverseOf(property)
 

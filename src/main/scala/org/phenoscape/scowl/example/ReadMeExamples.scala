@@ -3,7 +3,7 @@ package org.phenoscape.scowl.example
 import org.phenoscape.scowl._
 import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.apibinding.OWLManager
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.semanticweb.owlapi.model.parameters.Imports
 
 object ReadMeExamples {
@@ -51,11 +51,11 @@ object ReadMeExamples {
   manager.addAxiom(ontology, Eye SubClassOf (not(PartOf some Tail)))
 
   val gcis = for {
-    term <- ontology.getClassesInSignature(Imports.INCLUDED)
+    term <- ontology.getClassesInSignature(Imports.INCLUDED).asScala
   } yield {
     (not(HasPart some term)) SubClassOf (not(HasPart some (DevelopsFrom some term)))
   }
-  manager.addAxioms(ontology, gcis)
+  manager.addAxioms(ontology, gcis.toSet.asJava)
 
   /**
    * Using pattern matching extractors to implement negation normal form
@@ -86,14 +86,14 @@ object ReadMeExamples {
    */
   // Print all properties and fillers used in existential restrictions in subclass axioms
   for {
-    SubClassOf(_, subclass, ObjectSomeValuesFrom(property, filler)) <- ontology.getAxioms(Imports.INCLUDED)
+    SubClassOf(_, subclass, ObjectSomeValuesFrom(property, filler)) <- ontology.getAxioms(Imports.INCLUDED).asScala
   } yield {
     println(s"$property $filler")
   }
 
   // Make an index of language tags to label values
   val langValuePairs = for {
-    AnnotationAssertion(_, RDFSLabel, _, value @@ Some(lang)) <- ontology.getAxioms(Imports.INCLUDED)
+    AnnotationAssertion(_, RDFSLabel, _, value @@ Some(lang)) <- ontology.getAxioms(Imports.INCLUDED).asScala
   } yield {
     lang -> value
   }
