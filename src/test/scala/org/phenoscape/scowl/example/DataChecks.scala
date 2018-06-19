@@ -5,7 +5,7 @@ import Scalaz._
 import org.semanticweb.owlapi.model.OWLOntology
 import org.phenoscape.scowl._
 import org.phenoscape.scowl.^^
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import org.semanticweb.owlapi.model.AxiomType
 import org.semanticweb.owlapi.model.parameters.Imports
 import org.semanticweb.owlapi.apibinding.OWLManager
@@ -25,14 +25,14 @@ class DataChecks extends UnitSpec {
   val synonymProperties = Set(HasExactSynonym, HasNarrowSynonym, HasBroadSynonym, HasRelatedSynonym)
 
   "rdfs:label values" should "be used only once per ontology" ignore {
-    ont.getAxioms(Imports.EXCLUDED)
+    ont.getAxioms(Imports.EXCLUDED).asScala
       .collect { case axiom @ AnnotationAssertion(_, RDFSLabel, _, value ^^ _) => Map(value -> Set(axiom)) }
       .reduce(_ |+| _)
       .filter { case (label, annotations) => annotations.size > 1 } shouldBe empty
   }
 
   "hasExactSynonym values" should "be used only once per ontology" ignore {
-    ont.getAxioms(Imports.EXCLUDED)
+    ont.getAxioms(Imports.EXCLUDED).asScala
       .collect { case axiom @ AnnotationAssertion(_, HasExactSynonym, _, value ^^ _) => Map(value -> Set(axiom)) }
       .reduce(_ |+| _)
       .filter { case (label, annotations) => annotations.size > 1 } shouldBe empty
@@ -40,7 +40,7 @@ class DataChecks extends UnitSpec {
 
   // This test is very slow; SPARQL would probably be better (perhaps for many other such tests as well).
   "No class" should "have a synonym that matches the label" ignore { //FIXME ignored 
-    val annotations = ont.getAxioms(AxiomType.ANNOTATION_ASSERTION, Imports.EXCLUDED).toSet
+    val annotations = ont.getAxioms(AxiomType.ANNOTATION_ASSERTION, Imports.EXCLUDED).asScala.toSet
     (for {
       AnnotationAssertion(_, RDFSLabel, termIRI, label ^^ _) <- annotations
       AnnotationAssertion(_, synonymProperty, `termIRI`, `label` ^^ _) <- annotations
@@ -49,13 +49,13 @@ class DataChecks extends UnitSpec {
   }
 
   "Annotation values" should "not contain double spaces" ignore {
-    ont.getAxioms(Imports.EXCLUDED)
+    ont.getAxioms(Imports.EXCLUDED).asScala
       .collect { case axiom @ AnnotationAssertion(_, _, _, value ^^ _) if value.contains("  ") => axiom } shouldBe empty
 
   }
 
   "Trim" should "not have an effect on annotation values" ignore {
-    ont.getAxioms(Imports.EXCLUDED)
+    ont.getAxioms(Imports.EXCLUDED).asScala
       .collect { case axiom @ AnnotationAssertion(_, _, _, value ^^ _) if value.trim != value => axiom } shouldBe empty
   }
 

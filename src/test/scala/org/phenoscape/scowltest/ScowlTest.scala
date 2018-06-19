@@ -1,6 +1,6 @@
 package org.phenoscape.scowltest
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.language.postfixOps
 
 import org.phenoscape.scowl._
@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.vocab.OWLFacet
 import org.semanticweb.owlapi.vocab.SWRLBuiltInsVocabulary
 import org.semanticweb.owlapi.vocab.XSDVocabulary
 import org.semanticweb.owlapi.search.EntitySearcher
+import org.semanticweb.owlapi.model.SWRLDArgument
 
 class ScowlTest extends UnitSpec {
 
@@ -43,7 +44,7 @@ class ScowlTest extends UnitSpec {
     val Narcissist = Class("http://example.org/Narcissist")
     val loves = ObjectProperty("http://example.org/loves")
     (Narcissist EquivalentTo (loves Self)) should equal(factory.getOWLEquivalentClassesAxiom(Narcissist, factory.getOWLObjectHasSelf(loves)))
-    ((ind1 Fact (prop1, ind2)) Annotation (RDFSLabel, AnonymousIndividual("urn:anon:1"))) should equal(factory.getOWLObjectPropertyAssertionAxiom(prop1, ind1, ind2, Set(factory.getOWLAnnotation(factory.getRDFSLabel, factory.getOWLAnonymousIndividual("urn:anon:1")))))
+    ((ind1 Fact (prop1, ind2)) Annotation (RDFSLabel, AnonymousIndividual("urn:anon:1"))) should equal(factory.getOWLObjectPropertyAssertionAxiom(prop1, ind1, ind2, Set(factory.getOWLAnnotation(factory.getRDFSLabel, factory.getOWLAnonymousIndividual("urn:anon:1"))).asJava))
     (ind1 SameAs ind2) should equal(factory.getOWLSameIndividualAxiom(ind1, ind2))
     (ind1 SameAs (ind2, ind3)) should equal(factory.getOWLSameIndividualAxiom(ind1, ind2, ind3))
     (ind1 DifferentFrom ind2) should equal(factory.getOWLDifferentIndividualsAxiom(ind1, ind2))
@@ -51,8 +52,8 @@ class ScowlTest extends UnitSpec {
   }
 
   "Scowl property chains" should "equal standard API" in {
-    (prop4 SubPropertyChain (prop1 o prop2)) should equal(factory.getOWLSubPropertyChainOfAxiom(List(prop1, prop2), prop4))
-    (prop4 SubPropertyChain (prop1 o prop2 o prop3)) should equal(factory.getOWLSubPropertyChainOfAxiom(List(prop1, prop2, prop3), prop4))
+    (prop4 SubPropertyChain (prop1 o prop2)) should equal(factory.getOWLSubPropertyChainOfAxiom(List(prop1, prop2).asJava, prop4))
+    (prop4 SubPropertyChain (prop1 o prop2 o prop3)) should equal(factory.getOWLSubPropertyChainOfAxiom(List(prop1, prop2, prop3).asJava, prop4))
   }
 
   "Scowl data properties and literals" should "equal standard API" in {
@@ -89,9 +90,9 @@ class ScowlTest extends UnitSpec {
     } yield lang -> value
     langValuePairs should equal(Set("en" -> "cat", "fr" -> "chat"))
 
-    val ont = OWLManager.createOWLOntologyManager().createOntology(Set[OWLAxiom](class1 Annotation (RDFSLabel, "cat" @@ "en")))
+    val ont = OWLManager.createOWLOntologyManager().createOntology(Set[OWLAxiom](class1 Annotation (RDFSLabel, "cat" @@ "en")).asJava)
     val values = for {
-      Annotation(_, _, value @@ _) <- EntitySearcher.getAnnotations(class1, ont)
+      Annotation(_, _, value @@ _) <- EntitySearcher.getAnnotations(class1, ont).asScala
     } yield value
     values.toSet should equal(Set("cat"))
   }
@@ -101,11 +102,11 @@ class ScowlTest extends UnitSpec {
       factory.getSWRLRule(
         Set(
           factory.getSWRLClassAtom(class1, factory.getSWRLVariable(IRI.create("urn:swrl#x"))),
-          factory.getSWRLClassAtom(class1, factory.getSWRLVariable(IRI.create("urn:swrl#y")))),
+          factory.getSWRLClassAtom(class1, factory.getSWRLVariable(IRI.create("urn:swrl#y")))).asJava,
         Set(
-          factory.getSWRLClassAtom(class2, factory.getSWRLVariable(IRI.create("urn:swrl#x")))),
+          factory.getSWRLClassAtom(class2, factory.getSWRLVariable(IRI.create("urn:swrl#x")))).asJava,
         Set(
-          factory.getOWLAnnotation(factory.getRDFSLabel, factory.getOWLLiteral("X and Y rule")))))
+          factory.getOWLAnnotation(factory.getRDFSLabel, factory.getOWLLiteral("X and Y rule"))).asJava))
     (prop1(ind1, 'x) ^ class1('x) ^ class2(ind1) ^ class1('y)) --> prop2('x, 'y)
     ((prop5(ind1, 42) ^ class1(ind1) ^ sameAs(ind1, ind2) ^ differentFrom(ind1, 'x) ^ swrlbAbs('x)) --> prop5(ind1, "text")) should equal(
       factory.getSWRLRule(
@@ -114,9 +115,9 @@ class ScowlTest extends UnitSpec {
           factory.getSWRLClassAtom(class1, factory.getSWRLIndividualArgument(ind1)),
           factory.getSWRLSameIndividualAtom(factory.getSWRLIndividualArgument(ind1), factory.getSWRLIndividualArgument(ind2)),
           factory.getSWRLDifferentIndividualsAtom(factory.getSWRLIndividualArgument(ind1), factory.getSWRLVariable(IRI.create("urn:swrl#x"))),
-          factory.getSWRLBuiltInAtom(SWRLBuiltInsVocabulary.ABS.getIRI, List(factory.getSWRLVariable(IRI.create("urn:swrl#x"))))),
+          factory.getSWRLBuiltInAtom(SWRLBuiltInsVocabulary.ABS.getIRI, List[SWRLDArgument](factory.getSWRLVariable(IRI.create("urn:swrl#x"))).toSeq.asJava)).asJava,
         Set(
-          factory.getSWRLDataPropertyAtom(prop5, factory.getSWRLIndividualArgument(ind1), factory.getSWRLLiteralArgument(factory.getOWLLiteral("text"))))))
+          factory.getSWRLDataPropertyAtom(prop5, factory.getSWRLIndividualArgument(ind1), factory.getSWRLLiteralArgument(factory.getOWLLiteral("text")))).asJava))
   }
 
 }

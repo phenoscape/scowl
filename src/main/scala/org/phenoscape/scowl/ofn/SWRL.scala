@@ -104,7 +104,7 @@ trait SWRL {
     }
 
     def unapply(atom: SWRLBuiltInAtom): Option[(IRI, Seq[SWRLDArgument])] = {
-      Option(atom.getPredicate, atom.getArguments.asScala)
+      Option((atom.getPredicate, atom.getArguments.asScala.toSeq))
     }
 
   }
