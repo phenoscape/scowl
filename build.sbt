@@ -3,7 +3,7 @@ organization  := "org.phenoscape"
 
 name          := "scowl"
 
-version       := "1.4.1"
+version       := "1.3.1"
 
 publishMavenStyle := true
 
