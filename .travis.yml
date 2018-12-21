@@ -1,8 +1,9 @@
 language: scala
 scala:
-  - "2.13.0-M4"
-  - "2.12.6"
+  - "2.13.0-M5"
+  - "2.12.8"
   - "2.11.8"
   - "2.10.6"
 jdk:
   - oraclejdk8
+  - oraclejdk11

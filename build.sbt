@@ -3,7 +3,7 @@ organization  := "org.phenoscape"
 
 name          := "scowl"
 
-version       := "1.3.1"
+version       := "1.3.2-SNAPSHOT"
 
 publishMavenStyle := true
 
@@ -21,7 +21,7 @@ licenses := Seq("MIT license" -> url("https://opensource.org/licenses/MIT"))
 
 homepage := Some(url("https://github.com/phenoscape/scowl"))
 
-crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.6", "2.13.0-M4")
+crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.8", "2.13.0-M5")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
