@@ -31,7 +31,7 @@ libraryDependencies ++= {
   Seq(
     "net.sourceforge.owlapi" %  "owlapi-distribution"    % "4.5.9",
     "org.scalatest"          %% "scalatest"              % "3.0.6-SNAP5" % Test,
-    "org.scalaz"             %% "scalaz-core"            % "7.2.26" % Test
+    "org.scalaz"             %% "scalaz-core"            % "7.2.27" % Test
   )
 }
 
