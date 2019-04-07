@@ -8,3 +8,4 @@ scowl.iml
 .cache-tests
 project/target
 bin
+/.idea
