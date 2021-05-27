@@ -35,9 +35,9 @@ package object scowl extends Vocab
 
   implicit class ScowlClassExpression(val self: OWLClassExpression) extends AnyVal {
 
-    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf((self.asConjunctSet.asScala + other).asJava)
+    def and(other: OWLClassExpression): OWLObjectIntersectionOf = factory.getOWLObjectIntersectionOf((self.asConjunctSet.asScala.to(Set) + other).asJava)
 
-    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf((self.asDisjunctSet.asScala + other).asJava)
+    def or(other: OWLClassExpression): OWLObjectUnionOf = factory.getOWLObjectUnionOf((self.asDisjunctSet.asScala.to(Set) + other).asJava)
 
     def SubClassOf(other: OWLClassExpression): OWLSubClassOfAxiom = factory.getOWLSubClassOfAxiom(self, other)
 
@@ -56,7 +56,7 @@ package object scowl extends Vocab
 
   implicit class ScowlObjectOneOf(val self: OWLObjectOneOf) extends AnyVal {
 
-    def ~(ind: OWLIndividual) = factory.getOWLObjectOneOf((self.getIndividuals.asScala + ind).asJava)
+    def ~(ind: OWLIndividual) = factory.getOWLObjectOneOf((self.getIndividuals.asScala.to(Set) + ind).asJava)
 
   }
 
@@ -64,15 +64,15 @@ package object scowl extends Vocab
 
     def and(other: OWLDataRange): OWLDataIntersectionOf = (self, other) match {
       case (s: OWLDataIntersectionOf, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf((s.getOperands.asScala ++ o.getOperands.asScala).asJava)
-      case (s: OWLDataIntersectionOf, _) => factory.getOWLDataIntersectionOf((s.getOperands.asScala + other).asJava)
-      case (_, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf((o.getOperands.asScala + self).asJava)
+      case (s: OWLDataIntersectionOf, _) => factory.getOWLDataIntersectionOf((s.getOperands.asScala.to(Set) + other).asJava)
+      case (_, o: OWLDataIntersectionOf) => factory.getOWLDataIntersectionOf((o.getOperands.asScala.to(Set) + self).asJava)
       case _ => factory.getOWLDataIntersectionOf(Set(self, other).asJava)
     }
 
     def or(other: OWLDataRange): OWLDataUnionOf = (self, other) match {
       case (s: OWLDataUnionOf, o: OWLDataIntersectionOf) => factory.getOWLDataUnionOf((s.getOperands.asScala ++ o.getOperands.asScala).asJava)
-      case (s: OWLDataUnionOf, _) => factory.getOWLDataUnionOf((s.getOperands.asScala + other).asJava)
-      case (_, o: OWLDataUnionOf) => factory.getOWLDataUnionOf((o.getOperands.asScala + self).asJava)
+      case (s: OWLDataUnionOf, _) => factory.getOWLDataUnionOf((s.getOperands.asScala.to(Set) + other).asJava)
+      case (_, o: OWLDataUnionOf) => factory.getOWLDataUnionOf((o.getOperands.asScala.to(Set) + self).asJava)
       case _ => factory.getOWLDataUnionOf(Set(self, other).asJava)
     }
 
@@ -275,7 +275,7 @@ package object scowl extends Vocab
 
     def ~[T: Literalable](value: T): OWLDataOneOf = {
       val literalable = implicitly[Literalable[T]]
-      factory.getOWLDataOneOf((self.getValues.asScala + literalable.toLiteral(value)).asJava)
+      factory.getOWLDataOneOf((self.getValues.asScala.to(Set) + literalable.toLiteral(value)).asJava)
     }
 
   }
