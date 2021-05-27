@@ -12,11 +12,11 @@ import org.semanticweb.owlapi.model.SWRLLiteralArgument
 
 trait SWRLArgs {
 
+  val iriPrefix = "urn:swrl#"
+
   private val factory = OWLManager.getOWLDataFactory
 
   implicit object SymbolArgish extends SWRLIArgish[Symbol] with SWRLDArgish[Symbol] {
-
-    val iriPrefix = "urn:swrl#"
 
     def toArgument(arg: Symbol): SWRLVariable = factory.getSWRLVariable(IRI.create(s"$iriPrefix${arg.name}"))
 
