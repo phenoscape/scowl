@@ -31,7 +31,7 @@ javaOptions += "-Xmx8G"
 
 libraryDependencies ++= {
   Seq(
-    "net.sourceforge.owlapi" %  "owlapi-distribution"    % "4.5.16",
+    "net.sourceforge.owlapi" %  "owlapi-distribution"    % "4.5.19",
     "org.scalatest"          %% "scalatest"              % "3.2.9"    % Test,
     "org.scalaz"             %% "scalaz-core"            % "7.4.0-M7" % Test
   )
