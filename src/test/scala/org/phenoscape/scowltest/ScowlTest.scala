@@ -98,7 +98,7 @@ class ScowlTest extends UnitSpec {
   }
 
   "SWRL syntax" should "equal standard API" in {
-    (((class1('x) ^ class1('y)) --> class2('x)) Annotation (RDFSLabel, "X and Y rule")) should equal(
+    (((class1(swrl"x") ^ class1(swrl"y")) --> class2(swrl"x")) Annotation (RDFSLabel, "X and Y rule")) should equal(
       factory.getSWRLRule(
         Set(
           factory.getSWRLClassAtom(class1, factory.getSWRLVariable(IRI.create("urn:swrl#x"))),
@@ -107,8 +107,8 @@ class ScowlTest extends UnitSpec {
           factory.getSWRLClassAtom(class2, factory.getSWRLVariable(IRI.create("urn:swrl#x")))).asJava,
         Set(
           factory.getOWLAnnotation(factory.getRDFSLabel, factory.getOWLLiteral("X and Y rule"))).asJava))
-    (prop1(ind1, 'x) ^ class1('x) ^ class2(ind1) ^ class1('y)) --> prop2('x, 'y)
-    ((prop5(ind1, 42) ^ class1(ind1) ^ sameAs(ind1, ind2) ^ differentFrom(ind1, 'x) ^ swrlbAbs('x)) --> prop5(ind1, "text")) should equal(
+    (prop1(ind1, swrl"x") ^ class1(swrl"x") ^ class2(ind1) ^ class1(swrl"y")) --> prop2(swrl"x", swrl"y")
+    ((prop5(ind1, 42) ^ class1(ind1) ^ sameAs(ind1, ind2) ^ differentFrom(ind1, swrl"x") ^ swrlbAbs(swrl"x")) --> prop5(ind1, "text")) should equal(
       factory.getSWRLRule(
         Set(
           factory.getSWRLDataPropertyAtom(prop5, factory.getSWRLIndividualArgument(ind1), factory.getSWRLLiteralArgument(factory.getOWLLiteral(42))),

@@ -60,9 +60,9 @@ object ReadMeExamples {
   /**
    * Using pattern matching extractors to implement negation normal form
    */
-  def nnf(given: OWLClassExpression): OWLClassExpression = given match {
-    case Class(_) => given
-    case ObjectComplementOf(Class(_)) => given
+  def nnf(expression: OWLClassExpression): OWLClassExpression = expression match {
+    case Class(_) => expression
+    case ObjectComplementOf(Class(_)) => expression
     case ObjectComplementOf(ObjectComplementOf(expression)) => nnf(expression)
     case ObjectUnionOf(operands) => ObjectUnionOf(operands.map(nnf))
     case ObjectIntersectionOf(operands) => ObjectIntersectionOf(operands.map(nnf))
