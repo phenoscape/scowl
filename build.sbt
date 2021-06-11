@@ -15,7 +15,7 @@ publishTo := {
         Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 licenses := Seq("MIT license" -> url("https://opensource.org/licenses/MIT"))
 
