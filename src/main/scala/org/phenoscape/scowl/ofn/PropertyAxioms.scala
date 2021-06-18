@@ -1,35 +1,9 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConverters._
-
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.OWLAnnotation
-import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
-import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom
-import org.semanticweb.owlapi.model.OWLDataRange
-import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom
-import org.semanticweb.owlapi.model.OWLDisjointObjectPropertiesAxiom
-import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom
-import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom
-import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom
-import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom
-import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom
-import org.semanticweb.owlapi.model.OWLPropertyExpression
-import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom
-import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom
-import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom
-import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLUnaryPropertyAxiom
+import org.semanticweb.owlapi.model._
+
+import scala.jdk.CollectionConverters._
 
 trait PropertyAxioms {
 

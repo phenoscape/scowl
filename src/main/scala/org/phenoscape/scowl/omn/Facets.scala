@@ -1,8 +1,8 @@
 package org.phenoscape.scowl.omn
 
 import org.phenoscape.scowl.converters.Literalable
-import org.semanticweb.owlapi.vocab.OWLFacet
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.vocab.OWLFacet
 
 trait Facets {
   

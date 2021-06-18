@@ -1,18 +1,14 @@
 package org.phenoscape.scowltest
 
-import scala.collection.JavaConverters._
-import scala.language.postfixOps
-
 import org.phenoscape.scowl._
 import org.scalatest._
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.IRI
-import org.semanticweb.owlapi.model.OWLAxiom
-import org.semanticweb.owlapi.vocab.OWLFacet
-import org.semanticweb.owlapi.vocab.SWRLBuiltInsVocabulary
-import org.semanticweb.owlapi.vocab.XSDVocabulary
+import org.semanticweb.owlapi.model.{IRI, OWLAxiom, SWRLDArgument}
 import org.semanticweb.owlapi.search.EntitySearcher
-import org.semanticweb.owlapi.model.SWRLDArgument
+import org.semanticweb.owlapi.vocab.{OWLFacet, SWRLBuiltInsVocabulary, XSDVocabulary}
+
+import scala.jdk.CollectionConverters._
+import scala.language.postfixOps
 
 class ScowlTest extends UnitSpec {
 

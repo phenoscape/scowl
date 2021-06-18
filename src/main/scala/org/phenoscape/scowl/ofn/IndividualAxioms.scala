@@ -1,23 +1,10 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConverters._
 import org.phenoscape.scowl.converters.Literalable
-import org.semanticweb.owlapi.model.OWLAnnotation
-import org.semanticweb.owlapi.model.OWLClassAssertionAxiom
-import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
-import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom
-import org.semanticweb.owlapi.model.OWLIndividual
-import org.semanticweb.owlapi.model.OWLLiteral
-import org.semanticweb.owlapi.model.OWLNaryIndividualAxiom
-import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom
-import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom
-import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.OWLPropertyAssertionAxiom
-import org.semanticweb.owlapi.model.OWLSameIndividualAxiom
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.model._
+
+import scala.jdk.CollectionConverters._
 
 trait IndividualAxioms {
   

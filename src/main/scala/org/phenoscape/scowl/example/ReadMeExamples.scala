@@ -1,10 +1,11 @@
 package org.phenoscape.scowl.example
 
 import org.phenoscape.scowl._
-import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.apibinding.OWLManager
-import scala.collection.JavaConverters._
+import org.semanticweb.owlapi.model.OWLClassExpression
 import org.semanticweb.owlapi.model.parameters.Imports
+
+import scala.jdk.CollectionConverters._
 
 object ReadMeExamples {
 

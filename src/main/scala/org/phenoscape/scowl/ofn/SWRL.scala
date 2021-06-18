@@ -1,30 +1,10 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConverters._
-import org.phenoscape.scowl.converters.SWRLArgs
-import org.phenoscape.scowl.converters.SWRLDArgish
-import org.phenoscape.scowl.converters.SWRLIArgish
+import org.phenoscape.scowl.converters.{SWRLArgs, SWRLDArgish, SWRLIArgish}
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.IRI
-import org.semanticweb.owlapi.model.OWLAnnotation
-import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLDataRange
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.SWRLAtom
-import org.semanticweb.owlapi.model.SWRLClassAtom
-import org.semanticweb.owlapi.model.SWRLDArgument
-import org.semanticweb.owlapi.model.SWRLDataRangeAtom
-import org.semanticweb.owlapi.model.SWRLIArgument
-import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom
-import org.semanticweb.owlapi.model.SWRLRule
-import org.semanticweb.owlapi.model.SWRLVariable
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
-import org.semanticweb.owlapi.model.SWRLDataPropertyAtom
-import org.phenoscape.scowl.converters.SWRLDArgish
-import org.semanticweb.owlapi.model.SWRLBuiltInAtom
-import org.phenoscape.scowl.converters.SWRLIArgish
-import org.semanticweb.owlapi.model.SWRLSameIndividualAtom
-import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom
+import org.semanticweb.owlapi.model._
+
+import scala.jdk.CollectionConverters._
 
 trait SWRL {
 

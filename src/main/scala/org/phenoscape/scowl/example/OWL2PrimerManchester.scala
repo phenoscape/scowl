@@ -1,6 +1,7 @@
 package org.phenoscape.scowl.example
 
 import org.phenoscape.scowl._
+
 import scala.language.postfixOps
 
 object OWL2PrimerManchester {

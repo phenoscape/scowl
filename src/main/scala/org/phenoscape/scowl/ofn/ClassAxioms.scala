@@ -1,19 +1,9 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConverters._
-import org.semanticweb.owlapi.model.OWLAnnotation
-import org.semanticweb.owlapi.model.OWLClass
-import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
-import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom
-import org.semanticweb.owlapi.model.OWLDisjointUnionAxiom
-import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom
-import org.semanticweb.owlapi.model.OWLHasKeyAxiom
-import org.semanticweb.owlapi.model.OWLNaryClassAxiom
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.OWLPropertyExpression
-import org.semanticweb.owlapi.model.OWLSubClassOfAxiom
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.model._
+
+import scala.jdk.CollectionConverters._
 
 trait ClassAxioms {
 

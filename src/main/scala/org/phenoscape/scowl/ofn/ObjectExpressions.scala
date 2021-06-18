@@ -1,23 +1,10 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConverters._
 import org.phenoscape.scowl.Vocab
-import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLIndividual
-import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom
-import org.semanticweb.owlapi.model.OWLObjectComplementOf
-import org.semanticweb.owlapi.model.OWLObjectExactCardinality
-import org.semanticweb.owlapi.model.OWLObjectHasSelf
-import org.semanticweb.owlapi.model.OWLObjectHasValue
-import org.semanticweb.owlapi.model.OWLObjectIntersectionOf
-import org.semanticweb.owlapi.model.OWLObjectMaxCardinality
-import org.semanticweb.owlapi.model.OWLObjectMinCardinality
-import org.semanticweb.owlapi.model.OWLObjectOneOf
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom
-import org.semanticweb.owlapi.model.OWLObjectUnionOf
-import org.semanticweb.owlapi.model.OWLObjectInverseOf
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.model._
+
+import scala.jdk.CollectionConverters._
 
 trait ObjectExpressions extends Vocab {
   

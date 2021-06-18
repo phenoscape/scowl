@@ -1,17 +1,11 @@
 package org.phenoscape
 
-import scala.collection.JavaConverters._
-import org.phenoscape.scowl.converters.AnnotationValuer
-import org.phenoscape.scowl.converters.Literalable
-import org.phenoscape.scowl.converters.SWRLDArgish
-import org.phenoscape.scowl.converters.SWRLIArgish
-import org.phenoscape.scowl.omn.PropertyCharacteristic
-import org.phenoscape.scowl.omn.ScowlNegativeDataPropertyValue
-import org.phenoscape.scowl.omn.ScowlNegativeObjectPropertyValue
-import org.phenoscape.scowl.omn.ScowlPropertyChain
-import org.phenoscape.scowl.omn.ScowlSWRLConjunction
+import org.phenoscape.scowl.converters.{AnnotationValuer, Literalable, SWRLDArgish, SWRLIArgish}
+import org.phenoscape.scowl.omn._
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.{IRI, OWLAnnotation, OWLAnnotationAssertionAxiom, OWLAnnotationProperty, OWLAnnotationSubject, OWLAnnotationValue, OWLAxiom, OWLClassAssertionAxiom, OWLClassExpression, OWLDataAllValuesFrom, OWLDataExactCardinality, OWLDataHasValue, OWLDataIntersectionOf, OWLDataMaxCardinality, OWLDataMinCardinality, OWLDataOneOf, OWLDataPropertyAssertionAxiom, OWLDataPropertyCharacteristicAxiom, OWLDataPropertyDomainAxiom, OWLDataPropertyExpression, OWLDataPropertyRangeAxiom, OWLDataRange, OWLDataSomeValuesFrom, OWLDataUnionOf, OWLDatatype, OWLDatatypeDefinitionAxiom, OWLDatatypeRestriction, OWLDifferentIndividualsAxiom, OWLDisjointClassesAxiom, OWLDisjointDataPropertiesAxiom, OWLDisjointObjectPropertiesAxiom, OWLEquivalentClassesAxiom, OWLEquivalentDataPropertiesAxiom, OWLEquivalentObjectPropertiesAxiom, OWLFacetRestriction, OWLHasKeyAxiom, OWLIndividual, OWLInverseObjectPropertiesAxiom, OWLLiteral, OWLNamedObject, OWLNegativeDataPropertyAssertionAxiom, OWLNegativeObjectPropertyAssertionAxiom, OWLObjectAllValuesFrom, OWLObjectExactCardinality, OWLObjectHasSelf, OWLObjectHasValue, OWLObjectIntersectionOf, OWLObjectMaxCardinality, OWLObjectMinCardinality, OWLObjectOneOf, OWLObjectPropertyAssertionAxiom, OWLObjectPropertyCharacteristicAxiom, OWLObjectPropertyDomainAxiom, OWLObjectPropertyExpression, OWLObjectPropertyRangeAxiom, OWLObjectSomeValuesFrom, OWLObjectUnionOf, OWLPropertyExpression, OWLSameIndividualAxiom, OWLSubClassOfAxiom, OWLSubDataPropertyOfAxiom, OWLSubObjectPropertyOfAxiom, OWLSubPropertyChainOfAxiom, SWRLAtom, SWRLClassAtom, SWRLDataPropertyAtom, SWRLDataRangeAtom, SWRLObjectPropertyAtom, SWRLRule, SWRLVariable}
+import org.semanticweb.owlapi.model._
+
+import scala.jdk.CollectionConverters._
 
 package object scowl extends Vocab
     with ofn.Entities

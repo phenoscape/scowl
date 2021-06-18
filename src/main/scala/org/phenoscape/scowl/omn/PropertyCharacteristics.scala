@@ -1,23 +1,7 @@
 package org.phenoscape.scowl.omn
 
-import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLClassExpression
-import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLObjectPropertyCharacteristicAxiom
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression
-import org.semanticweb.owlapi.model.OWLPropertyAxiom
-import org.semanticweb.owlapi.model.OWLPropertyExpression
-import org.semanticweb.owlapi.model.OWLPropertyRange
-import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom
-import org.semanticweb.owlapi.model.OWLProperty
-import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom
-import org.semanticweb.owlapi.model.OWLDataPropertyCharacteristicAxiom
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.model._
 
 sealed trait PropertyCharacteristic[T <: OWLObjectPropertyCharacteristicAxiom, U <: OWLDataPropertyCharacteristicAxiom] {
 
