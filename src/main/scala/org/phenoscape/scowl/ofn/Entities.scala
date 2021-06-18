@@ -1,18 +1,9 @@
 package org.phenoscape.scowl.ofn
 
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.OWLNamedObject
-import org.semanticweb.owlapi.model.OWLAnonymousIndividual
-import org.semanticweb.owlapi.model.OWLAnnotationProperty
-import org.semanticweb.owlapi.model.IRI
-import org.semanticweb.owlapi.model.OWLDataProperty
-import org.semanticweb.owlapi.model.OWLNamedIndividual
-import org.semanticweb.owlapi.model.OWLObjectProperty
-import org.semanticweb.owlapi.model.OWLOntology
-import org.semanticweb.owlapi.model.OWLClass
-import org.semanticweb.owlapi.model.OWLAxiom
-import scala.collection.JavaConverters._
-import org.semanticweb.owlapi.model.OWLDatatype
+import org.semanticweb.owlapi.model._
+
+import scala.jdk.CollectionConverters._
 
 trait Entities {
   

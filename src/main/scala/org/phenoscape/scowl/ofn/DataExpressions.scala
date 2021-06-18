@@ -1,22 +1,11 @@
 package org.phenoscape.scowl.ofn
 
-import scala.collection.JavaConverters._
-import org.semanticweb.owlapi.model.OWLDataOneOf
-import org.semanticweb.owlapi.model.OWLDatatype
-import org.semanticweb.owlapi.model.OWLLiteral
-import org.semanticweb.owlapi.model.OWLDataRange
-import org.semanticweb.owlapi.model.OWLAnnotation
-import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom
-import org.semanticweb.owlapi.model.OWLFacetRestriction
-import org.semanticweb.owlapi.model.OWLDatatypeRestriction
-import org.semanticweb.owlapi.vocab.OWLFacet
-import org.semanticweb.owlapi.model.OWLDataIntersectionOf
-import org.semanticweb.owlapi.model.OWLDataComplementOf
-import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression
-import org.semanticweb.owlapi.model.OWLDataAllValuesFrom
 import org.phenoscape.scowl.converters.Literalable
 import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.model._
+import org.semanticweb.owlapi.vocab.OWLFacet
+
+import scala.jdk.CollectionConverters._
 
 trait DataExpressions {
 

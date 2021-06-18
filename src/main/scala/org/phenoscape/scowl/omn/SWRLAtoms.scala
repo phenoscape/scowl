@@ -1,15 +1,11 @@
 package org.phenoscape.scowl.omn
 
-import scala.collection.JavaConverters._
-import org.phenoscape.scowl.converters.SWRLDArgish
-import org.phenoscape.scowl.converters.SWRLIArgish
+import org.phenoscape.scowl.converters.{SWRLDArgish, SWRLIArgish}
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.IRI
-import org.semanticweb.owlapi.model.SWRLBuiltInAtom
-import org.semanticweb.owlapi.model.SWRLDifferentIndividualsAtom
-import org.semanticweb.owlapi.model.SWRLSameIndividualAtom
-import org.semanticweb.owlapi.vocab.SWRLVocabulary
-import org.semanticweb.owlapi.vocab.SWRLBuiltInsVocabulary
+import org.semanticweb.owlapi.model.{IRI, SWRLBuiltInAtom, SWRLDifferentIndividualsAtom, SWRLSameIndividualAtom}
+import org.semanticweb.owlapi.vocab.{SWRLBuiltInsVocabulary, SWRLVocabulary}
+
+import scala.jdk.CollectionConverters._
 
 trait SWRLAtoms {
 

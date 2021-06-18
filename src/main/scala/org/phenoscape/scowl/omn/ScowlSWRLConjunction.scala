@@ -1,9 +1,9 @@
 package org.phenoscape.scowl.omn
 
-import org.semanticweb.owlapi.model.SWRLAtom
-import org.semanticweb.owlapi.model.SWRLRule
 import org.semanticweb.owlapi.apibinding.OWLManager
-import scala.collection.JavaConverters._
+import org.semanticweb.owlapi.model.{SWRLAtom, SWRLRule}
+
+import scala.jdk.CollectionConverters._
 
 case class ScowlSWRLConjunction(atoms: Set[SWRLAtom]) {
 

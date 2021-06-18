@@ -1,17 +1,15 @@
 package org.phenoscape.scowl.example
 
-import scalaz._
-import Scalaz._
-import org.semanticweb.owlapi.model.OWLOntology
-import org.phenoscape.scowl._
-import org.phenoscape.scowl.^^
-import scala.collection.JavaConverters._
-import org.semanticweb.owlapi.model.AxiomType
-import org.semanticweb.owlapi.model.parameters.Imports
-import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.IRI
+import org.phenoscape.scowl.{^^, _}
 import org.phenoscape.scowltest.UnitSpec
 import org.scalatest._
+import org.semanticweb.owlapi.apibinding.OWLManager
+import org.semanticweb.owlapi.model.{AxiomType, IRI, OWLOntology}
+import org.semanticweb.owlapi.model.parameters.Imports
+import scalaz._
+import Scalaz._
+
+import scala.jdk.CollectionConverters._
 
 class DataChecks extends UnitSpec {
   // All tests are ignored so that the scowl build passes (this is an example ontology test).
