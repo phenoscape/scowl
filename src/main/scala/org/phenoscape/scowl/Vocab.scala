@@ -1,7 +1,6 @@
 package org.phenoscape.scowl
 
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.{OWLAnnotation, OWLAnnotationProperty}
 import org.semanticweb.owlapi.vocab.OWL2Datatype
 
 trait Vocab {
