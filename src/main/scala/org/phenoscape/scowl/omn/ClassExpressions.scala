@@ -22,7 +22,7 @@ trait ClassExpressions {
 
   def oneOf(literals: OWLLiteral*): OWLDataOneOf = factory.getOWLDataOneOf(literals.toSet.asJava)
 
-  def inverse(property: OWLObjectPropertyExpression): OWLObjectInverseOf = factory.getOWLObjectInverseOf(property)
+  def inverse(property: OWLObjectProperty): OWLObjectInverseOf = factory.getOWLObjectInverseOf(property)
 
 }
 
