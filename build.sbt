@@ -23,7 +23,7 @@ homepage := Some(url("https://github.com/phenoscape/scowl"))
 
 scalaVersion  := "3.0.0"
 
-crossScalaVersions := Seq("2.13.6", "3.0.0")
+crossScalaVersions := Seq("2.13.8", "3.0.0")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
