@@ -16,7 +16,7 @@ object AnatomyOntology extends App {
   val arm = Class(ns + "004")
   val anatomical_structure = Class(ns + "005")
   val part_of = ObjectProperty(ns + "006")
-  val label = factory.getRDFSLabel
+  val label = factory.getRDFSLabel()
 
   val ontology = Ontology("http://example.org/anatomy.owl", Set(
     head Annotation (label, "head"),

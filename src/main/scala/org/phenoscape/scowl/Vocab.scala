@@ -21,8 +21,8 @@ trait Vocab {
 
   val OWLNothing = factory.getOWLNothing
 
-  val RDFSLabel = factory.getRDFSLabel
+  val RDFSLabel = factory.getRDFSLabel()
 
-  val RDFSComment = factory.getRDFSComment
+  val RDFSComment = factory.getRDFSComment()
 
 }
