@@ -9,3 +9,4 @@ scowl.iml
 project/target
 bin
 /.idea
+/.bsp

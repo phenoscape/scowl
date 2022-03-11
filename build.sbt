@@ -1,9 +1,9 @@
 
 organization  := "org.phenoscape"
 
-name          := "scowl"
+name          := "scowl-owlapi5"
 
-version       := "1.4.0"
+version       := "1.4.1-SNAPSHOT"
 
 publishMavenStyle := true
 
@@ -23,7 +23,7 @@ homepage := Some(url("https://github.com/phenoscape/scowl"))
 
 scalaVersion  := "3.0.0"
 
-crossScalaVersions := Seq("2.13.6", "3.0.0")
+crossScalaVersions := Seq("2.13.8", "3.0.0")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
@@ -31,7 +31,7 @@ javaOptions += "-Xmx8G"
 
 libraryDependencies ++= {
   Seq(
-    "net.sourceforge.owlapi" %  "owlapi-distribution"    % "4.5.16",
+    "net.sourceforge.owlapi" %  "owlapi-distribution"    % "5.1.20",
     "org.scalatest"          %% "scalatest"              % "3.2.11"    % Test,
     "org.scalaz"             %% "scalaz-core"            % "7.4.0-M7" % Test
   )

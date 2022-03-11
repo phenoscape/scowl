@@ -129,7 +129,7 @@ trait ObjectExpressions extends Vocab {
 
   object ObjectInverseOf {
 
-    def apply(property: OWLObjectPropertyExpression): OWLObjectInverseOf = factory.getOWLObjectInverseOf(property)
+    def apply(property: OWLObjectProperty): OWLObjectInverseOf = factory.getOWLObjectInverseOf(property)
 
     def unapply(inverse: OWLObjectInverseOf): Option[OWLObjectPropertyExpression] = Option(inverse.getInverse)
 
