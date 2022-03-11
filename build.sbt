@@ -21,9 +21,9 @@ licenses := Seq("MIT license" -> url("https://opensource.org/licenses/MIT"))
 
 homepage := Some(url("https://github.com/phenoscape/scowl"))
 
-scalaVersion  := "3.0.0"
+scalaVersion  := "3.0.2"
 
-crossScalaVersions := Seq("2.13.8", "3.0.0")
+crossScalaVersions := Seq("2.13.8", "3.0.2")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
