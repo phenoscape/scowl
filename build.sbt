@@ -72,3 +72,5 @@ lazy val parentProject = project
     Test / scalaSource := baseDirectory.value / "dummy"
   )
   .aggregate(owlapi4, owlapi5)
+
+Global / useGpg := false
