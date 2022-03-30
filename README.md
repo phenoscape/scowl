@@ -6,15 +6,21 @@ Scowl provides a Scala DSL allowing a declarative approach to composing OWL expr
 
 ## Usage
 
-Since version 1.2.1, Scowl is available via Maven Central. Add the dependency to your `build.sbt`:
+Since version 1.2.1, Scowl is available via Maven Central. Add the dependency to your `build.sbt` if you are using OWL API 4.x:
 
 ```scala
-libraryDependencies += "org.phenoscape" %% "scowl" % "1.4.0"
+libraryDependencies += "org.phenoscape" %% "scowl" % "1.4.1"
+```
+
+For OWL API 5.x:
+
+```scala
+libraryDependencies += "org.phenoscape" %% "scowl-owlapi5" % "1.4.1"
 ```
 
 Import `org.phenoscape.scowl._`, and Scowl implicit conversions will add pseudo Manchester syntax methods to native OWL API objects. Additionally, functional syntax-style constructors and extractors will be in scope.
 
-Scowl 1.2+ is built with OWL API 4.x. For OWL API 3.5, use Scowl 1.0.2. Scowl is cross-compiled to support Scala 2.13 and Scala 3.
+Scowl 1.2+ is built with OWL API 4.x (and from 1.4.1, additionally OWL API 5.x). For OWL API 3.5, use Scowl 1.0.2. Scowl is cross-compiled to support Scala 2.13 and Scala 3.
 
 ## Examples
 The easiest way to get started is to see how the DSL can be used to implement all the examples from the [OWL 2 Web Ontology Language 
