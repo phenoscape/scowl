@@ -19,4 +19,4 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Run tests
-      run: sbt +test
+      run: sbt "project owlapi4" +test "project owlapi5" +test

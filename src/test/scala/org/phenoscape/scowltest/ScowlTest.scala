@@ -8,7 +8,6 @@ import org.semanticweb.owlapi.search.EntitySearcher
 import org.semanticweb.owlapi.vocab.{OWLFacet, SWRLBuiltInsVocabulary, XSDVocabulary}
 
 import scala.jdk.CollectionConverters._
-import scala.jdk.StreamConverters._
 import scala.language.postfixOps
 
 class ScowlTest extends UnitSpec {
@@ -89,7 +88,7 @@ class ScowlTest extends UnitSpec {
 
     val ont = OWLManager.createOWLOntologyManager().createOntology(Set[OWLAxiom](class1 Annotation (RDFSLabel, "cat" @@ "en")).asJava)
     val values = for {
-      Annotation(_, _, value @@ _) <- EntitySearcher.getAnnotations(class1, ont).toScala(LazyList)
+      Annotation(_, _, value @@ _) <- EntitySearcher.getAnnotations(class1, ont).iterator.asScala
     } yield value
     values.toSet should equal(Set("cat"))
   }
