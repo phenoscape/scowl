@@ -60,7 +60,7 @@ class ScowlTest extends UnitSpec {
     (ind1 Fact (hasAge, 20.5)) should equal(factory.getOWLDataPropertyAssertionAxiom(hasAge, ind1, factory.getOWLLiteral(20.5)))
     (ind1 Fact (countryName, "Republic of France" @@ "en")) should equal(factory.getOWLDataPropertyAssertionAxiom(countryName, ind1, factory.getOWLLiteral("Republic of France", "en")))
     ind1 Fact (countryName, "République française" @@ "fr")
-    (ind1 Annotation (RDFSLabel, "Robespierre" @@ "en")) should equal(factory.getOWLAnnotationAssertionAxiom(factory.getRDFSLabel, ind1.getIRI, factory.getOWLLiteral("Robespierre", "en")))
+    (ind1 Annotation (RDFSLabel, "Robespierre" @@ "en")) should equal(factory.getOWLAnnotationAssertionAxiom(factory.getRDFSLabel(), ind1.getIRI, factory.getOWLLiteral("Robespierre", "en")))
     ind1 Annotation (RDFSLabel, "1" ^^ XSDInteger)
 
     (ind1 Type (hasAge some (XSDInteger(org.phenoscape.scowl.>(1))))) should equal(factory.getOWLClassAssertionAxiom(factory.getOWLDataSomeValuesFrom(hasAge, factory.getOWLDatatypeMinExclusiveRestriction(1)), ind1))
@@ -88,7 +88,7 @@ class ScowlTest extends UnitSpec {
 
     val ont = OWLManager.createOWLOntologyManager().createOntology(Set[OWLAxiom](class1 Annotation (RDFSLabel, "cat" @@ "en")).asJava)
     val values = for {
-      Annotation(_, _, value @@ _) <- EntitySearcher.getAnnotations(class1, ont).asScala
+      Annotation(_, _, value @@ _) <- EntitySearcher.getAnnotations(class1, ont).iterator.asScala
     } yield value
     values.toSet should equal(Set("cat"))
   }
