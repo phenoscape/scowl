@@ -1,7 +1,7 @@
 
 lazy val commonSettings = Seq(
   organization := "org.phenoscape",
-  version := "1.4.1-SNAPSHOT",
+  version := "1.4.1",
   publishMavenStyle := true,
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
