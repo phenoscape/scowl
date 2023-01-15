@@ -20,7 +20,7 @@ lazy val commonSettings = Seq(
   libraryDependencies ++= {
     Seq(
       "org.scalatest" %% "scalatest" % "3.2.11" % Test,
-      "org.scalaz" %% "scalaz-core" % "7.4.0-M7" % Test
+      "org.scalaz" %% "scalaz-core" % "7.4.0-M13" % Test
     )
   },
   pomExtra := <scm>
