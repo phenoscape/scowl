@@ -19,7 +19,7 @@ lazy val commonSettings = Seq(
   javaOptions += "-Xmx8G",
   libraryDependencies ++= {
     Seq(
-      "org.scalatest" %% "scalatest" % "3.2.11" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.16" % Test,
       "org.scalaz" %% "scalaz-core" % "7.4.0-M7" % Test
     )
   },
