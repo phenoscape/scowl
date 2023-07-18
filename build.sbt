@@ -44,7 +44,7 @@ lazy val owlapi4 = project
     Test / scalaSource := baseDirectory.value / ".." / "src" / "test" / "scala",
     libraryDependencies ++= {
       Seq(
-        "net.sourceforge.owlapi" % "owlapi-distribution" % "4.5.16"
+        "net.sourceforge.owlapi" % "owlapi-distribution" % "4.5.26"
       )
     }
   )
